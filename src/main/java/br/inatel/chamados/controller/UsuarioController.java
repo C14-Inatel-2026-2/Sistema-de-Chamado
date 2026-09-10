@@ -1,4 +1,4 @@
-package br.inatel.chamados;
+package br.inatel.chamados.controller;
 
 import br.inatel.chamados.model.Usuario;
 import br.inatel.chamados.service.UsuarioService;
