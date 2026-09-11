@@ -4,7 +4,6 @@ import br.inatel.chamados.model.Chamado;
 import br.inatel.chamados.model.Perfil;
 import br.inatel.chamados.model.Prioridade;
 import br.inatel.chamados.model.StatusChamado;
-import br.inatel.chamados.model.Usuario;
 import br.inatel.chamados.repository.ChamadoRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

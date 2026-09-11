@@ -5,7 +5,6 @@ import br.inatel.chamados.model.StatusChamado;
 import br.inatel.chamados.repository.ChamadoRepository;
 import org.springframework.stereotype.Service;
 import br.inatel.chamados.model.Perfil;
-import br.inatel.chamados.model.Usuario;
 
 import java.time.LocalDateTime;
 
