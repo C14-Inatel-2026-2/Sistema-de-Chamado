@@ -31,6 +31,10 @@ public class Chamado {
     public Chamado() {
     }
 
+    @ManyToOne
+    @JoinColumn(name = "tecnico_id")
+    private Usuario tecnico;
+
     public Chamado(String titulo, String descricao, Prioridade prioridade) {
         this.titulo = titulo;
         this.descricao = descricao;
@@ -79,5 +83,13 @@ public class Chamado {
 
     public void setDataAbertura(LocalDateTime dataAbertura) {
         this.dataAbertura = dataAbertura;
+    }
+
+    public Usuario getTecnico() {
+        return tecnico;
+    }
+
+    public void setTecnico(Usuario tecnico) {
+        this.tecnico = tecnico;
     }
 }
