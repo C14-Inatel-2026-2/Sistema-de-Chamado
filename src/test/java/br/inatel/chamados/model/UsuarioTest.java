@@ -1,30 +1,29 @@
 package br.inatel.chamados.model;
 
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-class UsuarioTest {         // testes sem mock
+class UsuarioTest {
 
     @Test
     void deveCriarUsuarioComConstrutorCompleto() {
         Usuario usuario = new Usuario(
                 1L,
-                "Eduardo",
-                "eduardo@email.com",
+                "Cauã",
+                "caua@email.com",
                 "123456",
                 "ADMINISTRADOR"
         );
 
         assertEquals(1L, usuario.getId());
-        assertEquals("Eduardo", usuario.getNome());
-        assertEquals("eduardo@email.com", usuario.getEmail());
+        assertEquals("Cauã", usuario.getNome());
+        assertEquals("caua@email.com", usuario.getEmail());
         assertEquals("123456", usuario.getSenha());
         assertEquals("ADMINISTRADOR", usuario.getPerfil());
     }
 
     @Test
-    void AlterarDadosDoUsuarioComSetters() {
+    void deveAlterarDadosDoUsuarioComSetters() {
         Usuario usuario = new Usuario();
 
         usuario.setId(2L);
