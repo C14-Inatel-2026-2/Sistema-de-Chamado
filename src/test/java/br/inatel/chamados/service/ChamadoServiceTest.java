@@ -196,4 +196,22 @@ class ChamadoServiceTest {
 
         verify(chamadoRepository).save(novoChamado);
     }
+
+    @Test
+    void naoDeveAtribuirTecnicoAChamadoInexistente() {
+        when(chamadoRepository.findById(99L))
+                .thenReturn(Optional.empty());
+
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> chamadoService.atribuirTecnico(99L, tecnico)
+        );
+
+        assertEquals(
+                "Chamado não encontrado",
+                exception.getMessage()
+        );
+
+        verify(chamadoRepository, never()).save(any());
+    }
 }
