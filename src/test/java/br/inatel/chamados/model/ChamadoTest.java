@@ -49,4 +49,23 @@ class ChamadoTest {
                 chamado.getPrioridade()
         );
     }
+
+    @Test
+    void deveCriarChamadoComConstrutorPreenchendoCamposCorretamente() {
+        Chamado chamado = new Chamado("Lâmpada queimada", "Corredor do bloco B sem iluminação", Prioridade.BAIXA);
+
+        assertEquals("Lâmpada queimada", chamado.getTitulo());
+        assertEquals("Corredor do bloco B sem iluminação", chamado.getDescricao());
+        assertEquals(Prioridade.BAIXA, chamado.getPrioridade());
+        assertNull(chamado.getStatus());
+    }
+
+    @Test
+    void deveAtualizarStatusCorretamenteAoUsarSetter() {
+        Chamado chamado = new Chamado("Ar-condicionado quebrado", "Sala 210", Prioridade.MEDIA);
+
+        chamado.setStatus(StatusChamado.EM_ANDAMENTO);
+
+        assertEquals(StatusChamado.EM_ANDAMENTO, chamado.getStatus());
+    }
 }
