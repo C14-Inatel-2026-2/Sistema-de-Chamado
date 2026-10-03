@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,14 +7,14 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <main class="container">
-        <h1>Sistema de Chamados de Manutenção</h1>
-        <p>Projeto C14 - Engenharia de Software</p>
+<main class="container">
+    <h1 th:text="${titulo}">Sistema de Chamados de Manutenção</h1>
+    <p>Projeto C14 - Engenharia de Software</p>
 
-        <section class="card">
-            <h2>Dashboard inicial</h2>
-            <p>A aplicação foi iniciada com Spring Boot, Maven e Thymeleaf.</p>
-        </section>
-    </main>
+    <section class="card">
+        <h2>Dashboard inicial</h2>
+        <p>A aplicação foi iniciada com Spring Boot, Maven e Thymeleaf.</p>
+    </section>
+</main>
 </body>
 </html>
