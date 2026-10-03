@@ -2,9 +2,9 @@ package br.inatel.chamados.service;
 
 import br.inatel.chamados.model.Chamado;
 import br.inatel.chamados.model.StatusChamado;
+import br.inatel.chamados.model.Usuario;
 import br.inatel.chamados.repository.ChamadoRepository;
 import org.springframework.stereotype.Service;
-import br.inatel.chamados.model.Perfil;
 
 import java.time.LocalDateTime;
 
@@ -21,6 +21,7 @@ public class ChamadoService {
         if (chamado.getTitulo() == null || chamado.getTitulo().isBlank()) {
             throw new IllegalArgumentException("Título é obrigatório");
         }
+
         if (chamado.getDescricao() == null || chamado.getDescricao().isBlank()) {
             throw new IllegalArgumentException("Descrição é obrigatória");
         }
@@ -38,7 +39,7 @@ public class ChamadoService {
             throw new IllegalArgumentException("Técnico é obrigatório");
         }
 
-        if (tecnico.getPerfil() != Perfil.TECNICO) {
+        if (!"TECNICO".equalsIgnoreCase(tecnico.getPerfil())) {
             throw new IllegalArgumentException(
                     "O usuário selecionado não possui perfil de técnico"
             );
