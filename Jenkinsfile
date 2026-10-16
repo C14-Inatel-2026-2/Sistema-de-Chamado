@@ -1,4 +1,5 @@
-git pipeline {
+
+pipeline {
     agent any
 
     tools {
@@ -23,7 +24,9 @@ git pipeline {
         stage('Deploy local demo') {
             steps {
                 bat '''
-                    start "" cmd /c "java -jar target\\sistema-chamados-manutencao-0.0.1-SNAPSHOT.jar > target\\deploy.log 2>&1"
+                    for %%F in (target\\sistema-chamados-manutencao-0.0.1-SNAPSHOT.jar) do (
+                        start "" /B cmd /c "java -jar %%F > target\\deploy.log 2>&1"
+                    )
                 '''
             }
         }
