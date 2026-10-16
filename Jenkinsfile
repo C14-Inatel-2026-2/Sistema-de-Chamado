@@ -1,5 +1,4 @@
-
-pipeline {
+git pipeline {
     agent any
 
     tools {
