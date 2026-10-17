@@ -14,12 +14,21 @@ pipeline {
                 bat 'mvn -B validate'
             }
         }
-
         stage('Build') {
             steps {
-                bat 'mvn -B -DskipTests package'
+                echo 'Compilando e empacotando o projeto...'
+                bat 'mvn -B clean -DskipTests package'
+
+                bat '''
+            if not exist target\\sistema-chamados-manutencao-0.0.1-SNAPSHOT.jar (
+                echo ERRO: build nao gerou o arquivo JAR esperado
+                exit /b 1
+            )
+            echo Build concluido com sucesso: JAR gerado em target\\
+        '''
             }
         }
+
 
         stage('Tests and Coverage') {
             steps {
