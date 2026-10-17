@@ -37,6 +37,23 @@ pipeline {
             }
         }
 
+        stage('Package') {
+            steps {
+                echo 'Empacotando o projeto...'
+
+                bat 'mvn -B package -DskipTests'
+
+                bat '''
+                    if not exist target\\sistema-chamados-manutencao-0.0.1-SNAPSHOT.jar (
+                        echo ERRO: package nao gerou o arquivo JAR esperado
+                        exit /b 1
+                    )
+
+                    echo Package concluido com sucesso: JAR gerado em target\\
+                '''
+            }
+        }
+
         stage('Deploy Local') {
             steps {
                 echo 'Iniciando deploy local do Sistema de Chamados'
