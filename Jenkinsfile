@@ -8,6 +8,13 @@ pipeline {
     }
 
     stages {
+        stage('Validate') {
+            steps {
+                echo 'Validando o projeto Maven...'
+                bat 'mvn -B validate'
+            }
+        }
+
         stage('Build') {
             steps {
                 bat 'mvn -B -DskipTests package'
