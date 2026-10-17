@@ -21,13 +21,18 @@ pipeline {
             }
         }
 
-        stage('Deploy local demo') {
+        stage('Deploy Local') {
             steps {
+                echo 'Iniciando deploy local do Sistema de Chamados'
+
                 bat '''
-                    for %%F in (target\\sistema-chamados-manutencao-0.0.1-SNAPSHOT.jar) do (
-                        start "" /B cmd /c "java -jar %%F > target\\deploy.log 2>&1"
-                    )
-                '''
+            if not exist target\\sistema-chamados-manutencao-0.0.1-SNAPSHOT.jar (
+                echo ERRO: arquivo JAR nao encontrado
+                exit /b 1
+            )
+
+            start "" /B java -jar target\\sistema-chamados-manutencao-0.0.1-SNAPSHOT.jar
+        '''
             }
         }
     }
@@ -35,17 +40,17 @@ pipeline {
     post {
         always {
             junit testResults: 'target/surefire-reports/*.xml',
-                  allowEmptyResults: true
+                    allowEmptyResults: true
 
             jacoco(
-                execPattern: '**/target/jacoco.exec',
-                classPattern: '**/target/classes',
-                sourcePattern: '**/src/main/java'
+                    execPattern: '**/target/jacoco.exec',
+                    classPattern: '**/target/classes',
+                    sourcePattern: '**/src/main/java'
             )
 
             archiveArtifacts(
-                artifacts: 'target/site/jacoco/**,target/surefire-reports/*.xml,target/*.jar,target/deploy.log',
-                allowEmptyArchive: true
+                    artifacts: 'target/site/jacoco/**,target/surefire-reports/*.xml,target/*.jar,target/deploy.log',
+                    allowEmptyArchive: true
             )
         }
     }
