@@ -87,4 +87,21 @@ pipeline {
             )
         }
     }
+    stage('Testes e Cobertura') {
+            steps {
+                echo 'Rodando testes e gerando relatório do JaCoCo...'
+                sh 'mvn clean test'
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                    jacoco(
+                        execPattern: 'target/jacoco.exec',
+                        classPattern: 'target/classes',
+                        sourcePattern: 'src/main/java',
+                        inclusionPattern: '**/*.class'
+                    )
+                }
+            }
+        }
 }
