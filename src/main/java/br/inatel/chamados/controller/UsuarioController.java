@@ -17,8 +17,10 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public String listar(Model model) {
+    public String listar() {
+
         return "usuarios";
+
     }
 
     @GetMapping("/novo")
