@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private static final String EMAIL_JA_CADASTRADO = "E-mail já cadastrado.";
 
     public UsuarioService(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
@@ -16,7 +17,7 @@ public class UsuarioService {
     public Usuario cadastrar(Usuario usuario) {
 
         if (usuarioRepository.findByEmail(usuario.getEmail()) != null) {
-            throw new IllegalArgumentException("E-mail já cadastrado.");
+            throw new IllegalArgumentException(EMAIL_JA_CADASTRADO);
         }
 
         return usuarioRepository.save(usuario);
