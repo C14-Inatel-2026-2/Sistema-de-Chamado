@@ -12,7 +12,7 @@ public class PaginaController {
     @GetMapping("/")
     public String inicio(Model model) {
         prepararModel(model);
-        return "dashboard";
+        return "redirect:/usuarios/login";
     }
 
     @GetMapping("/dashboard")
