@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuários | Sistema de Chamados</title>
+    <link rel="stylesheet" th:href="@{/css/usuarios.css}">
+</head>
+<body>
+<main class="container">
+    <header class="page-header">
+        <div>
+            <h1>Usuários cadastrados</h1>
+            <p class="subtitle">Área de administração do sistema.</p>
+        </div>
+        <a class="button button-secondary" th:href="@{/dashboard}">Voltar ao painel</a>
+    </header>
+
+    <section class="card">
+        <div class="table-header">
+            <h2>Lista de usuários</h2>
+            <a class="button" th:href="@{/usuarios/novo}">Cadastrar usuário</a>
+        </div>
+
+        <p th:if="${#lists.isEmpty(usuarios)}" class="empty-state">Nenhum usuário cadastrado.</p>
+
+        <div class="table-wrapper" th:unless="${#lists.isEmpty(usuarios)}">
+            <table>
+                <thead>
+                <tr><th>ID</th><th>Nome</th><th>E-mail</th><th>Perfil</th></tr>
+                </thead>
+                <tbody>
+                <tr th:each="usuario : ${usuarios}">
+                    <td th:text="${usuario.id}"></td>
+                    <td th:text="${usuario.nome}"></td>
+                    <td th:text="${usuario.email}"></td>
+                    <td><span class="profile-tag" th:text="${usuario.perfil}"></span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrar | Sistema de Chamados</title>
+    <link rel="stylesheet" th:href="@{/css/usuarios.css}">
+</head>
+<body>
+<main class="container auth-container">
+    <section class="card auth-card">
+        <h1>Sistema de Chamados</h1>
+        <p class="subtitle">Entre com seus dados para continuar.</p>
+
+        <div class="alert alert-success" th:if="${mensagem}" th:text="${mensagem}"></div>
+        <div class="alert alert-error" th:if="${erro}" th:text="${erro}"></div>
+
+        <form th:action="@{/usuarios/login}" method="post">
+            <label for="email">E-mail</label>
+            <input id="email" type="email" name="email" required autofocus autocomplete="username">
+
+            <label for="senha">Senha</label>
+            <input id="senha" type="password" name="senha" required autocomplete="current-password">
+
+            <button class="button" type="submit">Entrar</button>
+        </form>
+
+        <p class="form-footer">Ainda não tem uma conta? <a th:href="@{/usuarios/novo}">Cadastre-se</a></p>
+    </section>
+</main>
+</body>
+</html>
