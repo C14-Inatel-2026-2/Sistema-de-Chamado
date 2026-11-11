@@ -9,8 +9,8 @@ h2 { margin: 0; font-size: 19px; }
 .subtitle { margin: 0 0 24px; color: #68727d; }
 form { display: grid; gap: 10px; }
 label { margin-top: 8px; font-weight: 600; }
-input { width: 100%; padding: 11px 12px; border: 1px solid #cbd2d9; border-radius: 7px; font: inherit; }
-input:focus { outline: 2px solid #9cc5f5; border-color: #3979bd; }
+input, select { width: 100%; padding: 11px 12px; border: 1px solid #cbd2d9; border-radius: 7px; font: inherit; background: #fff; }
+input:focus, select:focus { outline: 2px solid #9cc5f5; border-color: #3979bd; }
 .button { display: inline-block; width: fit-content; margin-top: 12px; padding: 10px 16px; border: 0; border-radius: 7px; background: #245f9e; color: #fff; font: inherit; text-decoration: none; cursor: pointer; }
 .button-secondary { background: #68727d; }
 .form-footer { margin: 20px 0 0; text-align: center; }

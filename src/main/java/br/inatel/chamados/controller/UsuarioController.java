@@ -29,6 +29,7 @@ public class UsuarioController {
     @GetMapping("/novo")
     public String novoUsuario(Model model) {
         model.addAttribute("usuario", new Usuario());
+        model.addAttribute("perfis", java.util.List.of("SOLICITANTE", "TECNICO", "ADMIN"));
         return "usuario-form";
     }
 
@@ -36,14 +37,16 @@ public class UsuarioController {
     public String cadastrar(@Valid @ModelAttribute("usuario") Usuario usuario,
                             BindingResult resultado, Model model) {
         if (resultado.hasErrors()) {
+            model.addAttribute("perfis", java.util.List.of("SOLICITANTE", "TECNICO", "ADMIN"));
             return "usuario-form";
         }
 
         try {
             usuarioService.cadastrar(usuario);
-            return "redirect:/usuarios/login?cadastro=sucesso";
+            return "redirect:/usuarios";
         } catch (IllegalArgumentException exception) {
             model.addAttribute("erro", exception.getMessage());
+            model.addAttribute("perfis", java.util.List.of("SOLICITANTE", "TECNICO", "ADMIN"));
             return "usuario-form";
         }
     }

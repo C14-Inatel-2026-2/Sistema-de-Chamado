@@ -28,9 +28,9 @@ class UsuarioServiceTest {
     private UsuarioService usuarioService;
 
     @Test
-    void deveCadastrarUsuarioComSenhaCriptografadaEPerfilPadrao() {
+    void deveCadastrarUsuarioComSenhaCriptografadaEPerfilSelecionado() {
         Usuario usuario = novoUsuario("Eduardo", "Eduardo@Email.com", "123456");
-        usuario.setPerfil("ADMIN"); // O cadastro público não pode conceder esse perfil.
+        usuario.setPerfil("ADMIN");
 
         when(usuarioRepository.findByEmail("eduardo@email.com")).thenReturn(null);
         when(passwordEncoder.encode("123456")).thenReturn("senha-criptografada");
@@ -42,9 +42,24 @@ class UsuarioServiceTest {
         assertEquals("Eduardo", resultado.getNome());
         assertEquals("eduardo@email.com", resultado.getEmail());
         assertEquals("senha-criptografada", resultado.getSenha());
-        assertEquals("SOLICITANTE", resultado.getPerfil());
+        assertEquals("ADMIN", resultado.getPerfil());
         verify(passwordEncoder).encode("123456");
         verify(usuarioRepository).save(usuario);
+    }
+
+    @Test
+    void naoDeveCadastrarUsuarioComPerfilInvalido() {
+        Usuario usuario = novoUsuario("Eduardo", "eduardo@email.com", "123456");
+        usuario.setPerfil("SUPER_ADMIN");
+        when(usuarioRepository.findByEmail("eduardo@email.com")).thenReturn(null);
+
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> usuarioService.cadastrar(usuario)
+        );
+
+        assertEquals("Selecione um perfil válido.", exception.getMessage());
+        verify(usuarioRepository, never()).save(any());
     }
 
     @Test

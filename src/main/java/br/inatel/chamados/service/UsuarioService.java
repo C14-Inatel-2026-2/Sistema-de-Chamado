@@ -12,7 +12,8 @@ import java.util.Locale;
 public class UsuarioService {
 
     private static final String EMAIL_JA_CADASTRADO = "E-mail já cadastrado.";
-    private static final String PERFIL_PADRAO = "SOLICITANTE";
+    private static final java.util.Set<String> PERFIS_VALIDOS = java.util.Set.of(
+            "SOLICITANTE", "TECNICO", "ADMIN");
 
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
@@ -32,10 +33,11 @@ public class UsuarioService {
 
         usuario.setNome(usuario.getNome().trim());
         usuario.setEmail(emailNormalizado);
-        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
-        // O cadastro público nunca pode conceder privilégios administrativos.
-        usuario.setPerfil(PERFIL_PADRAO);
+        if (usuario.getPerfil() == null || !PERFIS_VALIDOS.contains(usuario.getPerfil())) {
+            throw new IllegalArgumentException("Selecione um perfil válido.");
+        }
 
+        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         return usuarioRepository.save(usuario);
     }
 

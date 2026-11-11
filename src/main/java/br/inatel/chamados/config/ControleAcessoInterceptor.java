@@ -53,8 +53,6 @@ public class ControleAcessoInterceptor implements HandlerInterceptor {
 
     private boolean ehRotaPublica(String caminho, String metodo) {
         return caminho.equals("/usuarios/login")
-                || caminho.equals("/usuarios/novo") && metodo.equals("GET")
-                || caminho.equals("/usuarios") && metodo.equals("POST")
                 || caminho.startsWith("/css/")
                 || caminho.startsWith("/js/")
                 || caminho.equals("/favicon.ico")
@@ -63,6 +61,8 @@ public class ControleAcessoInterceptor implements HandlerInterceptor {
     }
 
     private boolean requerAdministrador(String caminho, String metodo) {
-        return caminho.equals("/usuarios") && metodo.equals("GET");
+        return caminho.equals("/usuarios") && metodo.equals("GET")
+                || caminho.equals("/usuarios/novo") && metodo.equals("GET")
+                || caminho.equals("/usuarios") && metodo.equals("POST");
     }
 }

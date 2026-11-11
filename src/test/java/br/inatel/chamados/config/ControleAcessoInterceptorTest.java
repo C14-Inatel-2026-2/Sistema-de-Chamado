@@ -46,6 +46,31 @@ class ControleAcessoInterceptorTest {
     }
 
     @Test
+    void deveBloquearAcessoAoFormularioDeCadastroSemSessao() throws Exception {
+        MockHttpServletRequest request = request("GET", "/usuarios/novo");
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        assertFalse(interceptor.preHandle(request, response, new Object()));
+        assertEquals("/usuarios/login", response.getRedirectedUrl());
+    }
+
+    @Test
+    void devePermitirAdministradorNoFormularioDeCadastro() throws Exception {
+        MockHttpServletRequest request = request("GET", "/usuarios/novo");
+        adicionarSessao(request, "ADMIN");
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        assertTrue(interceptor.preHandle(request, response, new Object()));
+    }
+
+    @Test
+    void deveBloquearSolicitanteNoFormularioDeCadastro() throws Exception {
+        MockHttpServletRequest request = request("GET", "/usuarios/novo");
+        adicionarSessao(request, "SOLICITANTE");
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        assertFalse(interceptor.preHandle(request, response, new Object()));
+        assertEquals(HttpServletResponse.SC_FORBIDDEN, response.getStatus());
+    }
+
+    @Test
     void devePermitirAdministradorNaListagemDeUsuarios() throws Exception {
         MockHttpServletRequest request = request("GET", "/usuarios");
         adicionarSessao(request, "ADMIN");
