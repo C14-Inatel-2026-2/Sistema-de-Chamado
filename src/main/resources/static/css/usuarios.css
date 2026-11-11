@@ -1,0 +1,29 @@
+/* Estilos isolados das telas do módulo de usuários. */
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; font-family: Arial, sans-serif; color: #222; background: #f4f6f8; }
+.container { width: min(920px, calc(100% - 32px)); margin: 48px auto; }
+.auth-container { width: min(440px, calc(100% - 32px)); display: flex; align-items: center; min-height: calc(100vh - 96px); margin: 0 auto; }
+.card { width: 100%; padding: 28px; border: 1px solid #e1e5e9; border-radius: 12px; background: #fff; box-shadow: 0 5px 20px rgba(0,0,0,.05); }
+h1 { margin: 0 0 8px; font-size: 25px; }
+h2 { margin: 0; font-size: 19px; }
+.subtitle { margin: 0 0 24px; color: #68727d; }
+form { display: grid; gap: 10px; }
+label { margin-top: 8px; font-weight: 600; }
+input { width: 100%; padding: 11px 12px; border: 1px solid #cbd2d9; border-radius: 7px; font: inherit; }
+input:focus { outline: 2px solid #9cc5f5; border-color: #3979bd; }
+.button { display: inline-block; width: fit-content; margin-top: 12px; padding: 10px 16px; border: 0; border-radius: 7px; background: #245f9e; color: #fff; font: inherit; text-decoration: none; cursor: pointer; }
+.button-secondary { background: #68727d; }
+.form-footer { margin: 20px 0 0; text-align: center; }
+a { color: #245f9e; }
+.alert { margin: 12px 0; padding: 11px; border-radius: 7px; }
+.alert-success { color: #155724; background: #dff2e3; }
+.alert-error, .field-error { color: #a3212b; background: #fbe7e9; }
+.field-error { padding: 5px; background: transparent; }
+.page-header, .table-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
+.table-wrapper { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 12px; border-bottom: 1px solid #e5e8eb; text-align: left; }
+th { background: #f6f8fa; }
+.profile-tag { display: inline-block; padding: 4px 9px; border-radius: 20px; background: #e8eef5; font-size: 12px; }
+.empty-state { color: #68727d; }
+@media (max-width: 560px) { .page-header, .table-header { align-items: flex-start; flex-direction: column; } .card { padding: 20px; } }
