@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 public class ChamadoConsultaService {
@@ -22,12 +21,8 @@ public class ChamadoConsultaService {
     }
 
     public Chamado buscarPorId(Long id) {
-        Optional<Chamado> chamado = chamadoRepository.findById(id);
-
-        if (chamado.isEmpty()) {
-            throw new NoSuchElementException("Chamado não encontrado com id: " + id);
-        }
-
-        return chamado.get();
+        return chamadoRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException(
+                        "Chamado não encontrado com id: " + id));
     }
 }
