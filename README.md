@@ -54,14 +54,14 @@ mvn test
 - Code smell: duplicação da validação de título e descrição em `ChamadoService.abrirChamado`, com a mesma verificação de texto nulo ou em branco.
 - Refactoring aplicado: Remove Duplicate Code com Extract Method, criando o método privado `validarTextoObrigatorio`.
 - Justificativa: centralizar a validação repetida, preservando a ordem das verificações, as mensagens de erro e os dados do chamado.
-- Pull Request: [PENDENTE]
+- Pull Request: https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/32
 
 **Refactoring 2**
 
 - Code smell: expressão condicional com comparações repetidas e operadores `&&` e `||` em `ChamadoService.transicaoPermitida`.
 - Refactoring aplicado: Simplify Conditional Expression, substituindo a expressão por um `switch` sobre o status atual.
 - Justificativa: explicitar o destino permitido para cada status, mantendo somente as transições ABERTO → EM_ANDAMENTO → RESOLVIDO → FECHADO e a rejeição de status atual nulo.
-- Pull Request: [PENDENTE]
+- Pull Request: https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/32
 
 Validação local em 13/11/2026, com Java 21 e `mvn clean test`:
 
