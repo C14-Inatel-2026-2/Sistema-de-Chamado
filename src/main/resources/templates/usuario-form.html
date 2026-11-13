@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novo usuário | Sistema de Chamados</title>
+    <link rel="stylesheet" th:href="@{/css/usuarios.css}">
+</head>
+<body>
+<main class="container auth-container">
+    <section class="card auth-card">
+        <h1>Criar conta</h1>
+        <p class="subtitle">Preencha os dados do novo usuário.</p>
+
+        <div class="alert alert-error" th:if="${erro}" th:text="${erro}"></div>
+
+        <form th:action="@{/usuarios}" th:object="${usuario}" method="post">
+            <label for="nome">Nome</label>
+            <input id="nome" type="text" th:field="*{nome}" required maxlength="120">
+            <small class="field-error" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></small>
+
+            <label for="email">E-mail</label>
+            <input id="email" type="email" th:field="*{email}" required maxlength="160" autocomplete="email">
+            <small class="field-error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+
+            <label for="senha">Senha</label>
+            <input id="senha" type="password" th:field="*{senha}" required minlength="6" autocomplete="new-password">
+            <small class="field-error" th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}"></small>
+
+            <label for="perfil">Perfil</label>
+            <select id="perfil" th:field="*{perfil}" required>
+                <option value="" disabled>Selecione um perfil</option>
+                <option th:each="perfilOpcao : ${perfis}"
+                        th:value="${perfilOpcao}"
+                        th:text="${perfilOpcao}"></option>
+            </select>
+            <small class="field-error" th:if="${#fields.hasErrors('perfil')}" th:errors="*{perfil}"></small>
+
+            <button class="button" type="submit">Cadastrar usuário</button>
+        </form>
+
+        <p class="form-footer"><a th:href="@{/usuarios/login}">Voltar para o login</a></p>
+    </section>
+</main>
+</body>
+</html>
