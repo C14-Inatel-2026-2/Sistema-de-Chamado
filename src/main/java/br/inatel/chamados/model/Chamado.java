@@ -28,6 +28,18 @@ public class Chamado {
     @Column(nullable = false)
     private LocalDateTime dataAbertura;
 
+    @ManyToOne
+    @JoinColumn(name = "solicitante_id")
+    private Usuario solicitante;
+
+    @ManyToOne
+    @JoinColumn(name = "local_id")
+    private Local local;
+
+    @ManyToOne
+    @JoinColumn(name = "equipamento_id")
+    private Equipamento equipamento;
+
     public Chamado() {
     }
 
@@ -91,5 +103,29 @@ public class Chamado {
 
     public void setTecnico(Usuario tecnico) {
         this.tecnico = tecnico;
+    }
+
+    public Usuario getSolicitante() {
+        return solicitante;
+    }
+
+    public void setSolicitante(Usuario solicitante) {
+        this.solicitante = solicitante;
+    }
+
+    public Local getLocal() {
+        return local;
+    }
+
+    public void setLocal(Local local) {
+        this.local = local;
+    }
+
+    public Equipamento getEquipamento() {
+        return equipamento;
+    }
+
+    public void setEquipamento(Equipamento equipamento) {
+        this.equipamento = equipamento;
     }
 }
