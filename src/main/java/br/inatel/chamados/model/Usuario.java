@@ -1,6 +1,8 @@
 package br.inatel.chamados.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "usuario")
@@ -10,9 +12,20 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Nome é obrigatório.")
+    @Column(nullable = false)
     private String nome;
+
+    @NotBlank(message = "E-mail é obrigatório.")
+    @Email(message = "Informe um e-mail válido.")
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @NotBlank(message = "Senha é obrigatória.")
+    @Column(nullable = false)
     private String senha;
+
+    @Column(nullable = false)
     private String perfil;
 
     public Usuario() {

@@ -3,6 +3,7 @@ package br.inatel.chamados.service;
 import br.inatel.chamados.model.Chamado;
 import br.inatel.chamados.model.Prioridade;
 import br.inatel.chamados.repository.ChamadoRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -21,9 +22,15 @@ class ChamadoConsultaServiceTest {
     @Mock
     private ChamadoRepository chamadoRepository;
 
+    private ChamadoConsultaService service;
+
+    @BeforeEach
+    void setUp() {
+        service = new ChamadoConsultaService(chamadoRepository);
+    }
+
     @Test
     void deveRetornarChamadoQuandoIdExiste() {
-        ChamadoConsultaService service = new ChamadoConsultaService(chamadoRepository);
         Chamado chamado = new Chamado("Rede Wi-Fi instável", "Laboratório 3", Prioridade.ALTA);
 
         when(chamadoRepository.findById(1L)).thenReturn(Optional.of(chamado));
@@ -35,8 +42,6 @@ class ChamadoConsultaServiceTest {
 
     @Test
     void deveLancarExcecaoQuandoIdNaoExiste() {
-        ChamadoConsultaService service = new ChamadoConsultaService(chamadoRepository);
-
         when(chamadoRepository.findById(99L)).thenReturn(Optional.empty());
 
         assertThrows(NoSuchElementException.class, () -> service.buscarPorId(99L));
