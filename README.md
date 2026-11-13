@@ -457,6 +457,13 @@ Cada integrante aplicou pelo menos 2 refactorings, com testes e pipeline verdes 
 | 1 | Field Injection (`@Autowired` em campo) em `LocalController` e `EquipamentoController` | Replace Field Injection with Constructor Injection | As dependências ficam explícitas e imutáveis, e o controller pode ser criado em testes sem o Spring | [#30](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/30) |
 | 2 | Controller acessando o repository direto, sem camada de service | Extract Class (`LocalService` e `EquipamentoService`) | Separa a camada web do acesso a dados, segue o padrão do projeto e permite testes unitários com Mockito | [#31](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/31) |
 
+## Eduardo Nogueira
+
+| # | Smell | Refactoring aplicado | Por quê | PR |
+|---|-------|----------------------|---------|----|
+| 1 | Mensagem de erro de "email já cadastrado" escrita diretamente na exception em `UsuarioService` | Create Constant String (`EMAIL_JA_CADASTRADO`) | Centraliza a mensagem em uma constante, facilitando a manutenção e evitando strings repetidas no código | [#28](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/28/changes/32f81f5ae4de036c2b8973b70fc38b1c6ee016f6) |
+| 2 | Parâmetro `Model` não utilizado no método `listar()` de `UsuarioController` | Remove Parameter | Remove um parâmetro desnecessário, simplificando a assinatura do método e evitando dependências que não são utilizadas | [#28](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/28/changes/0e935c72b53a337361adb77bfe34cd3626acb1ba) |
+
 
 ---
 
