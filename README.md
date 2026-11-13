@@ -465,6 +465,40 @@ Cada integrante aplicou pelo menos 2 refactorings, com testes e pipeline verdes 
 | 2 | Parâmetro `Model` não utilizado no método `listar()` de `UsuarioController` | Remove Parameter | Remove um parâmetro desnecessário, simplificando a assinatura do método e evitando dependências que não são utilizadas | [#28](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/28/changes/0e935c72b53a337361adb77bfe34cd3626acb1ba) |
 
 
+## Allan
+
+**Refactoring 1**
+
+- Code smell: duplicação da validação de título e descrição em `ChamadoService.abrirChamado`, com a mesma verificação de texto nulo ou em branco.
+- Refactoring aplicado: Remove Duplicate Code com Extract Method, criando o método privado `validarTextoObrigatorio`.
+- Justificativa: centralizar a validação repetida, preservando a ordem das verificações, as mensagens de erro e os dados do chamado.
+- Pull Request: https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/32
+
+**Refactoring 2**
+
+- Code smell: expressão condicional com comparações repetidas e operadores `&&` e `||` em `ChamadoService.transicaoPermitida`.
+- Refactoring aplicado: Simplify Conditional Expression, substituindo a expressão por um `switch` sobre o status atual.
+- Justificativa: explicitar o destino permitido para cada status, mantendo somente as transições ABERTO → EM_ANDAMENTO → RESOLVIDO → FECHADO e a rejeição de status atual nulo.
+- Pull Request: https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/32
+
+Validação dos refactorings antes da integração da `main`, em 13/11/2026, com Java 21 e `mvn clean test`:
+
+| Estado | Testes | Falhas | Erros | Ignorados | Resultado |
+| --- | --- | --- | --- | --- | --- |
+| Antes dos refactorings | 30 | 0 | 0 | 0 | BUILD SUCCESS |
+| Após o refactoring 1 | 40 | 0 | 0 | 0 | BUILD SUCCESS |
+| Após o refactoring 2 | 65 | 0 | 0 | 0 | BUILD SUCCESS |
+
+Os novos testes passaram também antes de cada refactoring correspondente. Eles verificam as validações de abertura, as 16 combinações de status e os casos nulos, incluindo mensagens de erro e ausência de persistência nas rejeições.
+
+O JaCoCo 0.8.13 gerou o relatório em `target/site/jacoco/index.html`. A cobertura global de linhas passou de 65,78% (123/187) para 70,47% (136/193), e a de ramificações passou de 70,59% para 96,55%. Os resultados dos testes ficam em `target/surefire-reports/`.
+
+A primeira tentativa no sandbox teve 17 erros de inicialização do Mockito/Byte Buddy ao anexar o agente à JVM. As execuções acima ocorreram fora do sandbox, sem alterar código ou configuração para contornar esse problema.
+
+O Jenkinsfile mantém as etapas Validate, Build, Tests and Coverage, Package e Deploy Local. A execução real do Jenkins não foi verificada por falta de endereço e acesso disponíveis neste ambiente; os resultados locais não comprovam o estado do pipeline.
+
+Após integrar a `main` para resolver o conflito do PR #32, `mvn clean test` aprovou 87 testes, sem falhas, erros ou testes ignorados. O JaCoCo gerou o relatório com cobertura global de linhas de 70,65% (219/310) e de ramificações de 67,52% (79/117). Esses resultados incluem o código e os testes adicionados pelos demais integrantes na `main`.
+
 ---
 
 # Integrantes

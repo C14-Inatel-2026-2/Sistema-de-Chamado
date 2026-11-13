@@ -18,13 +18,8 @@ public class ChamadoService {
     }
 
     public Chamado abrirChamado(Chamado chamado) {
-        if (chamado.getTitulo() == null || chamado.getTitulo().isBlank()) {
-            throw new IllegalArgumentException("Título é obrigatório");
-        }
-
-        if (chamado.getDescricao() == null || chamado.getDescricao().isBlank()) {
-            throw new IllegalArgumentException("Descrição é obrigatória");
-        }
+        validarTextoObrigatorio(chamado.getTitulo(), "Título é obrigatório");
+        validarTextoObrigatorio(chamado.getDescricao(), "Descrição é obrigatória");
 
         chamado.setStatus(StatusChamado.ABERTO);
         chamado.setDataAbertura(LocalDateTime.now());
@@ -71,6 +66,12 @@ public class ChamadoService {
         return chamadoRepository.save(chamado);
     }
 
+    private void validarTextoObrigatorio(String texto, String mensagem) {
+        if (texto == null || texto.isBlank()) {
+            throw new IllegalArgumentException(mensagem);
+        }
+    }
+
     private Chamado buscarChamado(Long chamadoId) {
         return chamadoRepository.findById(chamadoId)
                 .orElseThrow(() ->
@@ -82,13 +83,12 @@ public class ChamadoService {
             StatusChamado statusAtual,
             StatusChamado novoStatus) {
 
-        return (statusAtual == StatusChamado.ABERTO
-                && novoStatus == StatusChamado.EM_ANDAMENTO)
-
-                || (statusAtual == StatusChamado.EM_ANDAMENTO
-                && novoStatus == StatusChamado.RESOLVIDO)
-
-                || (statusAtual == StatusChamado.RESOLVIDO
-                && novoStatus == StatusChamado.FECHADO);
+        return switch (statusAtual) {
+            case ABERTO -> novoStatus == StatusChamado.EM_ANDAMENTO;
+            case EM_ANDAMENTO -> novoStatus == StatusChamado.RESOLVIDO;
+            case RESOLVIDO -> novoStatus == StatusChamado.FECHADO;
+            case FECHADO -> false;
+            case null -> false;
+        };
     }
 }
