@@ -115,6 +115,14 @@ POST /chamados
 GET /chamados
 GET /chamados/{id}
 ```
+Os vínculos com solicitante, local e equipamento são opcionais e informados pelo id de registros já existentes:
+
+```json
+{"titulo": "Projetor não liga", "descricao": "Sem imagem", "prioridade": "ALTA",
+ "solicitante": {"id": 1}, "local": {"id": 1}}
+```
+
+Respostas: `201` ao criar, `400` para dados inválidos ou vínculo inexistente e `404` quando o chamado não existe.
 
 ---
 
@@ -464,6 +472,12 @@ Cada integrante aplicou pelo menos 2 refactorings, com testes e pipeline verdes 
 | 1 | Mensagem de erro de "email já cadastrado" escrita diretamente na exception em `UsuarioService` | Create Constant String (`EMAIL_JA_CADASTRADO`) | Centraliza a mensagem em uma constante, facilitando a manutenção e evitando strings repetidas no código | [#28](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/28/changes/32f81f5ae4de036c2b8973b70fc38b1c6ee016f6) |
 | 2 | Parâmetro `Model` não utilizado no método `listar()` de `UsuarioController` | Remove Parameter | Remove um parâmetro desnecessário, simplificando a assinatura do método e evitando dependências que não são utilizadas | [#28](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/28/changes/0e935c72b53a337361adb77bfe34cd3626acb1ba) |
 
+## Pedro Henrique dos Santos Araujo
+
+| # | Smell | Refactoring aplicado | Por quê | PR |
+|---|-------|----------------------|---------|----|
+| 1 | Uso desajeitado de `Optional` (`isEmpty()` seguido de `get()`) em `ChamadoConsultaService.buscarPorId` | Replace with `orElseThrow` | Remove o `get()` inseguro e deixa o método mais curto e legível, sem mudar a exceção nem a mensagem | [#27](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/27) |
+| 2 | Código duplicado nos testes: criação do `ChamadoConsultaService` repetida em cada teste de `ChamadoConsultaServiceTest` | Extract setup para `@BeforeEach` | Remove a repetição e facilita acrescentar novos testes sem copiar o setup | [#29](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/29) |
 
 ## Allan
 
@@ -498,6 +512,54 @@ A primeira tentativa no sandbox teve 17 erros de inicialização do Mockito/Byte
 O Jenkinsfile mantém as etapas Validate, Build, Tests and Coverage, Package e Deploy Local. A execução real do Jenkins não foi verificada por falta de endereço e acesso disponíveis neste ambiente; os resultados locais não comprovam o estado do pipeline.
 
 Após integrar a `main` para resolver o conflito do PR #32, `mvn clean test` aprovou 87 testes, sem falhas, erros ou testes ignorados. O JaCoCo gerou o relatório com cobertura global de linhas de 70,65% (219/310) e de ramificações de 67,52% (79/117). Esses resultados incluem o código e os testes adicionados pelos demais integrantes na `main`.
+
+---
+
+# Uso de IA
+
+Cada integrante declara abaixo como usou IA no projeto.
+
+## Pedro Henrique dos Santos Araujo
+
+**Modelo:** Claude Sonnet 5.5 (Anthropic), usado em todas as sessões.
+
+**Para que foi usado:**
+- Orientação passo a passo de cada entrega (estrutura do projeto, fluxo de git, testes, pipeline, README).
+- Escrever e revisar código do meu módulo (`ChamadoConsultaService`, `ChamadoController`, vínculos do chamado) e seus testes unitários.
+- Redigir mensagens de commit, descrições de PR e o texto da história SCM-9 no Jira.
+- Revisar refactorings e PRs de colegas à luz dos critérios da entrega.
+
+**Exemplos de prompts reais:**
+
+**Prompt 1: definir o conjunto de testes**
+
+- **Contexto:** a entrega exigia testes unitários dos arquivos de cada integrante.
+- **Prompt:** "Proponha 4 testes unitários apenas para os arquivos do meu módulo: 2 com mock e 2 sem mock, incluindo pelo menos 1 teste negativo, seguindo boas práticas de nomenclatura e estrutura (given/when/then)."
+- **Resultado:** **aceito com ajustes.** Adaptei os testes ao `ChamadoTest` que já existia na `main` e resolvi à mão o conflito de merge com os testes de um colega.
+
+**Prompt 2: validar se um refactoring é adequado**
+
+- **Contexto:** os slides da disciplina definem o que conta e o que não conta como refactoring.
+- **Prompt:** "Com base nos critérios dos slides em anexo, avalie se cada um dos meus dois refactorings é adequado. Aponte qual deles pode ser considerado apenas formatação e sugira uma alternativa no mesmo arquivo."
+- **Resultado:** **ajustado.** A IA indicou que mover um campo de lugar se aproximava de "só formatar". Troquei esse refactoring por extrair o setup repetido do teste para `@BeforeEach`.
+
+**Prompt 3: complementar o stage de build do pipeline**
+
+- **Contexto:** o `Jenkinsfile` já tinha um stage de build básico.
+- **Prompt:** "Complemente o stage Build do `Jenkinsfile` existente, sem substituir os demais stages: limpar o `target` antes de compilar e falhar o stage se o JAR esperado não for gerado. O agente é Windows, então use `bat`."
+- **Resultado:** **aceito.** O stage passou a executar `mvn -B clean -DskipTests package` e a verificar a existência do JAR.
+
+**Prompt 4: tratar erro encontrado no teste manual**
+
+- **Contexto:** ao testar o `ChamadoController` com `curl`, um chamado com `"local":{"id":999}` devolvia erro 500 com stack trace.
+- **Prompt:** "O `POST /chamados` com um local inexistente retorna 500 com stack trace (violação de chave estrangeira). Proponha um tratamento no controller que devolva 400 com uma mensagem curta, e o teste unitário correspondente."
+- **Resultado:** **ajustado após testar.** Passei a devolver 400 com a mensagem "Dados inválidos: verifique se o solicitante, o local e o equipamento informados existem", e conferi de novo com `curl`.
+
+**Dinâmica de uso:** conversas curtas e sequenciais, uma entrega por vez. Eu pedia o código, lia, rodava na minha máquina e só então commitava.
+
+**O que foi feito sem IA, por mim:** executar todos os comandos de git (branch `PedroSantos`, commits, push e PRs), rodar a aplicação e os testes, fazer os testes manuais com `curl`, escolher quais refactorings aplicar, decidir o escopo do módulo e revisar o código antes de entregar.
+
+**Compreensão:** o código gerado foi lido e testado por mim.
 
 ---
 
