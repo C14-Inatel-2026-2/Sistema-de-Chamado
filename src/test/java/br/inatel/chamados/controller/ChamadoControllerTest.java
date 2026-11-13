@@ -9,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -80,5 +81,14 @@ class ChamadoControllerTest {
                 controller.tratarRequisicaoInvalida(new IllegalArgumentException("Título é obrigatório"));
 
         assertEquals(HttpStatus.BAD_REQUEST, resposta.getStatusCode());
+    }
+
+    @Test
+    void deveRetornar400QuandoVinculoNaoExiste() {
+        ResponseEntity<String> resposta =
+                controller.tratarVinculoInvalido(new DataIntegrityViolationException("FK violada"));
+
+        assertEquals(HttpStatus.BAD_REQUEST, resposta.getStatusCode());
+        assertTrue(resposta.getBody().contains("solicitante"));
     }
 }

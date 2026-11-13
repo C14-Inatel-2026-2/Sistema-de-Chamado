@@ -6,6 +6,7 @@ import br.inatel.chamados.service.ChamadoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -50,5 +51,11 @@ public class ChamadoController {
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<String> tratarNaoEncontrado(NoSuchElementException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<String> tratarVinculoInvalido(DataIntegrityViolationException e) {
+        return ResponseEntity.badRequest()
+                .body("Dados inválidos: verifique se o solicitante, o local e o equipamento informados existem");
     }
 }
