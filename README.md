@@ -446,6 +446,18 @@ Após iniciar a aplicação, a interface pode ser acessada em:
 http://localhost:8080/
 ```
 
+# Refactorings
+
+Cada integrante aplicou pelo menos 2 refactorings, com testes e pipeline verdes antes e depois de cada um.
+
+## Cauã de Souza Flauzino
+
+| # | Smell | Refactoring aplicado | Por quê | PR |
+|---|-------|----------------------|---------|----|
+| 1 | Field Injection (`@Autowired` em campo) em `LocalController` e `EquipamentoController` | Replace Field Injection with Constructor Injection | As dependências ficam explícitas e imutáveis, e o controller pode ser criado em testes sem o Spring | [#30](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/30) |
+| 2 | Controller acessando o repository direto, sem camada de service | Extract Class (`LocalService` e `EquipamentoService`) | Separa a camada web do acesso a dados, segue o padrão do projeto e permite testes unitários com Mockito | [#31](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/31) |
+
+
 ---
 
 # Integrantes
