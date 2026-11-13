@@ -1,4 +1,5 @@
 package br.inatel.chamados.controller;
+
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,26 +9,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.inatel.chamados.model.Equipamento;
-import br.inatel.chamados.repository.EquipamentoRepository;
+import br.inatel.chamados.service.EquipamentoService;
 
 @RestController
 @RequestMapping("/equipamentos")
 public class EquipamentoController {
 
-    private final EquipamentoRepository equipamentoRepository;
+    private final EquipamentoService equipamentoService;
 
-    public EquipamentoController(EquipamentoRepository equipamentoRepository) {
-        this.equipamentoRepository = equipamentoRepository;
+    public EquipamentoController(EquipamentoService equipamentoService) {
+        this.equipamentoService = equipamentoService;
     }
 
     @GetMapping
     public List<Equipamento> listar() {
-        return equipamentoRepository.findAll();
+        return equipamentoService.listar();
     }
 
     @PostMapping
     public Equipamento criar(@RequestBody Equipamento equipamento) {
-        return equipamentoRepository.save(equipamento);
+        return equipamentoService.criar(equipamento);
     }
 }
-
