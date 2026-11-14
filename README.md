@@ -1178,6 +1178,7 @@ A IA foi utilizada como ferramenta de consulta e apoio durante o desenvolvimento
 - criação e execução dos testes;
 - revisão e decisão final sobre as modificações.
 
+
 ### Compreensão
 
 As sugestões fornecidas pela IA foram utilizadas como apoio, sendo necessário compreender e verificar as alterações antes de incorporá-las ao projeto.
