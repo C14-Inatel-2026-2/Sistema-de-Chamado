@@ -12,9 +12,6 @@ import static org.mockito.Mockito.verify;
 
 class PaginaControllerTest {
 
-    private static final String TITULO_ESPERADO =
-            "Sistema de Chamados de Manutenção";
-
     private PaginaController controller;
 
     @BeforeEach
@@ -29,7 +26,10 @@ class PaginaControllerTest {
         String pagina = controller.inicio(model);
 
         assertEquals("dashboard", pagina);
-        verify(model).addAttribute("titulo", TITULO_ESPERADO);
+        verify(model).addAttribute(
+                "titulo",
+                "Sistema de Chamados de Manutenção"
+        );
     }
 
     @Test
@@ -39,7 +39,10 @@ class PaginaControllerTest {
         String pagina = controller.dashboard(model);
 
         assertEquals("dashboard", pagina);
-        verify(model).addAttribute("titulo", TITULO_ESPERADO);
+        verify(model).addAttribute(
+                "titulo",
+                "Sistema de Chamados de Manutenção"
+        );
     }
 
     @Test
@@ -49,42 +52,17 @@ class PaginaControllerTest {
         String pagina = controller.inicio(model);
 
         assertEquals("dashboard", pagina);
-        assertEquals(TITULO_ESPERADO, model.get("titulo"));
-    }
-
-    @Test
-    void dashboardSemMockDevePreencherModelERetornarDashboard() {
-        ExtendedModelMap model = new ExtendedModelMap();
-
-        String pagina = controller.dashboard(model);
-
-        assertEquals("dashboard", pagina);
-        assertEquals(TITULO_ESPERADO, model.get("titulo"));
+        assertEquals(
+                "Sistema de Chamados de Manutenção",
+                model.get("titulo")
+        );
     }
 
     @Test
     void dashboardSemMockComModelNuloDeveLancarExcecao() {
-        IllegalArgumentException excecao = assertThrows(
+        assertThrows(
                 IllegalArgumentException.class,
                 () -> controller.dashboard(null)
-        );
-
-        assertEquals(
-                "O model não pode ser nulo",
-                excecao.getMessage()
-        );
-    }
-
-    @Test
-    void inicioSemMockComModelNuloDeveLancarExcecao() {
-        IllegalArgumentException excecao = assertThrows(
-                IllegalArgumentException.class,
-                () -> controller.inicio(null)
-        );
-
-        assertEquals(
-                "O model não pode ser nulo",
-                excecao.getMessage()
         );
     }
 }

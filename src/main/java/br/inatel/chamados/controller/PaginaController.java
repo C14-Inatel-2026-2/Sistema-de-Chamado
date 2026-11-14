@@ -11,16 +11,17 @@ public class PaginaController {
 
     @GetMapping("/")
     public String inicio(Model model) {
-        return dashboard(model);
+        prepararModel(model);
+        return "dashboard";
     }
 
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
-        adicionarTituloAoModel(model);
+        prepararModel(model);
         return "dashboard";
     }
 
-    private void adicionarTituloAoModel(Model model) {
+    private void prepararModel(Model model) {
         if (model == null) {
             throw new IllegalArgumentException("O model não pode ser nulo");
         }
