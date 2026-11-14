@@ -41,6 +41,7 @@ Desenvolver uma aplicação capaz de gerenciar o ciclo completo de um chamado de
 - Mockito
 - JaCoCo
 - Jenkins
+- Docker
 - Git
 - GitHub
 - Jira
@@ -106,7 +107,7 @@ para que a equipe técnica saiba qual problema precisa ser resolvido e eu possa 
 - O sistema deve listar todos os chamados cadastrados.
 - Deve ser possível consultar um chamado pelo seu identificador.
 - Caso o chamado não exista, o sistema deve informar que ele não foi encontrado.
-- O chamado deve ficar vinculado ao solicitante e ao local/equipamento relacionado ao problema.
+- O chamado pode ficar vinculado ao solicitante e ao local/equipamento relacionado ao problema.
 
 ### Endpoints relacionados
 
@@ -115,14 +116,28 @@ POST /chamados
 GET /chamados
 GET /chamados/{id}
 ```
-Os vínculos com solicitante, local e equipamento são opcionais e informados pelo id de registros já existentes:
+
+Os vínculos com solicitante, local e equipamento são opcionais e informados pelo ID de registros já existentes:
 
 ```json
-{"titulo": "Projetor não liga", "descricao": "Sem imagem", "prioridade": "ALTA",
- "solicitante": {"id": 1}, "local": {"id": 1}}
+{
+  "titulo": "Projetor não liga",
+  "descricao": "Sem imagem",
+  "prioridade": "ALTA",
+  "solicitante": {
+    "id": 1
+  },
+  "local": {
+    "id": 1
+  }
+}
 ```
 
-Respostas: `201` ao criar, `400` para dados inválidos ou vínculo inexistente e `404` quando o chamado não existe.
+Respostas:
+
+- `201` ao criar;
+- `400` para dados inválidos ou vínculo inexistente;
+- `404` quando o chamado não existe.
 
 ---
 
@@ -176,9 +191,8 @@ para que os solicitantes possam indicar com precisão onde e em qual máquina o 
 ### Cadastro de equipamentos
 
 - O equipamento deve possuir nome ou descrição.
-- O número de patrimônio é obrigatório.
-- O número de patrimônio deve ser único.
-- Todo equipamento deve estar associado a um local existente.
+- O equipamento deve possuir uma identificação.
+- Cada equipamento deve estar associado a um local existente.
 - O sistema deve recusar o cadastro caso o local informado não exista.
 - Dados inválidos não devem ser salvos.
 
@@ -232,8 +246,22 @@ para visualizar a página principal do Sistema de Chamados de Manutenção.
 
 ```text
 /
- /dashboard
+/dashboard
 ```
+
+**Issue Jira:** SCM-7  
+**Status final:** Entregue
+
+### Implementação
+
+- `PaginaController.java`
+- `dashboard.html`
+
+### Testes
+
+- `PaginaControllerTest.java`
+
+**Pull Request:** [PREENCHER APÓS CRIAR O PR]
 
 ---
 
@@ -307,9 +335,9 @@ ABERTO → EM_ANDAMENTO → RESOLVIDO → FECHADO
 
 **RF23** – O sistema deve permitir cadastrar equipamentos.
 
-**RF24** – O equipamento deve possuir nome ou descrição e número de patrimônio.
+**RF24** – O equipamento deve possuir nome ou descrição e identificação.
 
-**RF25** – O número de patrimônio deve ser único.
+**RF25** – O equipamento deve possuir identificação adequada para sua consulta.
 
 **RF26** – Todo equipamento deve estar associado a um local existente.
 
@@ -367,6 +395,8 @@ ABERTO → EM_ANDAMENTO → RESOLVIDO → FECHADO
 
 **RNF12** – O desenvolvimento deve utilizar branches e Pull Requests para integração das alterações.
 
+**RNF13** – A aplicação deve permitir execução por meio de container Docker para publicação externa.
+
 ---
 
 # Testes
@@ -377,6 +407,12 @@ Os testes automatizados do projeto podem ser executados com:
 mvn test
 ```
 
+Para realizar a validação completa do projeto:
+
+```bash
+mvn clean verify
+```
+
 O relatório de cobertura do JaCoCo pode ser gerado durante a execução configurada no projeto.
 
 Quando disponível, o relatório pode ser encontrado em:
@@ -384,6 +420,30 @@ Quando disponível, o relatório pode ser encontrado em:
 ```text
 target/site/jacoco/
 ```
+
+---
+
+# Docker e Deploy Externo
+
+O projeto foi preparado para publicação externa utilizando Docker.
+
+Foi criado um arquivo `Dockerfile` na raiz do projeto para realizar o build da aplicação utilizando Maven e Java 21 e executar o arquivo JAR gerado pelo Spring Boot.
+
+No arquivo `application.properties` foi adicionada a configuração:
+
+```properties
+server.port=${PORT:8080}
+```
+
+Essa configuração permite que a aplicação continue utilizando a porta `8080` durante a execução local e também aceite a porta fornecida pelo ambiente de hospedagem durante o deploy externo.
+
+A plataforma escolhida para o deploy externo é o **Render**.
+
+**Status:** configuração do serviço externo em andamento.
+
+**URL pública:** [PREENCHER APÓS CONFIGURAR O RENDER]
+
+Após a configuração do serviço externo, o Jenkins será integrado ao Render para permitir que o pipeline solicite novos deploys automaticamente.
 
 ---
 
@@ -412,6 +472,8 @@ Package
    ↓
 Deploy
 ```
+
+A integração com o deploy externo será finalizada após a configuração e validação do serviço no Render.
 
 ---
 
@@ -454,9 +516,11 @@ Após iniciar a aplicação, a interface pode ser acessada em:
 http://localhost:8080/
 ```
 
+---
+
 # Refactorings
 
-Cada integrante aplicou pelo menos 2 refactorings, com testes e pipeline verdes antes e depois de cada um.
+Os refactorings registrados abaixo foram aplicados para melhorar a estrutura interna do código sem alterar seu comportamento externo.
 
 ## Cauã de Souza Flauzino
 
@@ -465,12 +529,16 @@ Cada integrante aplicou pelo menos 2 refactorings, com testes e pipeline verdes 
 | 1 | Field Injection (`@Autowired` em campo) em `LocalController` e `EquipamentoController` | Replace Field Injection with Constructor Injection | As dependências ficam explícitas e imutáveis, e o controller pode ser criado em testes sem o Spring | [#30](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/30) |
 | 2 | Controller acessando o repository direto, sem camada de service | Extract Class (`LocalService` e `EquipamentoService`) | Separa a camada web do acesso a dados, segue o padrão do projeto e permite testes unitários com Mockito | [#31](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/31) |
 
+---
+
 ## Eduardo Nogueira
 
 | # | Smell | Refactoring aplicado | Por quê | PR |
 |---|-------|----------------------|---------|----|
 | 1 | Mensagem de erro de "email já cadastrado" escrita diretamente na exception em `UsuarioService` | Create Constant String (`EMAIL_JA_CADASTRADO`) | Centraliza a mensagem em uma constante, facilitando a manutenção e evitando strings repetidas no código | [#28](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/28/changes/32f81f5ae4de036c2b8973b70fc38b1c6ee016f6) |
 | 2 | Parâmetro `Model` não utilizado no método `listar()` de `UsuarioController` | Remove Parameter | Remove um parâmetro desnecessário, simplificando a assinatura do método e evitando dependências que não são utilizadas | [#28](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/28/changes/0e935c72b53a337361adb77bfe34cd3626acb1ba) |
+
+---
 
 ## Pedro Henrique dos Santos Araujo
 
@@ -479,21 +547,25 @@ Cada integrante aplicou pelo menos 2 refactorings, com testes e pipeline verdes 
 | 1 | Uso desajeitado de `Optional` (`isEmpty()` seguido de `get()`) em `ChamadoConsultaService.buscarPorId` | Replace with `orElseThrow` | Remove o `get()` inseguro e deixa o método mais curto e legível, sem mudar a exceção nem a mensagem | [#27](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/27) |
 | 2 | Código duplicado nos testes: criação do `ChamadoConsultaService` repetida em cada teste de `ChamadoConsultaServiceTest` | Extract setup para `@BeforeEach` | Remove a repetição e facilita acrescentar novos testes sem copiar o setup | [#29](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/29) |
 
-## Allan
+---
 
-**Refactoring 1**
+## Allan Pinto Nogueira
 
-- Code smell: duplicação da validação de título e descrição em `ChamadoService.abrirChamado`, com a mesma verificação de texto nulo ou em branco.
-- Refactoring aplicado: Remove Duplicate Code com Extract Method, criando o método privado `validarTextoObrigatorio`.
-- Justificativa: centralizar a validação repetida, preservando a ordem das verificações, as mensagens de erro e os dados do chamado.
-- Pull Request: https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/32
+### Refactoring 1
 
-**Refactoring 2**
+- **Code smell:** duplicação da validação de título e descrição em `ChamadoService.abrirChamado`, com a mesma verificação de texto nulo ou em branco.
+- **Refactoring aplicado:** Remove Duplicate Code com Extract Method, criando o método privado `validarTextoObrigatorio`.
+- **Justificativa:** centralizar a validação repetida, preservando a ordem das verificações, as mensagens de erro e os dados do chamado.
+- **Pull Request:** https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/32
 
-- Code smell: expressão condicional com comparações repetidas e operadores `&&` e `||` em `ChamadoService.transicaoPermitida`.
-- Refactoring aplicado: Simplify Conditional Expression, substituindo a expressão por um `switch` sobre o status atual.
-- Justificativa: explicitar o destino permitido para cada status, mantendo somente as transições ABERTO → EM_ANDAMENTO → RESOLVIDO → FECHADO e a rejeição de status atual nulo.
-- Pull Request: https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/32
+### Refactoring 2
+
+- **Code smell:** expressão condicional com comparações repetidas e operadores `&&` e `||` em `ChamadoService.transicaoPermitida`.
+- **Refactoring aplicado:** Simplify Conditional Expression, substituindo a expressão por um `switch` sobre o status atual.
+- **Justificativa:** explicitar o destino permitido para cada status, mantendo somente as transições `ABERTO → EM_ANDAMENTO → RESOLVIDO → FECHADO` e a rejeição de status atual nulo.
+- **Pull Request:** https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/32
+
+### Validação
 
 Validação dos refactorings antes da integração da `main`, em 13/11/2026, com Java 21 e `mvn clean test`:
 
@@ -505,61 +577,252 @@ Validação dos refactorings antes da integração da `main`, em 13/11/2026, com
 
 Os novos testes passaram também antes de cada refactoring correspondente. Eles verificam as validações de abertura, as 16 combinações de status e os casos nulos, incluindo mensagens de erro e ausência de persistência nas rejeições.
 
-O JaCoCo 0.8.13 gerou o relatório em `target/site/jacoco/index.html`. A cobertura global de linhas passou de 65,78% (123/187) para 70,47% (136/193), e a de ramificações passou de 70,59% para 96,55%. Os resultados dos testes ficam em `target/surefire-reports/`.
+O JaCoCo 0.8.13 gerou o relatório em:
 
-A primeira tentativa no sandbox teve 17 erros de inicialização do Mockito/Byte Buddy ao anexar o agente à JVM. As execuções acima ocorreram fora do sandbox, sem alterar código ou configuração para contornar esse problema.
+```text
+target/site/jacoco/index.html
+```
 
-O Jenkinsfile mantém as etapas Validate, Build, Tests and Coverage, Package e Deploy Local. A execução real do Jenkins não foi verificada por falta de endereço e acesso disponíveis neste ambiente; os resultados locais não comprovam o estado do pipeline.
+A cobertura global de linhas passou de 65,78% para 70,47%, e a cobertura de ramificações passou de 70,59% para 96,55%.
 
-Após integrar a `main` para resolver o conflito do PR #32, `mvn clean test` aprovou 87 testes, sem falhas, erros ou testes ignorados. O JaCoCo gerou o relatório com cobertura global de linhas de 70,65% (219/310) e de ramificações de 67,52% (79/117). Esses resultados incluem o código e os testes adicionados pelos demais integrantes na `main`.
+Após integrar a `main` para resolver o conflito do PR #32, `mvn clean test` aprovou 87 testes, sem falhas, erros ou testes ignorados.
+
+O JaCoCo gerou relatório com cobertura global de linhas de 70,65% e cobertura de ramificações de 67,52%.
+
+Esses resultados incluem o código e os testes adicionados pelos demais integrantes na `main`.
+
+---
+
+## Pedro Cesar Maia
+
+### Refactoring 1 – Remoção de duplicação nas rotas do dashboard
+
+**Code smell:** código duplicado.
+
+Anteriormente, os métodos responsáveis pelas rotas `/` e `/dashboard` realizavam a mesma preparação do `Model` e retornavam a mesma página.
+
+**Refactoring aplicado:** Remove Duplicate Code.
+
+O método `inicio()` passou a reutilizar o método `dashboard()`:
+
+```java
+@GetMapping("/")
+public String inicio(Model model) {
+    return dashboard(model);
+}
+```
+
+**Motivo:** reduzir duplicação de código e manter apenas um ponto responsável pela preparação e retorno do dashboard.
+
+**Pull Request:** [PREENCHER APÓS CRIAR O PR]
+
+### Refactoring 2 – Renomeação do método de preparação do Model
+
+**Code smell:** nome de método pouco específico.
+
+O método:
+
+```text
+prepararModel()
+```
+
+foi renomeado para:
+
+```text
+adicionarTituloAoModel()
+```
+
+**Refactoring aplicado:** Rename Method.
+
+**Motivo:** deixar mais claro que a responsabilidade do método é adicionar o título da aplicação ao `Model`, sem alterar o comportamento externo da aplicação.
+
+**Pull Request:** [PREENCHER APÓS CRIAR O PR]
+
+### Validação dos refactorings
+
+Após as alterações foi executado:
+
+```bash
+mvn clean verify
+```
+
+Resultado:
+
+```text
+BUILD SUCCESS
+```
+
+Os testes de `PaginaControllerTest` verificam:
+
+- acesso à rota `/` utilizando Mockito;
+- acesso à rota `/dashboard` utilizando Mockito;
+- acesso à rota `/` utilizando `ExtendedModelMap`;
+- acesso à rota `/dashboard` utilizando `ExtendedModelMap`;
+- comportamento da rota `/` quando o `Model` é nulo;
+- comportamento da rota `/dashboard` quando o `Model` é nulo.
 
 ---
 
 # Uso de IA
 
-Cada integrante declara abaixo como usou IA no projeto.
+Cada integrante declara abaixo como utilizou ferramentas de Inteligência Artificial durante o desenvolvimento.
 
 ## Pedro Henrique dos Santos Araujo
 
 **Modelo:** Claude Sonnet 5.5 (Anthropic), usado em todas as sessões.
 
 **Para que foi usado:**
-- Orientação passo a passo de cada entrega (estrutura do projeto, fluxo de git, testes, pipeline, README).
-- Escrever e revisar código do meu módulo (`ChamadoConsultaService`, `ChamadoController`, vínculos do chamado) e seus testes unitários.
-- Redigir mensagens de commit, descrições de PR e o texto da história SCM-9 no Jira.
-- Revisar refactorings e PRs de colegas à luz dos critérios da entrega.
 
-**Exemplos de prompts reais:**
+- Orientação passo a passo de cada entrega.
+- Escrever e revisar código do módulo.
+- Auxílio na elaboração de testes unitários.
+- Redigir mensagens de commit, descrições de PR e textos do Jira.
+- Revisar refactorings e Pull Requests.
 
-**Prompt 1: definir o conjunto de testes**
+### Prompt 1 – Definir o conjunto de testes
 
-- **Contexto:** a entrega exigia testes unitários dos arquivos de cada integrante.
-- **Prompt:** "Proponha 4 testes unitários apenas para os arquivos do meu módulo: 2 com mock e 2 sem mock, incluindo pelo menos 1 teste negativo, seguindo boas práticas de nomenclatura e estrutura (given/when/then)."
-- **Resultado:** **aceito com ajustes.** Adaptei os testes ao `ChamadoTest` que já existia na `main` e resolvi à mão o conflito de merge com os testes de um colega.
+**Contexto:** a entrega exigia testes unitários dos arquivos de cada integrante.
 
-**Prompt 2: validar se um refactoring é adequado**
+**Prompt:**
 
-- **Contexto:** os slides da disciplina definem o que conta e o que não conta como refactoring.
-- **Prompt:** "Com base nos critérios dos slides em anexo, avalie se cada um dos meus dois refactorings é adequado. Aponte qual deles pode ser considerado apenas formatação e sugira uma alternativa no mesmo arquivo."
-- **Resultado:** **ajustado.** A IA indicou que mover um campo de lugar se aproximava de "só formatar". Troquei esse refactoring por extrair o setup repetido do teste para `@BeforeEach`.
+> "Proponha 4 testes unitários apenas para os arquivos do meu módulo: 2 com mock e 2 sem mock, incluindo pelo menos 1 teste negativo, seguindo boas práticas de nomenclatura e estrutura (given/when/then)."
 
-**Prompt 3: complementar o stage de build do pipeline**
+**Resultado:** **aceito com ajustes.** Os testes foram adaptados ao `ChamadoTest` já existente na `main`.
 
-- **Contexto:** o `Jenkinsfile` já tinha um stage de build básico.
-- **Prompt:** "Complemente o stage Build do `Jenkinsfile` existente, sem substituir os demais stages: limpar o `target` antes de compilar e falhar o stage se o JAR esperado não for gerado. O agente é Windows, então use `bat`."
-- **Resultado:** **aceito.** O stage passou a executar `mvn -B clean -DskipTests package` e a verificar a existência do JAR.
+### Prompt 2 – Validar se um refactoring é adequado
 
-**Prompt 4: tratar erro encontrado no teste manual**
+**Contexto:** os slides da disciplina definem o que conta e o que não conta como refactoring.
 
-- **Contexto:** ao testar o `ChamadoController` com `curl`, um chamado com `"local":{"id":999}` devolvia erro 500 com stack trace.
-- **Prompt:** "O `POST /chamados` com um local inexistente retorna 500 com stack trace (violação de chave estrangeira). Proponha um tratamento no controller que devolva 400 com uma mensagem curta, e o teste unitário correspondente."
-- **Resultado:** **ajustado após testar.** Passei a devolver 400 com a mensagem "Dados inválidos: verifique se o solicitante, o local e o equipamento informados existem", e conferi de novo com `curl`.
+**Prompt:**
 
-**Dinâmica de uso:** conversas curtas e sequenciais, uma entrega por vez. Eu pedia o código, lia, rodava na minha máquina e só então commitava.
+> "Com base nos critérios dos slides em anexo, avalie se cada um dos meus dois refactorings é adequado. Aponte qual deles pode ser considerado apenas formatação e sugira uma alternativa no mesmo arquivo."
 
-**O que foi feito sem IA, por mim:** executar todos os comandos de git (branch `PedroSantos`, commits, push e PRs), rodar a aplicação e os testes, fazer os testes manuais com `curl`, escolher quais refactorings aplicar, decidir o escopo do módulo e revisar o código antes de entregar.
+**Resultado:** **ajustado.** Um refactoring inicialmente proposto foi substituído por uma extração de setup para `@BeforeEach`.
 
-**Compreensão:** o código gerado foi lido e testado por mim.
+### Prompt 3 – Complementar o stage de build do pipeline
+
+**Contexto:** o `Jenkinsfile` já possuía um stage básico de build.
+
+**Prompt:**
+
+> "Complemente o stage Build do Jenkinsfile existente, sem substituir os demais stages: limpar o target antes de compilar e falhar o stage se o JAR esperado não for gerado. O agente é Windows, então use bat."
+
+**Resultado:** **aceito.**
+
+### Prompt 4 – Tratar erro encontrado no teste manual
+
+**Contexto:** um chamado com vínculo inválido devolvia erro 500.
+
+**Prompt:**
+
+> "O POST /chamados com um local inexistente retorna 500 com stack trace. Proponha um tratamento no controller que devolva 400 com uma mensagem curta, e o teste unitário correspondente."
+
+**Resultado:** **ajustado após testar.**
+
+### Dinâmica de uso
+
+As conversas foram realizadas em etapas curtas, com revisão e execução local antes de cada commit.
+
+### O que foi feito sem IA
+
+- execução dos comandos Git;
+- gerenciamento da branch;
+- commits;
+- push;
+- Pull Requests;
+- execução da aplicação;
+- execução dos testes;
+- testes manuais;
+- decisão dos refactorings utilizados;
+- revisão final do código.
+
+### Compreensão
+
+O código sugerido foi lido, testado e revisado antes da utilização.
+
+---
+
+## Pedro Cesar Maia
+
+**Modelo:** ChatGPT — GPT-5.6 Sol (OpenAI).
+
+**Para que foi utilizado:**
+
+- apoio na implementação e revisão da interface web;
+- revisão do `PaginaController`;
+- criação e revisão dos testes unitários;
+- análise dos requisitos da NP2;
+- identificação e documentação dos refactorings;
+- revisão da documentação do projeto;
+- apoio na organização das atividades relacionadas ao Jira;
+- interpretação dos requisitos de CI/CD;
+- apoio na preparação do Docker e do deploy externo.
+
+### Prompt 1 – Análise dos requisitos da NP2
+
+**Contexto:** verificar se o projeto atendia aos requisitos necessários para a entrega final da NP2.
+
+**Prompt organizado a partir da solicitação real:**
+
+> “Analise os requisitos da NP2 e compare com o estado atual do Sistema de Chamados de Manutenção. Verifique se faltam testes, documentação, refactorings, requisitos de CI/CD ou outros itens importantes para a entrega final.”
+
+**Resultado:** **aceito com ajustes.** A análise ajudou a identificar a necessidade de documentar os refactorings, ampliar os testes relacionados ao dashboard, registrar o uso de IA e preparar o deploy externo.
+
+### Prompt 2 – Refactoring do PaginaController
+
+**Contexto:** a entrega final exigia a realização de pelo menos dois refactorings por integrante.
+
+**Prompt organizado a partir da solicitação real:**
+
+> “Analise o PaginaController e proponha dois refactorings simples que melhorem a estrutura interna sem modificar o comportamento das rotas `/` e `/dashboard`.”
+
+**Resultado:** **aceito.** Foram aplicados os refactorings Remove Duplicate Code e Rename Method.
+
+### Prompt 3 – Revisão dos testes do dashboard
+
+**Contexto:** verificar se os testes existentes da US06 poderiam ser ampliados com cenários relevantes.
+
+**Prompt organizado a partir da solicitação real:**
+
+> “Revise os testes existentes do PaginaController e verifique se vale adicionar novos casos relacionados às rotas `/` e `/dashboard`, utilizando Mockito, Model real e cenários negativos.”
+
+**Resultado:** **aceito com ajustes.** A classe `PaginaControllerTest` passou a possuir seis cenários de teste relacionados diretamente ao comportamento das rotas do dashboard.
+
+### Prompt 4 – Preparação para deploy externo
+
+**Contexto:** a entrega final exige que a aplicação seja publicada fora da máquina utilizada pelo Jenkins.
+
+**Prompt organizado a partir da solicitação real:**
+
+> “Analise o projeto Spring Boot e indique como prepará-lo para publicação externa utilizando Docker e Render, sem alterar as funcionalidades existentes.”
+
+**Resultado:** **aceito com ajustes.** Foi criado um `Dockerfile` e adicionada ao `application.properties` a configuração da porta através da variável de ambiente `PORT`.
+
+### Dinâmica de uso
+
+A IA foi utilizada como ferramenta de apoio durante o desenvolvimento.
+
+As sugestões fornecidas foram analisadas antes de serem incorporadas ao projeto.
+
+O código e a documentação sugeridos foram conferidos e validados antes dos commits.
+
+### O que foi feito sem IA
+
+Foram realizados diretamente por mim:
+
+- execução dos comandos Git;
+- gerenciamento da branch `PedroCesar`;
+- realização de commits e push;
+- execução dos testes;
+- execução do comando `mvn clean verify`;
+- organização e acompanhamento das atividades no Jira;
+- conferência das alterações realizadas;
+- criação e acompanhamento dos Pull Requests;
+- decisão final sobre quais sugestões seriam incorporadas ao projeto.
+
+### Compreensão
+
+Todo código, teste, refactoring e documentação produzidos com apoio de IA foram revisados antes de sua utilização no projeto.
 
 ---
 
@@ -578,10 +841,10 @@ Cada integrante declara abaixo como usou IA no projeto.
 
 # Links do Projeto
 
-### GitHub
+## GitHub
 
 https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado
 
-### Jira
+## Jira
 
 https://ppedrocesarmaiaa.atlassian.net/jira/software/projects/SCM/boards/1/backlog
