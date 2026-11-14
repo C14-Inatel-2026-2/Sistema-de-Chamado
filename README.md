@@ -1204,7 +1204,7 @@ As ferramentas foram utilizadas como apoio à consulta do repositório e à atua
 
 ### O que foi feito sem IA
 
-**Lista sugerida, pendente de confirmação pelo integrante:**
+
 
 - levantamento e interpretação dos requisitos da US05 – Histórico e Filtros de Chamados;
 - organização e acompanhamento das tarefas da própria responsabilidade no Jira;
