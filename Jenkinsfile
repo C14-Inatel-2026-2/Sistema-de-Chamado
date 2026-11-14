@@ -54,36 +54,44 @@ pipeline {
             }
         }
 
-        stage('Deploy Local') {
+        stage('Deploy Externo') {
             steps {
-                echo 'Iniciando deploy local do Sistema de Chamados'
+                echo 'Disparando deploy externo no Render...'
 
-                bat '''
-            if not exist target\\sistema-chamados-manutencao-0.0.1-SNAPSHOT.jar (
-                echo ERRO: arquivo JAR nao encontrado
-                exit /b 1
-            )
+                withCredentials([
+                        string(
+                                credentialsId: 'render-deploy-hook',
+                                variable: 'RENDER_DEPLOY_HOOK'
+                        )
+                ]) {
+                    powershell '''
+                $response = Invoke-WebRequest `
+                    -Uri $env:RENDER_DEPLOY_HOOK `
+                    -Method Post `
+                    -UseBasicParsing
 
-            start "" /B java -jar target\\sistema-chamados-manutencao-0.0.1-SNAPSHOT.jar
-        '''
+                if ($response.StatusCode -ne 200 -and
+                    $response.StatusCode -ne 202) {
+                    throw "Falha ao iniciar deploy no Render. Status: $($response.StatusCode)"
+                }
+
+                Write-Host "Deploy solicitado ao Render com sucesso."
+            '''
+                }
             }
         }
     }
-
     post {
         always {
-            junit testResults: 'target/surefire-reports/*.xml',
-                    allowEmptyResults: true
+            junit 'target/surefire-reports/*.xml'
 
-            jacoco(
-                    execPattern: '**/target/jacoco.exec',
-                    classPattern: '**/target/classes',
-                    sourcePattern: '**/src/main/java'
-            )
-
-            archiveArtifacts(
-                    artifacts: 'target/site/jacoco/**,target/surefire-reports/*.xml,target/*.jar,target/deploy.log',
-                    allowEmptyArchive: true
+            recordCoverage(
+                    tools: [[
+                                    parser: 'JACOCO',
+                                    pattern: 'target/site/jacoco/jacoco.xml'
+                            ]],
+                    id: 'jacoco',
+                    name: 'JaCoCo Coverage'
             )
         }
     }

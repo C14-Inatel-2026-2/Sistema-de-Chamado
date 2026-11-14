@@ -384,4 +384,21 @@ class ChamadoServiceTest {
 
         verify(chamadoRepository, never()).save(any());
     }
+    @Test
+    void naoDeveAtribuirTecnicoNulo() {
+        when(chamadoRepository.findById(1L))
+                .thenReturn(Optional.of(chamado));
+
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> chamadoService.atribuirTecnico(1L, null)
+        );
+
+        assertEquals(
+                "Técnico é obrigatório",
+                exception.getMessage()
+        );
+
+        verify(chamadoRepository, never()).save(any());
+    }
 }
