@@ -10,6 +10,8 @@ O sistema permite cadastrar usuários com diferentes perfis, registrar locais e 
 
 A proposta é facilitar a comunicação entre solicitantes, técnicos e responsáveis pelo sistema, permitindo maior organização e rastreabilidade dos serviços de manutenção.
 
+A aplicação também possui uma interface web integrada ao backend, permitindo visualizar indicadores, consultar registros e executar operações diretamente pelo dashboard.
+
 ---
 
 ## Objetivo
@@ -34,6 +36,7 @@ Desenvolver uma aplicação capaz de gerenciar o ciclo completo de um chamado de
 - Spring MVC
 - Spring Data JPA
 - Thymeleaf
+- JavaScript
 - Maven
 - PostgreSQL
 - H2 Database
@@ -41,7 +44,9 @@ Desenvolver uma aplicação capaz de gerenciar o ciclo completo de um chamado de
 - Mockito
 - JaCoCo
 - Jenkins
+- Jenkins Coverage Plugin
 - Docker
+- Render
 - Git
 - GitHub
 - Jira
@@ -228,25 +233,53 @@ para acompanhar as alterações realizadas e localizar chamados com maior facili
 
 ---
 
-## US06 – Dashboard Inicial
+## US06 – Dashboard e Interface Web
 
 **Responsável:** Pedro Cesar Maia
 
 **Como usuário do sistema,**  
-quero acessar um dashboard inicial,  
-para visualizar a página principal do Sistema de Chamados de Manutenção.
+quero acessar uma interface web integrada às funcionalidades existentes,  
+para visualizar informações e executar as principais operações do Sistema de Chamados de Manutenção.
 
 ### Principais critérios
 
 - Ao acessar `/dashboard`, o sistema deve apresentar a página principal.
-- O dashboard deve apresentar o título `Sistema de Chamados de Manutenção`.
 - Ao acessar `/`, o usuário também deve visualizar o dashboard.
+- O dashboard deve apresentar o título `Sistema de Chamados de Manutenção`.
+- O dashboard deve apresentar a quantidade total de chamados.
+- O dashboard deve apresentar a quantidade de chamados por status.
+- O dashboard deve apresentar a quantidade de chamados por prioridade.
+- O dashboard deve exibir os chamados mais recentes.
+- A interface deve permitir consultar chamados.
+- A interface deve permitir consultar locais.
+- A interface deve permitir consultar equipamentos.
+- A interface deve permitir abrir novos chamados.
+- A interface deve permitir pesquisar chamados pelo ID.
+- Caso o chamado não exista, a interface deve apresentar a mensagem retornada pelo backend.
+- A interface deve permitir cadastrar locais.
+- A interface deve permitir cadastrar equipamentos.
+- Os locais cadastrados devem ser carregados dinamicamente nos campos de seleção.
+- A interface deve utilizar os endpoints já existentes do backend, sem duplicar regras de negócio.
 
 ### Rotas relacionadas
 
 ```text
 /
 /dashboard
+```
+
+### Endpoints utilizados pela interface
+
+```text
+GET  /chamados
+POST /chamados
+GET  /chamados/{id}
+
+GET  /locais
+POST /locais
+
+GET  /equipamentos
+POST /equipamentos
 ```
 
 **Issue Jira:** SCM-7  
@@ -261,8 +294,12 @@ para visualizar a página principal do Sistema de Chamados de Manutenção.
 
 - `PaginaControllerTest.java`
 
-**Pull Request:** [#38](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/38)
+### Pull Requests relacionados
 
+- [#38](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/38) – implementação inicial da interface, testes e refactorings;
+- [#39](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/39) – integração do Jenkins com deploy externo;
+- [#40](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/40) – correção da publicação da cobertura JaCoCo;
+- [#42](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/42) – operações finais do dashboard e integração com os endpoints do backend.
 
 ---
 
@@ -368,6 +405,24 @@ ABERTO → EM_ANDAMENTO → RESOLVIDO → FECHADO
 
 **RF35** – O dashboard deve estar disponível nas rotas `/` e `/dashboard`.
 
+**RF36** – O dashboard deve apresentar indicadores de chamados por status e prioridade.
+
+**RF37** – O dashboard deve apresentar os chamados cadastrados mais recentemente.
+
+**RF38** – A interface deve permitir consultar chamados, locais e equipamentos.
+
+**RF39** – A interface deve permitir abrir chamados.
+
+**RF40** – A interface deve permitir pesquisar um chamado pelo identificador.
+
+**RF41** – A interface deve informar quando o chamado pesquisado não existir.
+
+**RF42** – A interface deve permitir cadastrar locais.
+
+**RF43** – A interface deve permitir cadastrar equipamentos.
+
+**RF44** – Os locais cadastrados devem ser carregados dinamicamente nos campos de seleção da interface.
+
 ---
 
 # Requisitos Não Funcionais
@@ -398,6 +453,8 @@ ABERTO → EM_ANDAMENTO → RESOLVIDO → FECHADO
 
 **RNF13** – A aplicação deve permitir execução por meio de container Docker para publicação externa.
 
+**RNF14** – O processo de deploy deve publicar a aplicação fora da máquina executora do Jenkins.
+
 ---
 
 # Testes
@@ -405,7 +462,7 @@ ABERTO → EM_ANDAMENTO → RESOLVIDO → FECHADO
 Os testes automatizados do projeto podem ser executados com:
 
 ```bash
-mvn test
+mvn clean test
 ```
 
 Para realizar a validação completa do projeto:
@@ -414,37 +471,111 @@ Para realizar a validação completa do projeto:
 mvn clean verify
 ```
 
-O relatório de cobertura do JaCoCo pode ser gerado durante a execução configurada no projeto.
+A última execução local validada apresentou:
 
-Quando disponível, o relatório pode ser encontrado em:
+```text
+Tests run: 101
+Failures: 0
+Errors: 0
+Skipped: 0
+
+BUILD SUCCESS
+```
+
+O projeto possui atualmente **101 testes automatizados**.
+
+O relatório de cobertura do JaCoCo é gerado em:
 
 ```text
 target/site/jacoco/
 ```
 
+O arquivo XML utilizado pelo Jenkins fica em:
+
+```text
+target/site/jacoco/jacoco.xml
+```
+
+Os resultados individuais dos testes são armazenados em:
+
+```text
+target/surefire-reports/
+```
+
+---
+
+# Testes da Interface Web
+
+O `PaginaControllerTest` possui atualmente **9 testes**.
+
+Os cenários incluem:
+
+- acesso à rota `/` utilizando Mockito;
+- acesso à rota `/dashboard` utilizando Mockito;
+- acesso à rota `/` utilizando `ExtendedModelMap`;
+- acesso à rota `/dashboard` utilizando `ExtendedModelMap`;
+- contadores de status zerados quando não existem chamados;
+- contadores de prioridade zerados quando não existem chamados;
+- verificação do acesso ao `ChamadoRepository`;
+- comportamento de `/dashboard` quando o `Model` é nulo;
+- comportamento de `/` quando o `Model` é nulo.
+
+Também foram realizados testes manuais das operações da interface.
+
+Foram validados:
+
+- abertura de chamado;
+- cadastro de local;
+- cadastro de equipamento;
+- consulta de chamados;
+- consulta de locais;
+- consulta de equipamentos;
+- atualização dos indicadores do dashboard;
+- pesquisa de chamado por ID existente;
+- pesquisa de chamado por ID inexistente;
+- tratamento visual das mensagens de erro.
+
+Um dos cenários negativos testados foi:
+
+```text
+GET /chamados/9999
+```
+
+Resposta do backend:
+
+```text
+Chamado não encontrado com id: 9999
+```
+
+A interface apresenta a mensagem retornada pelo backend ao usuário.
+
 ---
 
 # Docker e Deploy Externo
 
-O projeto foi preparado para publicação externa utilizando Docker.
+O projeto está preparado para publicação externa utilizando Docker.
 
 Foi criado um arquivo `Dockerfile` na raiz do projeto para realizar o build da aplicação utilizando Maven e Java 21 e executar o arquivo JAR gerado pelo Spring Boot.
 
-No arquivo `application.properties` foi adicionada a configuração:
+No arquivo `application.properties` foi utilizada a configuração:
 
 ```properties
 server.port=${PORT:8080}
 ```
 
-Essa configuração permite que a aplicação continue utilizando a porta `8080` durante a execução local e também aceite a porta fornecida pelo ambiente de hospedagem durante o deploy externo.
+Essa configuração permite utilizar a porta `8080` durante a execução local e aceitar a porta fornecida pelo ambiente externo.
 
-A plataforma escolhida para o deploy externo é o **Render**.
+A plataforma utilizada para o deploy é o **Render**.
 
-**Status:** configuração do serviço externo em andamento.
+### Serviço
 
-**URL pública:** [PREENCHER APÓS CONFIGURAR O RENDER]
+```text
+sistema-chamados-manutencao
+```
 
-Após a configuração do serviço externo, o Jenkins será integrado ao Render para permitir que o pipeline solicite novos deploys automaticamente.
+### URL pública
+
+https://sistema-chamados-manutencao.onrender.com
 
 ---
 
@@ -458,23 +589,87 @@ O pipeline é definido através do arquivo:
 Jenkinsfile
 ```
 
-O fluxo do pipeline contempla etapas como:
+O fluxo configurado contempla:
 
 ```text
-Validação
+Validate
    ↓
 Build
    ↓
-Testes / Cobertura
-   ↓
-Relatório
+Tests and Coverage
    ↓
 Package
    ↓
-Deploy
+Deploy Externo
+   ↓
+Post Actions
 ```
 
-A integração com o deploy externo será finalizada após a configuração e validação do serviço no Render.
+Durante a execução são realizados:
+
+- validação do projeto;
+- compilação;
+- execução dos testes;
+- geração do relatório JaCoCo;
+- empacotamento do JAR;
+- solicitação de deploy externo;
+- publicação dos resultados dos testes;
+- publicação da cobertura no Jenkins.
+
+Os resultados do Surefire são publicados através de:
+
+```groovy
+junit 'target/surefire-reports/*.xml'
+```
+
+A cobertura JaCoCo é publicada através do Jenkins Coverage Plugin:
+
+```groovy
+recordCoverage(
+    tools: [[
+        parser: 'JACOCO',
+        pattern: 'target/site/jacoco/jacoco.xml'
+    ]],
+    id: 'jacoco',
+    name: 'JaCoCo Coverage'
+)
+```
+
+---
+
+# Integração Jenkins e Render
+
+O Jenkins utiliza um **Deploy Hook** fornecido pelo Render para solicitar novos deploys.
+
+A URL do hook é armazenada de forma segura nas credenciais do Jenkins.
+
+### Credential ID
+
+```text
+render-deploy-hook
+```
+
+O valor real da credencial não é armazenado no repositório.
+
+O fluxo utilizado é:
+
+```text
+GitHub
+   ↓
+Jenkins
+   ↓
+Build
+   ↓
+Testes
+   ↓
+JaCoCo
+   ↓
+Package
+   ↓
+Deploy Hook
+   ↓
+Render
+```
 
 ---
 
@@ -487,6 +682,7 @@ src/
 ├── main/
 │   ├── java/
 │   │   └── br/inatel/chamados/
+│   │       ├── config/
 │   │       ├── controller/
 │   │       ├── model/
 │   │       ├── repository/
@@ -494,6 +690,7 @@ src/
 │   │
 │   └── resources/
 │       ├── templates/
+│       │   └── dashboard.html
 │       ├── static/
 │       └── application.properties
 │
@@ -517,6 +714,12 @@ Após iniciar a aplicação, a interface pode ser acessada em:
 http://localhost:8080/
 ```
 
+ou:
+
+```text
+http://localhost:8080/dashboard
+```
+
 ---
 
 # Refactorings
@@ -526,7 +729,7 @@ Os refactorings registrados abaixo foram aplicados para melhorar a estrutura int
 ## Cauã de Souza Flauzino
 
 | # | Smell | Refactoring aplicado | Por quê | PR |
-|---|-------|----------------------|---------|----|
+|---|---|---|---|---|
 | 1 | Field Injection (`@Autowired` em campo) em `LocalController` e `EquipamentoController` | Replace Field Injection with Constructor Injection | As dependências ficam explícitas e imutáveis, e o controller pode ser criado em testes sem o Spring | [#30](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/30) |
 | 2 | Controller acessando o repository direto, sem camada de service | Extract Class (`LocalService` e `EquipamentoService`) | Separa a camada web do acesso a dados, segue o padrão do projeto e permite testes unitários com Mockito | [#31](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/31) |
 
@@ -535,18 +738,18 @@ Os refactorings registrados abaixo foram aplicados para melhorar a estrutura int
 ## Eduardo Nogueira
 
 | # | Smell | Refactoring aplicado | Por quê | PR |
-|---|-------|----------------------|---------|----|
+|---|---|---|---|---|
 | 1 | Mensagem de erro de "email já cadastrado" escrita diretamente na exception em `UsuarioService` | Create Constant String (`EMAIL_JA_CADASTRADO`) | Centraliza a mensagem em uma constante, facilitando a manutenção e evitando strings repetidas no código | [#28](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/28/changes/32f81f5ae4de036c2b8973b70fc38b1c6ee016f6) |
-| 2 | Parâmetro `Model` não utilizado no método `listar()` de `UsuarioController` | Remove Parameter | Remove um parâmetro desnecessário, simplificando a assinatura do método e evitando dependências que não são utilizadas | [#28](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/28/changes/0e935c72b53a337361adb77bfe34cd3626acb1ba) |
+| 2 | Parâmetro `Model` não utilizado no método `listar()` de `UsuarioController` | Remove Parameter | Remove um parâmetro desnecessário, simplificando a assinatura do método | [#28](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/28/changes/0e935c72b53a337361adb77bfe34cd3626acb1ba) |
 
 ---
 
 ## Pedro Henrique dos Santos Araujo
 
 | # | Smell | Refactoring aplicado | Por quê | PR |
-|---|-------|----------------------|---------|----|
-| 1 | Uso desajeitado de `Optional` (`isEmpty()` seguido de `get()`) em `ChamadoConsultaService.buscarPorId` | Replace with `orElseThrow` | Remove o `get()` inseguro e deixa o método mais curto e legível, sem mudar a exceção nem a mensagem | [#27](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/27) |
-| 2 | Código duplicado nos testes: criação do `ChamadoConsultaService` repetida em cada teste de `ChamadoConsultaServiceTest` | Extract setup para `@BeforeEach` | Remove a repetição e facilita acrescentar novos testes sem copiar o setup | [#29](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/29) |
+|---|---|---|---|---|
+| 1 | Uso de `Optional` com `isEmpty()` seguido de `get()` | Replace with `orElseThrow` | Remove o `get()` inseguro e torna o código mais legível | [#27](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/27) |
+| 2 | Setup repetido nos testes | Extract setup para `@BeforeEach` | Evita duplicação e facilita a criação de novos testes | [#29](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/29) |
 
 ---
 
@@ -554,43 +757,24 @@ Os refactorings registrados abaixo foram aplicados para melhorar a estrutura int
 
 ### Refactoring 1
 
-- **Code smell:** duplicação da validação de título e descrição em `ChamadoService.abrirChamado`, com a mesma verificação de texto nulo ou em branco.
-- **Refactoring aplicado:** Remove Duplicate Code com Extract Method, criando o método privado `validarTextoObrigatorio`.
-- **Justificativa:** centralizar a validação repetida, preservando a ordem das verificações, as mensagens de erro e os dados do chamado.
+- **Code smell:** duplicação da validação de título e descrição em `ChamadoService.abrirChamado`.
+- **Refactoring aplicado:** Remove Duplicate Code com Extract Method.
+- **Método criado:** `validarTextoObrigatorio`.
 - **Pull Request:** https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/32
 
 ### Refactoring 2
 
-- **Code smell:** expressão condicional com comparações repetidas e operadores `&&` e `||` em `ChamadoService.transicaoPermitida`.
-- **Refactoring aplicado:** Simplify Conditional Expression, substituindo a expressão por um `switch` sobre o status atual.
-- **Justificativa:** explicitar o destino permitido para cada status, mantendo somente as transições `ABERTO → EM_ANDAMENTO → RESOLVIDO → FECHADO` e a rejeição de status atual nulo.
+- **Code smell:** expressão condicional com comparações repetidas em `ChamadoService.transicaoPermitida`.
+- **Refactoring aplicado:** Simplify Conditional Expression utilizando `switch`.
 - **Pull Request:** https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/32
 
 ### Validação
 
-Validação dos refactorings antes da integração da `main`, em 13/11/2026, com Java 21 e `mvn clean test`:
-
 | Estado | Testes | Falhas | Erros | Ignorados | Resultado |
-| --- | --- | --- | --- | --- | --- |
+|---|---:|---:|---:|---:|---|
 | Antes dos refactorings | 30 | 0 | 0 | 0 | BUILD SUCCESS |
 | Após o refactoring 1 | 40 | 0 | 0 | 0 | BUILD SUCCESS |
 | Após o refactoring 2 | 65 | 0 | 0 | 0 | BUILD SUCCESS |
-
-Os novos testes passaram também antes de cada refactoring correspondente. Eles verificam as validações de abertura, as 16 combinações de status e os casos nulos, incluindo mensagens de erro e ausência de persistência nas rejeições.
-
-O JaCoCo 0.8.13 gerou o relatório em:
-
-```text
-target/site/jacoco/index.html
-```
-
-A cobertura global de linhas passou de 65,78% para 70,47%, e a cobertura de ramificações passou de 70,59% para 96,55%.
-
-Após integrar a `main` para resolver o conflito do PR #32, `mvn clean test` aprovou 87 testes, sem falhas, erros ou testes ignorados.
-
-O JaCoCo gerou relatório com cobertura global de linhas de 70,65% e cobertura de ramificações de 67,52%.
-
-Esses resultados incluem o código e os testes adicionados pelos demais integrantes na `main`.
 
 ---
 
@@ -600,11 +784,11 @@ Esses resultados incluem o código e os testes adicionados pelos demais integran
 
 **Code smell:** código duplicado.
 
-Anteriormente, os métodos responsáveis pelas rotas `/` e `/dashboard` realizavam a mesma preparação do `Model` e retornavam a mesma página.
+Os métodos das rotas `/` e `/dashboard` executavam comportamento semelhante.
 
 **Refactoring aplicado:** Remove Duplicate Code.
 
-O método `inicio()` passou a reutilizar o método `dashboard()`:
+O método `inicio()` passou a reutilizar `dashboard()`:
 
 ```java
 @GetMapping("/")
@@ -613,7 +797,7 @@ public String inicio(Model model) {
 }
 ```
 
-**Motivo:** reduzir duplicação de código e manter apenas um ponto responsável pela preparação e retorno do dashboard.
+**Motivo:** reduzir duplicação e centralizar a preparação do dashboard.
 
 **Pull Request:** [#38](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/38)
 
@@ -635,33 +819,57 @@ adicionarTituloAoModel()
 
 **Refactoring aplicado:** Rename Method.
 
-**Motivo:** deixar mais claro que a responsabilidade do método é adicionar o título da aplicação ao `Model`, sem alterar o comportamento externo da aplicação.
+**Motivo:** deixar clara a responsabilidade do método e melhorar a legibilidade.
 
 **Pull Request:** [#38](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/38)
 
-
 ### Validação dos refactorings
 
-Após as alterações foi executado:
+| Estado | Testes | Falhas | Erros | Ignorados | Resultado |
+|---|---:|---:|---:|---:|---|
+| Antes das alterações finais | 87 | 0 | 0 | 0 | BUILD SUCCESS |
+| Após os refactorings e novos testes | 98 | 0 | 0 | 0 | BUILD SUCCESS |
+| Após integração do dashboard | 101 | 0 | 0 | 0 | BUILD SUCCESS |
 
-```bash
-mvn clean verify
-```
+---
 
-Resultado:
+# Evolução da Interface Web
 
-```text
-BUILD SUCCESS
-```
+Após a implementação inicial da US06, o dashboard foi ampliado para apresentar informações reais da aplicação.
 
-Os testes de `PaginaControllerTest` verificam:
+Foram adicionados:
 
-- acesso à rota `/` utilizando Mockito;
-- acesso à rota `/dashboard` utilizando Mockito;
-- acesso à rota `/` utilizando `ExtendedModelMap`;
-- acesso à rota `/dashboard` utilizando `ExtendedModelMap`;
-- comportamento da rota `/` quando o `Model` é nulo;
-- comportamento da rota `/dashboard` quando o `Model` é nulo.
+- integração com `ChamadoRepository`;
+- total de chamados;
+- chamados por status;
+- chamados por prioridade;
+- cinco chamados mais recentes;
+- consulta de chamados;
+- consulta de locais;
+- consulta de equipamentos;
+- abertura de chamados;
+- pesquisa de chamado por ID;
+- tratamento para chamado inexistente;
+- cadastro de locais;
+- cadastro de equipamentos;
+- carregamento dinâmico de locais;
+- mensagens visuais de sucesso e erro;
+- integração com os endpoints através de JavaScript `fetch`.
+
+### PR #42 – Operações do Dashboard
+
+O Pull Request [#42](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/42) adicionou as operações finais da interface.
+
+Entre as principais alterações estão:
+
+- abertura de chamados através de `POST /chamados`;
+- busca por ID utilizando `GET /chamados/{id}`;
+- tratamento das respostas `404`;
+- cadastro de locais através de `POST /locais`;
+- cadastro de equipamentos através de `POST /equipamentos`;
+- carregamento dos locais nos campos `select`;
+- consulta dos registros existentes;
+- exibição de mensagens de sucesso e erro.
 
 ---
 
@@ -671,76 +879,56 @@ Cada integrante declara abaixo como utilizou ferramentas de Inteligência Artifi
 
 ## Pedro Henrique dos Santos Araujo
 
-**Modelo:** Claude Sonnet 5.5 (Anthropic), usado em todas as sessões.
+**Modelo:** Claude Sonnet 5.5 (Anthropic).
 
 **Para que foi usado:**
 
-- Orientação passo a passo de cada entrega.
-- Escrever e revisar código do módulo.
-- Auxílio na elaboração de testes unitários.
-- Redigir mensagens de commit, descrições de PR e textos do Jira.
-- Revisar refactorings e Pull Requests.
+- orientação nas entregas;
+- revisão de código;
+- elaboração de testes;
+- documentação;
+- commits e Pull Requests;
+- revisão de refactorings.
 
 ### Prompt 1 – Definir o conjunto de testes
 
-**Contexto:** a entrega exigia testes unitários dos arquivos de cada integrante.
-
-**Prompt:**
-
 > "Proponha 4 testes unitários apenas para os arquivos do meu módulo: 2 com mock e 2 sem mock, incluindo pelo menos 1 teste negativo, seguindo boas práticas de nomenclatura e estrutura (given/when/then)."
 
-**Resultado:** **aceito com ajustes.** Os testes foram adaptados ao `ChamadoTest` já existente na `main`.
+**Resultado:** aceito com ajustes.
 
-### Prompt 2 – Validar se um refactoring é adequado
-
-**Contexto:** os slides da disciplina definem o que conta e o que não conta como refactoring.
-
-**Prompt:**
+### Prompt 2 – Validar refactoring
 
 > "Com base nos critérios dos slides em anexo, avalie se cada um dos meus dois refactorings é adequado. Aponte qual deles pode ser considerado apenas formatação e sugira uma alternativa no mesmo arquivo."
 
-**Resultado:** **ajustado.** Um refactoring inicialmente proposto foi substituído por uma extração de setup para `@BeforeEach`.
+**Resultado:** ajustado.
 
-### Prompt 3 – Complementar o stage de build do pipeline
-
-**Contexto:** o `Jenkinsfile` já possuía um stage básico de build.
-
-**Prompt:**
+### Prompt 3 – Stage de build
 
 > "Complemente o stage Build do Jenkinsfile existente, sem substituir os demais stages: limpar o target antes de compilar e falhar o stage se o JAR esperado não for gerado. O agente é Windows, então use bat."
 
-**Resultado:** **aceito.**
+**Resultado:** aceito.
 
-### Prompt 4 – Tratar erro encontrado no teste manual
-
-**Contexto:** um chamado com vínculo inválido devolvia erro 500.
-
-**Prompt:**
+### Prompt 4 – Tratamento de erro
 
 > "O POST /chamados com um local inexistente retorna 500 com stack trace. Proponha um tratamento no controller que devolva 400 com uma mensagem curta, e o teste unitário correspondente."
 
-**Resultado:** **ajustado após testar.**
+**Resultado:** ajustado após testes.
 
 ### Dinâmica de uso
 
-As conversas foram realizadas em etapas curtas, com revisão e execução local antes de cada commit.
+As sugestões foram revisadas e executadas localmente antes da integração.
 
 ### O que foi feito sem IA
 
-- execução dos comandos Git;
-- gerenciamento da branch;
+- Git;
+- branches;
 - commits;
 - push;
 - Pull Requests;
-- execução da aplicação;
 - execução dos testes;
 - testes manuais;
-- decisão dos refactorings utilizados;
-- revisão final do código.
-
-### Compreensão
-
-O código sugerido foi lido, testado e revisado antes da utilização.
+- decisão dos refactorings;
+- revisão final.
 
 ---
 
@@ -750,81 +938,123 @@ O código sugerido foi lido, testado e revisado antes da utilização.
 
 **Para que foi utilizado:**
 
-- apoio na implementação e revisão da interface web;
+- implementação e revisão da interface web;
 - revisão do `PaginaController`;
-- criação e revisão dos testes unitários;
+- criação e revisão dos testes;
 - análise dos requisitos da NP2;
-- identificação e documentação dos refactorings;
-- revisão da documentação do projeto;
-- apoio na organização das atividades relacionadas ao Jira;
-- interpretação dos requisitos de CI/CD;
-- apoio na preparação do Docker e do deploy externo.
+- identificação e documentação de refactorings;
+- integração frontend/backend;
+- desenvolvimento do dashboard;
+- tratamento de respostas HTTP;
+- Jenkins;
+- JaCoCo;
+- Docker;
+- Render;
+- Git e Pull Requests;
+- revisão do README.
 
-### Prompt 1 – Análise dos requisitos da NP2
+### Prompt 1 – Revisão técnica da entrega NP2
 
-**Contexto:** verificar se o projeto atendia aos requisitos necessários para a entrega final da NP2.
+**Contexto:** revisar o estado atual do projeto em relação aos critérios técnicos da NP2.
 
-**Prompt organizado a partir da solicitação real:**
+**Prompt:**
 
-> “Analise os requisitos da NP2 e compare com o estado atual do Sistema de Chamados de Manutenção. Verifique se faltam testes, documentação, refactorings, requisitos de CI/CD ou outros itens importantes para a entrega final.”
+> “Analise o estado atual do projeto em relação aos requisitos da NP2. Verifique se a minha parte possui cobertura adequada de testes unitários, integração entre User Story, código e Pull Request, documentação dos refactorings, registro do uso de IA, integração contínua com Jenkins, cobertura JaCoCo e deploy externo. Aponte quais itens ainda precisam ser implementados, testados ou documentados antes da entrega.”
 
-**Resultado:** **aceito com ajustes.** A análise ajudou a identificar a necessidade de documentar os refactorings, ampliar os testes relacionados ao dashboard, registrar o uso de IA e preparar o deploy externo.
+**Resultado:** aceito com ajustes.
 
-### Prompt 2 – Refactoring do PaginaController
+A análise ajudou a identificar a necessidade de ampliar testes, documentar refactorings, registrar o uso de IA e validar CI/CD e deploy.
 
-**Contexto:** a entrega final exigia a realização de pelo menos dois refactorings por integrante.
+### Prompt 2 – Identificação de refactorings no PaginaController
 
-**Prompt organizado a partir da solicitação real:**
+**Contexto:** aplicar dois refactorings sem alterar o comportamento das rotas.
 
-> “Analise o PaginaController e proponha dois refactorings simples que melhorem a estrutura interna sem modificar o comportamento das rotas `/` e `/dashboard`.”
+**Prompt:**
 
-**Resultado:** **aceito.** Foram aplicados os refactorings Remove Duplicate Code e Rename Method.
+> “Analise o `PaginaController` e identifique dois code smells que possam ser corrigidos utilizando refactorings reconhecidos, sem alterar o comportamento das rotas `/` e `/dashboard`. Para cada caso, informe o smell, o refactoring aplicado, a justificativa técnica e quais testes devem continuar passando para comprovar que o comportamento foi preservado.”
 
-### Prompt 3 – Revisão dos testes do dashboard
+**Resultado:** aceito com ajustes.
 
-**Contexto:** verificar se os testes existentes da US06 poderiam ser ampliados com cenários relevantes.
+Foram utilizados:
 
-**Prompt organizado a partir da solicitação real:**
+- Remove Duplicate Code;
+- Rename Method.
 
-> “Revise os testes existentes do PaginaController e verifique se vale adicionar novos casos relacionados às rotas `/` e `/dashboard`, utilizando Mockito, Model real e cenários negativos.”
+### Prompt 3 – Ampliação dos testes do PaginaController
 
-**Resultado:** **aceito com ajustes.** A classe `PaginaControllerTest` passou a possuir seis cenários de teste relacionados diretamente ao comportamento das rotas do dashboard.
+**Contexto:** aumentar a cobertura da interface.
 
-### Prompt 4 – Preparação para deploy externo
+**Prompt:**
 
-**Contexto:** a entrega final exige que a aplicação seja publicada fora da máquina utilizada pelo Jenkins.
+> “Atualize o `PaginaControllerTest` para aumentar a cobertura da interface web. Inclua testes para as rotas `/` e `/dashboard`, utilização de `Model` mockado com Mockito e `ExtendedModelMap`, validação dos atributos adicionados ao model, contagem de chamados por status e prioridade, verificação da chamada ao `ChamadoRepository` e testes negativos para `Model` nulo. Mantenha os testes unitários independentes do contexto completo do Spring.”
 
-**Prompt organizado a partir da solicitação real:**
+**Resultado:** aceito com ajustes.
 
-> “Analise o projeto Spring Boot e indique como prepará-lo para publicação externa utilizando Docker e Render, sem alterar as funcionalidades existentes.”
+O `PaginaControllerTest` passou a possuir **9 testes**.
 
-**Resultado:** **aceito com ajustes.** Foi criado um `Dockerfile` e adicionada ao `application.properties` a configuração da porta através da variável de ambiente `PORT`.
+### Prompt 4 – Restrição das alterações ao módulo da interface
 
-### Dinâmica de uso
+**Contexto:** evoluir a US06 sem modificar as regras de negócio dos outros integrantes.
 
-A IA foi utilizada como ferramenta de apoio durante o desenvolvimento.
+**Prompt:**
 
-As sugestões fornecidas foram analisadas antes de serem incorporadas ao projeto.
+> “Revise a implementação da minha responsabilidade, limitada à interface web e integração. Faça alterações apenas em arquivos relacionados à US06, como `PaginaController`, `PaginaControllerTest` e `dashboard.html`. Não modifique controllers, services, repositories ou regras de negócio implementadas pelos outros integrantes. Caso a interface precise utilizar funcionalidades existentes, consuma os endpoints já disponíveis em vez de duplicar lógica no frontend ou alterar o backend.”
 
-O código e a documentação sugeridos foram conferidos e validados antes dos commits.
+**Resultado:** aceito.
+
+As alterações foram concentradas na interface, testes e integração.
+
+### Prompt 5 – Integração técnica do dashboard com o backend
+
+**Contexto:** integrar a interface Thymeleaf aos endpoints REST já existentes.
+
+**Prompt:**
+
+> “Atualize o `dashboard.html` utilizando JavaScript com `fetch` para integrar a interface aos endpoints existentes `GET /chamados`, `GET /chamados/{id}`, `POST /chamados`, `GET /locais`, `POST /locais`, `GET /equipamentos` e `POST /equipamentos`. Mantenha o backend atual sem modificar os controllers dos outros integrantes. Implemente formulários para abertura de chamado, cadastro de local e equipamento, carregamento dinâmico dos locais nos campos `select`, consulta de chamado por ID e tratamento das respostas HTTP de sucesso e erro, incluindo `404`. Preserve também os indicadores e as listagens já existentes no dashboard.”
+
+**Resultado:** aceito com ajustes.
+
+A interface passou a consumir os endpoints REST através de `fetch`, incluindo tratamento de erros HTTP e carregamento dinâmico dos dados.
+
+### Validação das respostas da IA
+
+As sugestões não foram incorporadas automaticamente.
+
+O processo utilizado foi:
+
+```text
+Sugestão da IA
+      ↓
+Revisão
+      ↓
+Implementação
+      ↓
+Teste manual
+      ↓
+mvn clean test
+      ↓
+Commit
+      ↓
+Pull Request
+```
 
 ### O que foi feito sem IA
 
-Foram realizados diretamente por mim:
-
 - execução dos comandos Git;
-- gerenciamento da branch `PedroCesar`;
-- realização de commits e push;
+- gerenciamento das branches;
+- commits;
+- push;
+- criação dos Pull Requests;
 - execução dos testes;
-- execução do comando `mvn clean verify`;
-- organização e acompanhamento das atividades no Jira;
-- conferência das alterações realizadas;
-- criação e acompanhamento dos Pull Requests;
-- decisão final sobre quais sugestões seriam incorporadas ao projeto.
+- testes manuais da interface;
+- configuração das credenciais do Jenkins;
+- execução dos builds;
+- acompanhamento do Render;
+- validação final das alterações.
 
 ### Compreensão
 
-Todo código, teste, refactoring e documentação produzidos com apoio de IA foram revisados antes de sua utilização no projeto.
+Todo código, teste, refactoring e documentação produzidos com apoio de IA foram revisados antes da utilização.
 
 ---
 
@@ -834,75 +1064,67 @@ Todo código, teste, refactoring e documentação produzidos com apoio de IA for
 
 **Para que foi utilizado:**
 
-- apoio na implementação do cadastro e da autenticação de usuários;
-- revisão do `UsuarioController` e do `UsuarioService`;
-- auxílio na implementação da criptografia de senhas com BCrypt;
-- identificação e correção de erros relacionados ao login e ao redirecionamento de páginas;
-- sugestões e aplicação de refactorings;
-- interpretação de falhas nos testes automatizados;
-- apoio na documentação dos refactorings;
-- auxílio na elaboração de mensagens de commit e descrições de Pull Requests;
-- orientação sobre comandos Git e gerenciamento de branches.
+- implementação do cadastro e autenticação;
+- revisão do `UsuarioController` e `UsuarioService`;
+- criptografia de senhas com BCrypt;
+- correção de problemas de login e redirecionamento;
+- refactorings;
+- interpretação de testes;
+- documentação;
+- commits e Pull Requests;
+- orientação com Git.
 
 ### Prompt 1 – Implementação da autenticação de usuários
 
-**Contexto:** implementar o processo de login dos usuários, verificando as credenciais informadas e gerenciando a sessão.
-
-**Prompt:**
-
 > "Como implementar a autenticação de usuários utilizando e-mail e senha no UsuarioService e UsuarioController, incluindo a validação das credenciais e o gerenciamento da sessão?"
 
-**Resultado:** **aceito com ajustes.** As orientações auxiliaram na implementação da autenticação, na validação das credenciais e no armazenamento das informações do usuário na sessão.
+**Resultado:** aceito com ajustes.
 
-### Prompt 2 – Depuração do redirecionamento após o login
-
-**Contexto:** após realizar o login, a aplicação apresentava um erro 404 relacionado à página `dashboard`.
-
-**Prompt:**
+### Prompt 2 – Redirecionamento após login
 
 > "Ao fazer login, aparece uma Whitelabel Error Page com status 404 e a mensagem No static resource dashboard. Como corrigir o redirecionamento para a página correta?"
 
-**Resultado:** **aceito com ajustes.** A análise ajudou a identificar problemas relacionados às rotas e aos redirecionamentos da aplicação. O fluxo foi ajustado conforme as páginas disponíveis no projeto.
+**Resultado:** aceito com ajustes.
 
-### Prompt 3 – Refatorações no código
-
-**Contexto:** a entrega exigia pelo menos dois refactorings por integrante, com melhorias na estrutura interna do código.
-
-**Prompt:**
+### Prompt 3 – Refactorings
 
 > "Analise o código e sugira dois refactorings simples que melhorem a legibilidade e a organização, sem modificar o comportamento esperado."
 
-**Resultado:** **aceito.** Foram aplicados dois refactorings:
-- Extração da mensagem de erro de e-mail duplicado para a constante `EMAIL_JA_CADASTRADO` no `UsuarioService`.
-- Remoção do parâmetro `Model` não utilizado no método `listar()` do `UsuarioController`.
+**Resultado:** aceito.
+
+Foram aplicados:
+
+- extração da constante `EMAIL_JA_CADASTRADO`;
+- remoção do parâmetro `Model` não utilizado.
 
 ### Dinâmica de uso
 
-A IA foi utilizada como ferramenta de consulta e apoio durante o desenvolvimento da parte de gerenciamento de usuários e autenticação.
+A IA foi utilizada como ferramenta de consulta e apoio durante o desenvolvimento da parte de usuários e autenticação.
 
-As sugestões de código foram analisadas e adaptadas conforme a estrutura existente no projeto. As alterações foram acompanhadas por testes e revisões antes de serem registradas em commits e enviadas por pull request.
+As sugestões foram analisadas e adaptadas conforme a estrutura do projeto.
 
 ### O que foi feito sem IA
 
-- execução dos comandos Git;
+- comandos Git;
 - gerenciamento da branch `EduardoNogueira`;
-- realização de commits e push;
-- execução dos testes automatizados com Maven;
-- análise dos resultados apresentados pelo ambiente de desenvolvimento;
-- conferência das alterações realizadas nos arquivos;
-- criação e acompanhamento do Pull Request;
-- decisão final sobre quais sugestões seriam incorporadas ao projeto;
-- validação das alterações na implementação de usuários e autenticação.
+- commits;
+- push;
+- testes Maven;
+- revisão das alterações;
+- Pull Requests;
+- decisão final das alterações.
 
 ### Compreensão
 
-Durante o processo, foi necessário compreender as sugestões recebidas da IA, verificar sua compatibilidade com a arquitetura do projeto e realizar adaptações quando necessário.
+As sugestões foram analisadas quanto à compatibilidade com a arquitetura antes da utilização.
 
 ---
 
-## Acesso para testes
+# Acesso para Testes
 
-Para facilitar a realização de testes no sistema, utilize as credenciais da conta de administrador` (Somente os administradores podem cadastrar usuários):
+Para facilitar os testes no sistema, pode ser utilizada a conta de administrador abaixo.
+
+Somente administradores podem cadastrar usuários.
 
 | Campo | Credencial |
 |---|---|
@@ -910,10 +1132,11 @@ Para facilitar a realização de testes no sistema, utilize as credenciais da co
 | **Senha** | `Admin@123` |
 | **Perfil** | Administrador |
 
-### Links de acesso para a parte de usuarios
+### Links de acesso
 
 | Página | URL |
 |---|---|
+| **Dashboard** | https://sistema-chamados-manutencao.onrender.com/ |
 | **Login** | https://sistema-chamados-manutencao.onrender.com/usuarios/login |
 | **Visualização e cadastro dos usuários** | https://sistema-chamados-manutencao.onrender.com/usuarios |
 
@@ -941,3 +1164,40 @@ https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado
 ## Jira
 
 https://ppedrocesarmaiaa.atlassian.net/jira/software/projects/SCM/boards/1/backlog
+
+## Aplicação Publicada
+
+https://sistema-chamados-manutencao.onrender.com
+
+---
+
+# Situação Atual
+
+A última versão validada localmente apresentou:
+
+```text
+Tests run: 101
+Failures: 0
+Errors: 0
+Skipped: 0
+BUILD SUCCESS
+```
+
+O JaCoCo analisou **24 classes**.
+
+A interface web foi validada com:
+
+- abertura de chamado;
+- cadastro de local;
+- cadastro de equipamento;
+- consulta de chamados;
+- consulta de locais;
+- consulta de equipamentos;
+- busca por ID existente;
+- busca por ID inexistente;
+- tratamento de erros;
+- atualização dos indicadores do dashboard.
+
+As operações finais da interface foram integradas através do **PR #42**.
+
+A infraestrutura de CI/CD utiliza Jenkins, JaCoCo, Docker e Render para testes, cobertura, empacotamento e publicação externa.
