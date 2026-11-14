@@ -474,7 +474,7 @@ mvn clean verify
 A última execução local validada apresentou:
 
 ```text
-Tests run: 101
+Tests run: 102
 Failures: 0
 Errors: 0
 Skipped: 0
@@ -832,56 +832,6 @@ adicionarTituloAoModel()
 | Após integração do dashboard | 101 | 0 | 0 | 0 | BUILD SUCCESS |
 
 ---
-## Cauã de Souza Flauzino
-
-**Modelo:** Gemini (Google).
-
-**Para que foi utilizado:**
-
-- orientação pontual durante o desenvolvimento do projeto;
-- apoio na resolução de detalhes de configuração no VS Code e Maven;
-- identificação e análise de possíveis refactorings;
-- revisão das alterações no código e padronização dos testes;
-- documentação do projeto no README e ajustes no Jenkins.
-
-### Prompt 1 – Identificação de refactorings
-
-> "Analise o código atual da parte de Locais e Equipamentos e identifique possíveis refactorings que possam melhorar a organização e legibilidade, evitando repetir alterações já realizadas por outros integrantes."
-
-**Resultado:** sugestões analisadas e ajustadas conforme os refactorings já realizados pelo grupo.
-
-### Prompt 2 – Padronização de testes unitários
-
-> "Com base na estrutura já adotada nos serviços do projeto, como organizar os cenários de teste unitário com JUnit 5 e Mockito para validar as regras de negócio de LocalService?"
-
-**Resultado:** sugestões utilizadas apenas como referência estrutural para adaptar os testes aos métodos reais implementados no código.
-
-### Prompt 3 – Documentação do README
-
-> "Organize uma seção para o README.md documentando os refactorings aplicados na US04, mantendo o mesmo padrão de tabela e formatação utilizado pelos outros integrantes do grupo."
-
-**Resultado:** sugestões analisadas e ajustadas conforme a documentação realizada pelo grupo.
-
-### Dinâmica de uso
-
-A IA foi utilizada apenas como ferramenta de consulta rápida e apoio em detalhes durante o desenvolvimento. Todas as sugestões foram avaliadas antes de serem aplicadas, considerando a arquitetura do projeto e as alterações realizadas pelos demais integrantes.
-
-### O que foi feito sem IA
-
-- desenvolvimento da US04 (Locais e Equipamentos);
-- gerenciamento das branches;
-- execução dos comandos Git;
-- commits e push;
-- criação e acompanhamento dos Pull Requests;
-- escrita e execução local dos testes automatizados;
-- acompanhamento do build no Jenkins;
-- revisão e decisão final sobre as modificações.
-
-### Compreensão
-
-As sugestões fornecidas pela IA foram utilizadas exclusivamente como apoio de referência, sendo necessário compreender, adaptar e verificar todas as alterações antes de incorporá-las ao projeto.
-
----
 
 ## Felipe da Silva Inácio
 
@@ -1186,6 +1136,7 @@ As sugestões foram analisadas e adaptadas conforme a estrutura do projeto.
 As sugestões foram analisadas quanto à compatibilidade com a arquitetura antes da utilização.
 
 ---
+
 ## Felipe da Silva Inácio
 
 **Modelo:** ChatGPT — GPT-6 (OpenAI).
@@ -1269,6 +1220,58 @@ As ferramentas foram utilizadas como apoio à consulta do repositório e à atua
 - criação e acompanhamento dos Pull Requests;
 - revisão das alterações antes da integração com o trabalho dos demais integrantes;
 - decisão final sobre as sugestões de melhoria e os refactorings adotados.
+
+---
+
+## Cauã de Souza Flauzino
+
+**Modelo:** Gemini (Google).
+
+**Para que foi utilizado:**
+
+- orientação pontual durante o desenvolvimento do projeto;
+- apoio na resolução de detalhes de configuração no VS Code e Maven;
+- identificação e análise de possíveis refactorings;
+- revisão das alterações no código e padronização dos testes;
+- documentação do projeto no README e ajustes no Jenkins.
+
+### Prompt 1 – Identificação de refactorings
+
+> "Analise o código atual da parte de Locais e Equipamentos e identifique possíveis refactorings que possam melhorar a organização e legibilidade, evitando repetir alterações já realizadas por outros integrantes."
+
+**Resultado:** sugestões analisadas e ajustadas conforme os refactorings já realizados pelo grupo.
+
+### Prompt 2 – Padronização de testes unitários
+
+> "Com base na estrutura já adotada nos serviços do projeto, como organizar os cenários de teste unitário com JUnit 5 e Mockito para validar as regras de negócio de LocalService?"
+
+**Resultado:** sugestões utilizadas apenas como referência estrutural para adaptar os testes aos métodos reais implementados no código.
+
+### Prompt 3 – Documentação do README
+
+> "Organize uma seção para o README.md documentando os refactorings aplicados na US04, mantendo o mesmo padrão de tabela e formatação utilizado pelos outros integrantes do grupo."
+
+**Resultado:** sugestões analisadas e ajustadas conforme a documentação realizada pelo grupo.
+
+### Dinâmica de uso
+
+A IA foi utilizada apenas como ferramenta de consulta rápida e apoio em detalhes durante o desenvolvimento. Todas as sugestões foram avaliadas antes de serem aplicadas, considerando a arquitetura do projeto e as alterações realizadas pelos demais integrantes.
+
+### O que foi feito sem IA
+
+- desenvolvimento da US04 (Locais e Equipamentos);
+- gerenciamento das branches;
+- execução dos comandos Git;
+- commits e push;
+- criação e acompanhamento dos Pull Requests;
+- escrita e execução local dos testes automatizados;
+- acompanhamento do build no Jenkins;
+- revisão e decisão final sobre as modificações.
+
+### Compreensão
+
+As sugestões fornecidas pela IA foram utilizadas exclusivamente como apoio de referência, sendo necessário compreender, adaptar e verificar todas as alterações antes de incorporá-las ao projeto.
+
 
 ---
 
