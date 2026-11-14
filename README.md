@@ -828,6 +828,76 @@ Todo código, teste, refactoring e documentação produzidos com apoio de IA for
 
 ---
 
+## Eduardo Nogueira
+
+**Modelo:** ChatGPT — GPT-6 (OpenAI).
+
+**Para que foi utilizado:**
+
+- apoio na implementação do cadastro e da autenticação de usuários;
+- revisão do `UsuarioController` e do `UsuarioService`;
+- auxílio na implementação da criptografia de senhas com BCrypt;
+- identificação e correção de erros relacionados ao login e ao redirecionamento de páginas;
+- sugestões e aplicação de refactorings;
+- interpretação de falhas nos testes automatizados;
+- apoio na documentação dos refactorings;
+- auxílio na elaboração de mensagens de commit e descrições de Pull Requests;
+- orientação sobre comandos Git e gerenciamento de branches.
+
+### Prompt 1 – Implementação da autenticação de usuários
+
+**Contexto:** implementar o processo de login dos usuários, verificando as credenciais informadas e gerenciando a sessão.
+
+**Prompt:**
+
+> "Como implementar a autenticação de usuários utilizando e-mail e senha no UsuarioService e UsuarioController, incluindo a validação das credenciais e o gerenciamento da sessão?"
+
+**Resultado:** **aceito com ajustes.** As orientações auxiliaram na implementação da autenticação, na validação das credenciais e no armazenamento das informações do usuário na sessão.
+
+### Prompt 2 – Depuração do redirecionamento após o login
+
+**Contexto:** após realizar o login, a aplicação apresentava um erro 404 relacionado à página `dashboard`.
+
+**Prompt:**
+
+> "Ao fazer login, aparece uma Whitelabel Error Page com status 404 e a mensagem No static resource dashboard. Como corrigir o redirecionamento para a página correta?"
+
+**Resultado:** **aceito com ajustes.** A análise ajudou a identificar problemas relacionados às rotas e aos redirecionamentos da aplicação. O fluxo foi ajustado conforme as páginas disponíveis no projeto.
+
+### Prompt 3 – Refatorações no código
+
+**Contexto:** a entrega exigia pelo menos dois refactorings por integrante, com melhorias na estrutura interna do código.
+
+**Prompt:**
+
+> "Analise o código e sugira dois refactorings simples que melhorem a legibilidade e a organização, sem modificar o comportamento esperado."
+
+**Resultado:** **aceito.** Foram aplicados dois refactorings:
+- Extração da mensagem de erro de e-mail duplicado para a constante `EMAIL_JA_CADASTRADO` no `UsuarioService`.
+- Remoção do parâmetro `Model` não utilizado no método `listar()` do `UsuarioController`.
+
+### Dinâmica de uso
+
+A IA foi utilizada como ferramenta de consulta e apoio durante o desenvolvimento da parte de gerenciamento de usuários e autenticação.
+
+As sugestões de código foram analisadas e adaptadas conforme a estrutura existente no projeto. As alterações foram acompanhadas por testes e revisões antes de serem registradas em commits e enviadas por pull request.
+
+### O que foi feito sem IA
+
+- execução dos comandos Git;
+- gerenciamento da branch `EduardoNogueira`;
+- realização de commits e push;
+- execução dos testes automatizados com Maven;
+- análise dos resultados apresentados pelo ambiente de desenvolvimento;
+- conferência das alterações realizadas nos arquivos;
+- criação e acompanhamento do Pull Request;
+- decisão final sobre quais sugestões seriam incorporadas ao projeto;
+- validação das alterações na implementação de usuários e autenticação.
+
+### Compreensão
+
+Durante o processo, foi necessário compreender as sugestões recebidas da IA, verificar sua compatibilidade com a arquitetura do projeto e realizar adaptações quando necessário.
+
 # Integrantes
 
 | Integrante | Matrícula | Responsabilidade |
