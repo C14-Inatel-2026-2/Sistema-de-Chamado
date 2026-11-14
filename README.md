@@ -902,7 +902,7 @@ Durante o processo, foi necessário compreender as sugestões recebidas da IA, v
 
 ## Acesso para testes
 
-Para facilitar a realização de testes no sistema, utilize as credenciais da conta de administrador:
+Para facilitar a realização de testes no sistema, utilize as credenciais da conta de administrador` (Somente os administradores podem cadastrar usuários):
 
 | Campo | Credencial |
 |---|---|
@@ -910,7 +910,7 @@ Para facilitar a realização de testes no sistema, utilize as credenciais da co
 | **Senha** | `Admin@123` |
 | **Perfil** | Administrador |
 
-### Links de acesso (localhost)
+### Links de acesso para a parte de usuarios
 
 | Página | URL |
 |---|---|
