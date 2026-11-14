@@ -83,18 +83,15 @@ pipeline {
     }
     post {
         always {
-            junit testResults: 'target/surefire-reports/*.xml',
-                    allowEmptyResults: true
+            junit 'target/surefire-reports/*.xml'
 
-            jacoco(
-                    execPattern: '**/target/jacoco.exec',
-                    classPattern: '**/target/classes',
-                    sourcePattern: '**/src/main/java'
-            )
-
-            archiveArtifacts(
-                    artifacts: 'target/site/jacoco/**,target/surefire-reports/*.xml,target/*.jar,target/deploy.log',
-                    allowEmptyArchive: true
+            recordCoverage(
+                    tools: [[
+                                    parser: 'JACOCO',
+                                    pattern: 'target/site/jacoco/jacoco.xml'
+                            ]],
+                    id: 'jacoco',
+                    name: 'JaCoCo Coverage'
             )
         }
     }
