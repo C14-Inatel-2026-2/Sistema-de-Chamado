@@ -261,7 +261,8 @@ para visualizar a página principal do Sistema de Chamados de Manutenção.
 
 - `PaginaControllerTest.java`
 
-**Pull Request:** [PREENCHER APÓS CRIAR O PR]
+**Pull Request:** [#38](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/38)
+
 
 ---
 
@@ -614,7 +615,7 @@ public String inicio(Model model) {
 
 **Motivo:** reduzir duplicação de código e manter apenas um ponto responsável pela preparação e retorno do dashboard.
 
-**Pull Request:** [PREENCHER APÓS CRIAR O PR]
+**Pull Request:** [#38](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/38)
 
 ### Refactoring 2 – Renomeação do método de preparação do Model
 
@@ -636,7 +637,8 @@ adicionarTituloAoModel()
 
 **Motivo:** deixar mais claro que a responsabilidade do método é adicionar o título da aplicação ao `Model`, sem alterar o comportamento externo da aplicação.
 
-**Pull Request:** [PREENCHER APÓS CRIAR O PR]
+**Pull Request:** [#38](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/38)
+
 
 ### Validação dos refactorings
 
