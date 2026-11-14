@@ -1,20 +1,1140 @@
 <!DOCTYPE html>
-<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-BR"
+      xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Chamados de Manutenção</title>
-    <link rel="stylesheet" href="/css/style.css">
-</head>
-<body>
-<main class="container">
-    <h1 th:text="${titulo}">Sistema de Chamados de Manutenção</h1>
-    <p>Projeto C14 - Engenharia de Software</p>
 
-    <section class="card">
-        <h2>Dashboard inicial</h2>
-        <p>A aplicação foi iniciada com Spring Boot, Maven e Thymeleaf.</p>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title th:text="${titulo}">
+        Sistema de Chamados de Manutenção
+    </title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f6f9;
+            color: #1f2937;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 24px 40px;
+        }
+
+        header h1 {
+            font-size: 26px;
+            margin-bottom: 6px;
+        }
+
+        header p {
+            color: #d1d5db;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 1250px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+
+        .welcome {
+            margin-bottom: 28px;
+        }
+
+        .welcome h2 {
+            font-size: 24px;
+            margin-bottom: 7px;
+        }
+
+        .welcome p {
+            color: #6b7280;
+        }
+
+        /* =========================
+           CARDS
+           ========================= */
+
+        .cards {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(180px, 1fr));
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+
+            box-shadow:
+                    0 2px 8px rgba(0, 0, 0, 0.06);
+
+            border-left: 5px solid #4f46e5;
+        }
+
+        .card span {
+            color: #6b7280;
+            font-size: 13px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .card h3 {
+            font-size: 30px;
+            margin-top: 10px;
+        }
+
+        .total {
+            border-color: #4f46e5;
+        }
+
+        .aberto {
+            border-color: #3b82f6;
+        }
+
+        .andamento {
+            border-color: #f59e0b;
+        }
+
+        .resolvido {
+            border-color: #10b981;
+        }
+
+        .fechado {
+            border-color: #6b7280;
+        }
+
+        /* =========================
+           GRID PRINCIPAL
+           ========================= */
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 22px;
+        }
+
+        .panel {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+
+            box-shadow:
+                    0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        .panel h2 {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        /* =========================
+           PRIORIDADES
+           ========================= */
+
+        .priority {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 14px 0;
+
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .priority:last-child {
+            border-bottom: none;
+        }
+
+        .priority-label {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+        }
+
+        .alta {
+            background: #dc2626;
+        }
+
+        .media {
+            background: #f59e0b;
+        }
+
+        .baixa {
+            background: #10b981;
+        }
+
+        .priority-number {
+            font-weight: bold;
+            font-size: 19px;
+        }
+
+        /* =========================
+           TABELA DO DASHBOARD
+           ========================= */
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            font-size: 12px;
+            text-transform: uppercase;
+
+            color: #6b7280;
+
+            padding: 12px;
+
+            border-bottom:
+                    2px solid #e5e7eb;
+        }
+
+        td {
+            padding: 14px 12px;
+
+            border-bottom:
+                    1px solid #e5e7eb;
+
+            font-size: 14px;
+        }
+
+        .badge {
+            display: inline-block;
+
+            padding: 5px 10px;
+
+            border-radius: 20px;
+
+            background: #eef2ff;
+            color: #4338ca;
+
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .empty {
+            color: #6b7280;
+
+            text-align: center;
+
+            padding: 30px;
+        }
+
+        /* =========================
+           AÇÕES RÁPIDAS
+           ========================= */
+
+        .actions {
+            margin-top: 24px;
+
+            background: white;
+
+            border-radius: 12px;
+
+            padding: 24px;
+
+            box-shadow:
+                    0 2px 8px rgba(0, 0, 0, 0.06);
+        }
+
+        .actions h2 {
+            font-size: 18px;
+            margin-bottom: 18px;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .button {
+            text-decoration: none;
+
+            padding: 12px 18px;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+            font-weight: bold;
+
+            transition: 0.2s;
+
+            border: none;
+
+            cursor: pointer;
+
+            font-family: inherit;
+        }
+
+        .button-primary {
+            background: #4f46e5;
+            color: white;
+        }
+
+        .button-secondary {
+            background: #e5e7eb;
+            color: #1f2937;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        /* =========================
+           PAINEL DA API
+           ========================= */
+
+        .dados-api {
+            margin-top: 24px;
+        }
+
+        .dados-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 18px;
+        }
+
+        .dados-header h2 {
+            margin: 0;
+        }
+
+        .fechar {
+            width: 36px;
+            height: 36px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #e5e7eb;
+            color: #374151;
+
+            cursor: pointer;
+
+            font-size: 17px;
+
+            transition: 0.2s;
+        }
+
+        .fechar:hover {
+            background: #d1d5db;
+        }
+
+        .api-table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .api-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .api-table th {
+            background: #f9fafb;
+
+            padding: 12px;
+
+            text-align: left;
+
+            border-bottom:
+                    2px solid #e5e7eb;
+
+            font-size: 12px;
+
+            text-transform: uppercase;
+        }
+
+        .api-table td {
+            padding: 12px;
+
+            border-bottom:
+                    1px solid #e5e7eb;
+
+            vertical-align: top;
+        }
+
+        .api-vazio {
+            color: #6b7280;
+
+            text-align: center;
+
+            padding: 35px;
+        }
+
+        .api-carregando {
+            color: #4f46e5;
+
+            text-align: center;
+
+            padding: 35px;
+
+            font-weight: bold;
+        }
+
+        .api-erro {
+            color: #991b1b;
+
+            background: #fee2e2;
+
+            padding: 15px;
+
+            border-radius: 8px;
+        }
+
+        /* =========================
+           FOOTER
+           ========================= */
+
+        footer {
+            text-align: center;
+
+            margin-top: 35px;
+
+            padding: 25px;
+
+            color: #6b7280;
+
+            font-size: 13px;
+        }
+
+        /* =========================
+           RESPONSIVO
+           ========================= */
+
+        @media (max-width: 800px) {
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                padding: 20px;
+            }
+
+            .container {
+                padding: 22px 15px;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .button {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <h1 th:text="${titulo}">
+        Sistema de Chamados de Manutenção
+    </h1>
+
+    <p>
+        C14 - Engenharia de Software | INATEL
+    </p>
+
+</header>
+
+
+<main class="container">
+
+    <!-- =========================
+         BOAS-VINDAS
+         ========================= -->
+
+    <section class="welcome">
+
+        <h2>Dashboard</h2>
+
+        <p>
+            Visão geral dos chamados de manutenção
+            cadastrados no sistema.
+        </p>
+
     </section>
+
+
+    <!-- =========================
+         CARDS
+         ========================= -->
+
+    <section class="cards">
+
+        <div class="card total">
+
+            <span>Total de chamados</span>
+
+            <h3 th:text="${totalChamados}">
+                0
+            </h3>
+
+        </div>
+
+
+        <div class="card aberto">
+
+            <span>Abertos</span>
+
+            <h3 th:text="${chamadosAbertos}">
+                0
+            </h3>
+
+        </div>
+
+
+        <div class="card andamento">
+
+            <span>Em andamento</span>
+
+            <h3 th:text="${chamadosEmAndamento}">
+                0
+            </h3>
+
+        </div>
+
+
+        <div class="card resolvido">
+
+            <span>Resolvidos</span>
+
+            <h3 th:text="${chamadosResolvidos}">
+                0
+            </h3>
+
+        </div>
+
+
+        <div class="card fechado">
+
+            <span>Fechados</span>
+
+            <h3 th:text="${chamadosFechados}">
+                0
+            </h3>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         GRID
+         ========================= -->
+
+    <section class="dashboard-grid">
+
+
+        <!-- PRIORIDADES -->
+
+        <div class="panel">
+
+            <h2>
+                Chamados por prioridade
+            </h2>
+
+
+            <div class="priority">
+
+                <div class="priority-label">
+
+                    <span class="dot alta"></span>
+
+                    <span>
+                        Alta
+                    </span>
+
+                </div>
+
+                <span class="priority-number"
+                      th:text="${prioridadeAlta}">
+                    0
+                </span>
+
+            </div>
+
+
+            <div class="priority">
+
+                <div class="priority-label">
+
+                    <span class="dot media"></span>
+
+                    <span>
+                        Média
+                    </span>
+
+                </div>
+
+                <span class="priority-number"
+                      th:text="${prioridadeMedia}">
+                    0
+                </span>
+
+            </div>
+
+
+            <div class="priority">
+
+                <div class="priority-label">
+
+                    <span class="dot baixa"></span>
+
+                    <span>
+                        Baixa
+                    </span>
+
+                </div>
+
+                <span class="priority-number"
+                      th:text="${prioridadeBaixa}">
+                    0
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- ÚLTIMOS CHAMADOS -->
+
+        <div class="panel">
+
+            <h2>
+                Últimos chamados
+            </h2>
+
+
+            <table th:if="${!#lists.isEmpty(ultimosChamados)}">
+
+                <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Título</th>
+
+                    <th>Prioridade</th>
+
+                    <th>Status</th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                <tr th:each="chamado : ${ultimosChamados}">
+
+                    <td th:text="${chamado.id}">
+                        1
+                    </td>
+
+
+                    <td th:text="${chamado.titulo}">
+                        Exemplo
+                    </td>
+
+
+                    <td>
+
+                        <span class="badge"
+                              th:text="${chamado.prioridade}">
+
+                            ALTA
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="badge"
+                              th:text="${chamado.status}">
+
+                            ABERTO
+
+                        </span>
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+
+            <div class="empty"
+                 th:if="${#lists.isEmpty(ultimosChamados)}">
+
+                Nenhum chamado cadastrado
+                até o momento.
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         ACESSO RÁPIDO
+         ========================= -->
+
+    <section class="actions">
+
+        <h2>
+            Acesso rápido
+        </h2>
+
+        <div class="action-buttons">
+
+
+            <button type="button"
+                    class="button button-primary"
+                    onclick="carregarDados(
+                        '/chamados',
+                        'Chamados'
+                    )">
+
+                Ver chamados
+
+            </button>
+
+
+            <button type="button"
+                    class="button button-secondary"
+                    onclick="carregarDados(
+                        '/locais',
+                        'Locais'
+                    )">
+
+                Locais
+
+            </button>
+
+
+            <button type="button"
+                    class="button button-secondary"
+                    onclick="carregarDados(
+                        '/equipamentos',
+                        'Equipamentos'
+                    )">
+
+                Equipamentos
+
+            </button>
+
+
+            <a th:href="@{/dashboard}"
+               class="button button-secondary">
+
+                Atualizar dashboard
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         DADOS DA API
+         ========================= -->
+
+    <section id="dadosApi"
+             class="panel dados-api"
+             style="display: none;">
+
+
+        <div class="dados-header">
+
+            <h2 id="dadosTitulo">
+                Dados
+            </h2>
+
+
+            <button type="button"
+                    class="fechar"
+                    onclick="fecharDados()"
+                    title="Fechar">
+
+                ✕
+
+            </button>
+
+        </div>
+
+
+        <div id="dadosConteudo">
+
+        </div>
+
+    </section>
+
 </main>
+
+
+<footer>
+
+    Sistema de Chamados de Manutenção
+    • C14 - Engenharia de Software
+    • INATEL
+
+</footer>
+
+
+<script>
+
+    /*
+     * Faz uma requisição para os endpoints
+     * já existentes no projeto.
+     */
+    async function carregarDados(url, titulo) {
+
+        const painel =
+            document.getElementById("dadosApi");
+
+        const tituloElemento =
+            document.getElementById("dadosTitulo");
+
+        const conteudo =
+            document.getElementById("dadosConteudo");
+
+
+        tituloElemento.textContent = titulo;
+
+        painel.style.display = "block";
+
+
+        conteudo.innerHTML =
+            '<div class="api-carregando">' +
+            'Carregando...' +
+            '</div>';
+
+
+        painel.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+
+        try {
+
+            const resposta =
+                await fetch(url);
+
+
+            if (!resposta.ok) {
+
+                throw new Error(
+                    "Erro HTTP: " +
+                    resposta.status
+                );
+            }
+
+
+            const dados =
+                await resposta.json();
+
+
+            mostrarTabela(
+                dados,
+                conteudo
+            );
+
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao carregar dados:",
+                erro
+            );
+
+
+            conteudo.innerHTML =
+                '<div class="api-erro">' +
+                '<strong>Não foi possível carregar os dados.</strong>' +
+                '<br><br>' +
+                'Verifique se o endpoint está disponível.' +
+                '</div>';
+        }
+    }
+
+
+    /*
+     * Monta automaticamente uma tabela
+     * usando o JSON devolvido pela API.
+     */
+    function mostrarTabela(dados, elemento) {
+
+
+        /*
+         * Caso a API retorne um único objeto
+         * em vez de uma lista.
+         */
+        if (!Array.isArray(dados)) {
+
+            dados = [dados];
+        }
+
+
+        /*
+         * Lista vazia.
+         */
+        if (dados.length === 0) {
+
+            elemento.innerHTML =
+                '<div class="api-vazio">' +
+                'Nenhum registro cadastrado.' +
+                '</div>';
+
+            return;
+        }
+
+
+        /*
+         * Obtém os nomes dos campos
+         * do primeiro registro.
+         */
+        const colunas =
+            Object.keys(dados[0]);
+
+
+        let html =
+            '<div class="api-table-wrapper">' +
+            '<table class="api-table">' +
+            '<thead>' +
+            '<tr>';
+
+
+        colunas.forEach(
+            coluna => {
+
+                html +=
+                    '<th>' +
+                    formatarNome(coluna) +
+                    '</th>';
+            }
+        );
+
+
+        html +=
+            '</tr>' +
+            '</thead>' +
+            '<tbody>';
+
+
+        /*
+         * Criação das linhas.
+         */
+        dados.forEach(
+            item => {
+
+                html += '<tr>';
+
+
+                colunas.forEach(
+                    coluna => {
+
+                        html +=
+                            '<td>' +
+                            formatarValor(
+                                item[coluna]
+                            ) +
+                            '</td>';
+                    }
+                );
+
+
+                html += '</tr>';
+            }
+        );
+
+
+        html +=
+            '</tbody>' +
+            '</table>' +
+            '</div>';
+
+
+        elemento.innerHTML = html;
+    }
+
+
+    /*
+     * Formata objetos vindos da API.
+     *
+     * Exemplo:
+     *
+     * local: {
+     *     id: 1,
+     *     nome: "Laboratório"
+     * }
+     *
+     * Vai mostrar:
+     *
+     * Laboratório
+     */
+    function formatarValor(valor) {
+
+
+        if (
+            valor === null ||
+            valor === undefined
+        ) {
+
+            return "-";
+        }
+
+
+        if (
+            typeof valor === "object"
+        ) {
+
+
+            if (valor.nome) {
+
+                return escaparHtml(
+                    valor.nome
+                );
+            }
+
+
+            if (valor.titulo) {
+
+                return escaparHtml(
+                    valor.titulo
+                );
+            }
+
+
+            if (valor.id) {
+
+                return "ID " +
+                    escaparHtml(
+                        String(valor.id)
+                    );
+            }
+
+
+            return escaparHtml(
+                JSON.stringify(valor)
+            );
+        }
+
+
+        return escaparHtml(
+            String(valor)
+        );
+    }
+
+
+    /*
+     * Transforma nomes como:
+     *
+     * dataAbertura
+     *
+     * em:
+     *
+     * Data Abertura
+     */
+    function formatarNome(nome) {
+
+        const texto =
+            nome
+                .replace(
+                    /([A-Z])/g,
+                    " $1"
+                )
+                .replace(
+                    /_/g,
+                    " "
+                );
+
+
+        return (
+            texto
+                .charAt(0)
+                .toUpperCase()
+            +
+            texto.slice(1)
+        );
+    }
+
+
+    /*
+     * Evita inserir diretamente HTML
+     * recebido da API.
+     */
+    function escaparHtml(valor) {
+
+        const elemento =
+            document.createElement("div");
+
+
+        elemento.textContent =
+            valor;
+
+
+        return elemento.innerHTML;
+    }
+
+
+    /*
+     * Fecha o painel.
+     */
+    function fecharDados() {
+
+        const painel =
+            document.getElementById("dadosApi");
+
+
+        painel.style.display =
+            "none";
+    }
+
+</script>
+
 </body>
+
 </html>
