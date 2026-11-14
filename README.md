@@ -898,6 +898,29 @@ As sugestões de código foram analisadas e adaptadas conforme a estrutura exist
 
 Durante o processo, foi necessário compreender as sugestões recebidas da IA, verificar sua compatibilidade com a arquitetura do projeto e realizar adaptações quando necessário.
 
+---
+
+## Acesso para testes
+
+Para facilitar a realização de testes no sistema, utilize as credenciais da conta de administrador:
+
+| Campo | Credencial |
+|---|---|
+| **E-mail** | `admin@chamados.com` |
+| **Senha** | `Admin@123` |
+| **Perfil** | Administrador |
+
+### Links de acesso (localhost)
+
+| Página | URL |
+|---|---|
+| **Login** | http://localhost:8080/usuarios/login |
+| **Visualização e cadastro dos usuários** | http://localhost:8080/usuarios |
+
+> **Observação:** Essas credenciais são destinadas exclusivamente ao ambiente de testes. É necessário iniciar a aplicação Spring Boot para acessar os links.
+
+---
+
 # Integrantes
 
 | Integrante | Matrícula | Responsabilidade |
