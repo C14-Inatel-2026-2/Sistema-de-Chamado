@@ -2,32 +2,35 @@
 
 Projeto desenvolvido para a disciplina **C14 – Engenharia de Software**, do Instituto Nacional de Telecomunicações – INATEL.
 
+---
+
 ## Descrição
 
 O **Sistema de Chamados de Manutenção** é uma aplicação web desenvolvida para centralizar o registro, acompanhamento e gerenciamento de solicitações de manutenção.
 
-O sistema permite cadastrar usuários com diferentes perfis, registrar locais e equipamentos, abrir chamados de manutenção, acompanhar o atendimento técnico, controlar a evolução dos status e consultar o histórico das alterações realizadas.
+O sistema permite cadastrar usuários com diferentes perfis, registrar locais e equipamentos, abrir e consultar chamados, realizar o atendimento técnico, controlar a evolução dos status e registrar o histórico das alterações.
 
-A proposta é facilitar a comunicação entre solicitantes, técnicos e responsáveis pelo sistema, permitindo maior organização e rastreabilidade dos serviços de manutenção.
+O projeto foi desenvolvido utilizando práticas de Engenharia de Software, incluindo testes automatizados, versionamento com Git, revisão por Pull Requests, integração contínua, metodologia ágil, refactoring e documentação do uso de Inteligência Artificial.
 
 ---
 
 ## Objetivo
 
-Desenvolver uma aplicação capaz de gerenciar o ciclo completo de um chamado de manutenção, desde sua abertura até seu encerramento, mantendo informações sobre:
+Gerenciar o ciclo de vida de um chamado de manutenção, desde sua abertura até seu encerramento, mantendo informações relacionadas a:
 
 - usuários;
+- solicitantes;
+- técnicos;
+- chamados;
+- prioridades;
 - locais;
 - equipamentos;
-- chamados;
-- prioridade;
-- atendimento técnico;
 - status;
 - histórico de alterações.
 
 ---
 
-## Tecnologias Utilizadas
+# Tecnologias Utilizadas
 
 - Java 21
 - Spring Boot
@@ -35,8 +38,8 @@ Desenvolver uma aplicação capaz de gerenciar o ciclo completo de um chamado de
 - Spring Data JPA
 - Thymeleaf
 - Maven
-- PostgreSQL
 - H2 Database
+- PostgreSQL
 - JUnit 5
 - Mockito
 - JaCoCo
@@ -47,22 +50,158 @@ Desenvolver uma aplicação capaz de gerenciar o ciclo completo de um chamado de
 
 ---
 
+# Funcionalidades
+
+Entre as principais funcionalidades do sistema estão:
+
+- cadastro de usuários;
+- definição de perfis de acesso;
+- abertura de chamados;
+- consulta de chamados;
+- atribuição de técnico;
+- atualização do status de atendimento;
+- cadastro de locais;
+- cadastro de equipamentos;
+- registro de histórico;
+- filtros de chamados;
+- dashboard web;
+- validações de regras de negócio.
+
+---
+
+# Instalação e Execução
+
+## Pré-requisitos
+
+Para executar o projeto localmente é necessário possuir:
+
+- Java 21;
+- Maven;
+- Git.
+
+Clone o repositório:
+
+```bash
+git clone https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado.git
+```
+
+Entre na pasta do projeto:
+
+```bash
+cd Sistema-de-Chamado
+```
+
+Execute os testes:
+
+```bash
+mvn clean test
+```
+
+Para executar também as verificações e relatórios:
+
+```bash
+mvn clean verify
+```
+
+Execute a aplicação:
+
+```bash
+mvn spring-boot:run
+```
+
+Após a inicialização, a aplicação estará disponível em:
+
+```text
+http://localhost:8080
+```
+
+---
+
+# Uso
+
+## Dashboard
+
+O dashboard pode ser acessado por:
+
+```text
+/
+```
+
+ou:
+
+```text
+/dashboard
+```
+
+## Chamados
+
+Principais endpoints relacionados aos chamados:
+
+```text
+POST /chamados
+GET /chamados
+GET /chamados/{id}
+```
+
+---
+
 # Gestão Ágil
 
-O projeto utiliza a metodologia ágil **Scrum**.
+O grupo utilizou a metodologia **Scrum** para organizar o desenvolvimento.
 
-As atividades são organizadas no Jira utilizando:
+O Jira foi utilizado para gerenciamento de:
 
 - Product Backlog;
 - User Stories;
 - critérios de aceite;
 - Sprint Backlog;
-- quadro Scrum;
-- acompanhamento de status das atividades.
+- responsáveis;
+- acompanhamento das atividades.
 
-As User Stories detalhadas, seus responsáveis e seus respectivos critérios de aceite podem ser consultados no Jira do projeto.
+## Papéis
 
-### Jira
+**Product Owner:** [PREENCHER]
+
+**Scrum Master / Facilitador:** [PREENCHER]
+
+**Equipe de desenvolvimento:** todos os integrantes do grupo.
+
+## Cadência
+
+O desenvolvimento foi organizado em Sprints relacionadas às diferentes entregas da disciplina.
+
+**Duração das Sprints:** [PREENCHER DE ACORDO COM O JIRA]
+
+## Definition of Ready — DoR
+
+Uma atividade era considerada preparada para desenvolvimento quando:
+
+- possuía objetivo definido;
+- possuía responsável;
+- apresentava critérios de aceite;
+- tinha escopo compreendido pelo integrante.
+
+## Definition of Done — DoD
+
+Uma atividade era considerada concluída quando:
+
+- a implementação estava finalizada;
+- os testes relacionados estavam executados;
+- o código estava versionado;
+- um Pull Request havia sido criado;
+- outro integrante havia realizado a revisão;
+- os critérios de aceite haviam sido verificados;
+- o pipeline estava funcionando quando aplicável.
+
+## Métricas
+
+**Issues concluídas:** [PREENCHER]
+
+**Issues pendentes ou parciais:** [PREENCHER]
+
+**Pull Requests realizados:** [PREENCHER]
+
+## Jira
 
 https://ppedrocesarmaiaa.atlassian.net/jira/software/projects/SCM/boards/1/backlog
 
@@ -78,13 +217,19 @@ https://ppedrocesarmaiaa.atlassian.net/jira/software/projects/SCM/boards/1/backl
 quero cadastrar novos usuários informando seus dados pessoais e de acesso,  
 para permitir que diferentes usuários tenham acesso ao sistema de chamados de manutenção de acordo com seus respectivos perfis.
 
-### Principais critérios
+### Critérios de aceite
 
-- O formulário deve possuir nome, e-mail, senha e perfil.
+- O sistema deve apresentar um formulário com nome, e-mail, senha e perfil.
 - Todos os campos obrigatórios devem ser preenchidos.
-- O sistema deve salvar usuários com dados válidos.
-- Não deve ser permitido cadastrar dois usuários utilizando o mesmo e-mail.
-- O sistema deve informar erros de validação quando o cadastro não puder ser realizado.
+- Usuários com dados válidos devem ser cadastrados.
+- O sistema deve impedir cadastro com e-mail já utilizado.
+- O sistema deve informar os erros de validação encontrados.
+
+**Issue Jira:** SCM-8  
+**Prioridade:** [PREENCHER]  
+**Status final:** [PREENCHER: Entregue / Parcial / Descartada]  
+**PR:** [PREENCHER]  
+**Testes:** testes relacionados ao módulo de usuários.
 
 ---
 
@@ -96,33 +241,22 @@ para permitir que diferentes usuários tenham acesso ao sistema de chamados de m
 quero abrir chamados de manutenção e consultá-los,  
 para que a equipe técnica saiba qual problema precisa ser resolvido e eu possa acompanhar o andamento.
 
-### Principais critérios
+### Critérios de aceite
 
-- O chamado deve possuir título, descrição e prioridade.
-- Título e descrição são obrigatórios.
-- A prioridade deve ser `BAIXA`, `MEDIA` ou `ALTA`.
-- Todo novo chamado deve iniciar com status `ABERTO`.
-- A data e hora de abertura devem ser registradas automaticamente.
-- O sistema deve listar todos os chamados cadastrados.
-- Deve ser possível consultar um chamado pelo seu identificador.
-- Caso o chamado não exista, o sistema deve informar que ele não foi encontrado.
-- O chamado deve ficar vinculado ao solicitante e ao local/equipamento relacionado ao problema.
+- título e descrição são obrigatórios;
+- a prioridade deve ser informada;
+- um novo chamado inicia com status `ABERTO`;
+- a data e hora de abertura são registradas automaticamente;
+- o sistema deve listar todos os chamados;
+- deve ser possível buscar um chamado pelo identificador;
+- um identificador inexistente deve gerar uma mensagem adequada;
+- o chamado deve possuir os vínculos necessários.
 
-### Endpoints relacionados
-
-```text
-POST /chamados
-GET /chamados
-GET /chamados/{id}
-```
-Os vínculos com solicitante, local e equipamento são opcionais e informados pelo id de registros já existentes:
-
-```json
-{"titulo": "Projetor não liga", "descricao": "Sem imagem", "prioridade": "ALTA",
- "solicitante": {"id": 1}, "local": {"id": 1}}
-```
-
-Respostas: `201` ao criar, `400` para dados inválidos ou vínculo inexistente e `404` quando o chamado não existe.
+**Issue Jira:** SCM-9  
+**Prioridade:** [PREENCHER]  
+**Status final:** [PREENCHER]  
+**PR:** [PREENCHER]  
+**Testes:** testes relacionados à abertura e consulta de chamados.
 
 ---
 
@@ -134,18 +268,17 @@ Respostas: `201` ao criar, `400` para dados inválidos ou vínculo inexistente e
 quero visualizar os chamados atribuídos a mim e atualizar seus status durante o atendimento,  
 para acompanhar e organizar os serviços de manutenção sob minha responsabilidade.
 
-### Principais critérios
+### Critérios de aceite
 
-- O técnico deve conseguir visualizar seus chamados atribuídos.
-- O chamado deve apresentar informações como título, descrição e prioridade.
-- O técnico deve poder iniciar o atendimento.
-- Um chamado `ABERTO` pode ser alterado para `EM_ANDAMENTO`.
-- Um chamado `EM_ANDAMENTO` pode ser alterado para `RESOLVIDO`.
-- Um chamado resolvido pode ser alterado para `FECHADO`.
-- O sistema deve impedir transições que não respeitem o fluxo estabelecido.
-- Tentativas de alteração inválida devem ser informadas ao usuário.
+- o técnico deve visualizar os chamados atribuídos;
+- o sistema deve apresentar título, descrição e prioridade;
+- o técnico deve conseguir iniciar o atendimento;
+- `ABERTO` deve poder ser alterado para `EM_ANDAMENTO`;
+- `EM_ANDAMENTO` deve poder ser alterado para `RESOLVIDO`;
+- `RESOLVIDO` deve poder ser alterado para `FECHADO`;
+- transições inválidas devem ser impedidas.
 
-### Fluxo de status
+### Fluxo
 
 ```text
 ABERTO
@@ -157,6 +290,12 @@ RESOLVIDO
 FECHADO
 ```
 
+**Issue Jira:** SCM-10  
+**Prioridade:** [PREENCHER]  
+**Status final:** [PREENCHER]  
+**PR:** [PREENCHER]  
+**Testes:** testes relacionados ao atendimento e às transições de status.
+
 ---
 
 ## US04 – Cadastro de Locais e Equipamentos
@@ -165,32 +304,22 @@ FECHADO
 
 **Como administrador do sistema,**  
 quero cadastrar os locais físicos e os equipamentos da instituição,  
-para que os solicitantes possam indicar com precisão onde e em qual máquina o problema ocorreu ao abrir um chamado.
+para que os solicitantes possam indicar onde e em qual equipamento ocorreu o problema.
 
-### Cadastro de locais
+### Critérios de aceite
 
-- O nome do local é obrigatório.
-- Não deve ser permitido cadastrar dois locais com exatamente o mesmo nome.
-- Deve ser possível criar e listar locais cadastrados.
+- permitir cadastro de locais;
+- permitir listagem de locais;
+- permitir cadastro de equipamentos;
+- permitir listagem de equipamentos;
+- permitir associação entre equipamento e local;
+- validar os dados necessários para realização do cadastro.
 
-### Cadastro de equipamentos
-
-- O equipamento deve possuir nome ou descrição.
-- O número de patrimônio é obrigatório.
-- O número de patrimônio deve ser único.
-- Todo equipamento deve estar associado a um local existente.
-- O sistema deve recusar o cadastro caso o local informado não exista.
-- Dados inválidos não devem ser salvos.
-
-### Endpoints relacionados
-
-```text
-POST /locais
-GET /locais
-
-POST /equipamentos
-GET /equipamentos
-```
+**Issue Jira:** SCM-11  
+**Prioridade:** [PREENCHER]  
+**Status final:** [PREENCHER]  
+**PR:** [PREENCHER]  
+**Testes:** testes relacionados aos locais e equipamentos.
 
 ---
 
@@ -199,18 +328,44 @@ GET /equipamentos
 **Responsável:** Allan Pinto Nogueira
 
 **Como usuário do sistema,**  
-quero consultar o histórico e filtrar os chamados,  
-para acompanhar as alterações realizadas e localizar chamados com maior facilidade.
+eu quero consultar o histórico e filtrar os chamados,  
+para acompanhar as alterações realizadas e localizar chamados com mais facilidade.
 
-### Principais critérios
+### Critérios de aceite
 
-- Alterações realizadas em um chamado devem ser registradas.
-- O histórico deve permitir identificar o status anterior e o novo status.
-- Deve ser possível identificar o usuário responsável pela alteração.
-- A data da alteração deve ser registrada.
-- O usuário deve conseguir consultar o histórico de um chamado.
-- O sistema deve permitir a utilização de filtros para facilitar a localização dos chamados.
-- Quando nenhum chamado corresponder ao filtro utilizado, o sistema deve retornar uma lista vazia ou informar que nenhum resultado foi encontrado.
+**DADO** que um chamado tenha alterações registradas  
+**QUANDO** o usuário consultar seu histórico  
+**ENTÃO** o sistema deve exibir as alterações realizadas no chamado.
+
+**DADO** que o status de um chamado seja alterado  
+**QUANDO** a alteração for registrada no histórico  
+**ENTÃO** o sistema deve armazenar o status anterior, o novo status, o usuário responsável e a data da alteração.
+
+**DADO** que existam vários chamados cadastrados  
+**QUANDO** o usuário utilizar um dos filtros disponíveis  
+**ENTÃO** o sistema deve apresentar apenas os chamados correspondentes ao filtro selecionado.
+
+**DADO** que nenhum chamado corresponda ao filtro informado  
+**QUANDO** a busca for realizada  
+**ENTÃO** o sistema deve retornar uma lista vazia ou informar que nenhum chamado foi encontrado.
+
+**DADO** que um chamado possua alterações de status registradas  
+**QUANDO** o usuário consultar o histórico  
+**ENTÃO** o sistema deve apresentar o status anterior e o novo status.
+
+**DADO** que existam registros no histórico  
+**QUANDO** o usuário visualizar esses registros  
+**ENTÃO** devem ser apresentadas a data e a hora das alterações em ordem cronológica.
+
+**DADO** que um chamado não possua alterações registradas  
+**QUANDO** o usuário consultar seu histórico  
+**ENTÃO** o sistema deve informar que não existem alterações registradas.
+
+**Issue Jira:** SCM-12  
+**Prioridade:** [PREENCHER]  
+**Status final:** [PREENCHER / CONFIRMAR COM ALLAN]  
+**PR:** [PREENCHER]  
+**Testes:** testes relacionados ao histórico e filtros.
 
 ---
 
@@ -222,18 +377,38 @@ para acompanhar as alterações realizadas e localizar chamados com maior facili
 quero acessar um dashboard inicial,  
 para visualizar a página principal do Sistema de Chamados de Manutenção.
 
-### Principais critérios
+### Critérios de aceite
 
-- Ao acessar `/dashboard`, o sistema deve apresentar a página principal.
-- O dashboard deve apresentar o título `Sistema de Chamados de Manutenção`.
-- Ao acessar `/`, o usuário também deve visualizar o dashboard.
+**DADO** que a aplicação esteja em execução  
+**QUANDO** o usuário acessar `/dashboard`  
+**ENTÃO** o sistema deve exibir a página principal.
 
-### Rotas relacionadas
+**DADO** que o dashboard seja carregado  
+**QUANDO** a página for exibida  
+**ENTÃO** deve aparecer o título `Sistema de Chamados de Manutenção`.
+
+**DADO** que a aplicação esteja em execução  
+**QUANDO** o usuário acessar `/`  
+**ENTÃO** deve visualizar o dashboard.
+
+**Issue Jira:** SCM-7  
+**Prioridade:** [PREENCHER]  
+**Status final:** Entregue
+
+### Implementação
 
 ```text
-/
- /dashboard
+PaginaController.java
+dashboard.html
 ```
+
+### Testes
+
+```text
+PaginaControllerTest.java
+```
+
+**PR:** [PREENCHER COM O LINK DO SEU PR FINAL]
 
 ---
 
@@ -241,194 +416,480 @@ para visualizar a página principal do Sistema de Chamados de Manutenção.
 
 ## Usuários
 
-**RF01** – O sistema deve permitir o cadastro de usuários.
+**RF01** – O sistema deve permitir cadastrar usuários.
 
 **RF02** – O cadastro deve possuir nome, e-mail, senha e perfil.
 
-**RF03** – O sistema deve validar os campos obrigatórios do cadastro de usuários.
+**RF03** – O sistema deve validar os campos obrigatórios.
 
-**RF04** – O sistema deve impedir o cadastro de usuários com e-mails já utilizados.
-
----
+**RF04** – O sistema deve impedir cadastro com e-mail já utilizado.
 
 ## Chamados
 
-**RF05** – O sistema deve permitir que um solicitante abra um chamado de manutenção.
+**RF05** – O sistema deve permitir abertura de chamados.
 
 **RF06** – O chamado deve possuir título, descrição e prioridade.
 
-**RF07** – A prioridade deve aceitar os valores `BAIXA`, `MEDIA` ou `ALTA`.
+**RF07** – O sistema deve trabalhar com prioridades válidas.
 
-**RF08** – Um novo chamado deve receber automaticamente o status `ABERTO`.
+**RF08** – Novos chamados devem iniciar com status `ABERTO`.
 
-**RF09** – A data e hora de abertura devem ser registradas automaticamente.
+**RF09** – A data e hora da abertura devem ser registradas.
 
-**RF10** – O sistema deve permitir listar os chamados cadastrados.
+**RF10** – O sistema deve permitir listar chamados.
 
-**RF11** – O sistema deve permitir consultar um chamado pelo seu identificador.
+**RF11** – O sistema deve permitir consultar chamado pelo identificador.
 
-**RF12** – O sistema deve informar quando um chamado solicitado não existir.
-
-**RF13** – O chamado deve poder ser associado ao solicitante, ao local e ao equipamento relacionados.
-
----
+**RF12** – O sistema deve informar quando um chamado não existir.
 
 ## Atendimento Técnico
 
-**RF14** – O sistema deve permitir a atribuição de chamados a técnicos.
+**RF13** – O sistema deve permitir atribuir técnico ao chamado.
 
-**RF15** – O técnico deve conseguir visualizar seus chamados atribuídos.
+**RF14** – O técnico deve poder atualizar o status do chamado.
 
-**RF16** – O técnico deve poder atualizar o status dos chamados durante o atendimento.
-
-**RF17** – O sistema deve respeitar o seguinte fluxo:
+**RF15** – O sistema deve respeitar o fluxo:
 
 ```text
 ABERTO → EM_ANDAMENTO → RESOLVIDO → FECHADO
 ```
 
-**RF18** – O sistema deve impedir transições de status inválidas.
+**RF16** – O sistema deve impedir transições inválidas.
 
----
+## Locais e Equipamentos
 
-## Locais
+**RF17** – O sistema deve permitir cadastrar locais.
 
-**RF19** – O sistema deve permitir cadastrar locais.
+**RF18** – O sistema deve permitir listar locais.
 
-**RF20** – O nome do local deve ser obrigatório.
+**RF19** – O sistema deve permitir cadastrar equipamentos.
 
-**RF21** – O sistema deve impedir o cadastro de locais com o mesmo nome.
+**RF20** – O sistema deve permitir listar equipamentos.
 
-**RF22** – O sistema deve permitir listar os locais cadastrados.
+**RF21** – Equipamentos devem poder ser relacionados a locais.
 
----
+## Histórico
 
-## Equipamentos
+**RF22** – O sistema deve registrar alterações dos chamados.
 
-**RF23** – O sistema deve permitir cadastrar equipamentos.
+**RF23** – O histórico deve registrar status anterior e novo status.
 
-**RF24** – O equipamento deve possuir nome ou descrição e número de patrimônio.
-
-**RF25** – O número de patrimônio deve ser único.
-
-**RF26** – Todo equipamento deve estar associado a um local existente.
-
-**RF27** – O sistema deve permitir listar os equipamentos cadastrados.
-
----
-
-## Histórico e Filtros
-
-**RF28** – O sistema deve registrar as alterações realizadas nos chamados.
-
-**RF29** – O histórico deve armazenar o status anterior e o novo status.
-
-**RF30** – O histórico deve registrar o usuário responsável e a data da alteração.
-
-**RF31** – O sistema deve permitir consultar o histórico de um chamado.
-
-**RF32** – O sistema deve permitir filtrar chamados.
-
----
+**RF24** – O histórico deve registrar data e horário.
 
 ## Interface Web
 
-**RF33** – O sistema deve possuir uma interface web para interação com o usuário.
+**RF25** – O sistema deve possuir interface web.
 
-**RF34** – O sistema deve disponibilizar um dashboard inicial.
+**RF26** – O sistema deve disponibilizar um dashboard inicial.
 
-**RF35** – O dashboard deve estar disponível nas rotas `/` e `/dashboard`.
+**RF27** – O dashboard deve estar disponível através de `/` e `/dashboard`.
 
 ---
 
 # Requisitos Não Funcionais
 
-**RNF01** – O sistema deve utilizar **Java 21** como linguagem principal.
+**RNF01** – Utilizar Java 21.
 
-**RNF02** – O gerenciamento de dependências e construção do projeto deve ser realizado utilizando **Maven**.
+**RNF02** – Utilizar Maven para gerenciamento de dependências.
 
-**RNF03** – A aplicação deve utilizar **Spring Boot**.
+**RNF03** – Utilizar Spring Boot.
 
-**RNF04** – A persistência dos dados deve utilizar **Spring Data JPA**.
+**RNF04** – Utilizar Spring Data JPA.
 
-**RNF05** – A interface web deve utilizar **Thymeleaf**.
+**RNF05** – Utilizar Thymeleaf para a interface web.
 
-**RNF06** – O sistema deve utilizar banco de dados relacional.
+**RNF06** – Utilizar banco de dados relacional.
 
-**RNF07** – O projeto deve possuir testes automatizados utilizando **JUnit 5**.
+**RNF07** – Possuir testes automatizados utilizando JUnit 5.
 
-**RNF08** – Dependências externas devem poder ser simuladas nos testes utilizando **Mockito**.
+**RNF08** – Utilizar Mockito quando necessário para simular dependências.
 
-**RNF09** – A cobertura dos testes deve ser analisada utilizando **JaCoCo**.
+**RNF09** – Utilizar JaCoCo para análise de cobertura.
 
-**RNF10** – O projeto deve possuir um pipeline de integração e entrega contínua utilizando **Jenkins**.
+**RNF10** – Possuir pipeline CI/CD utilizando Jenkins.
 
-**RNF11** – O código-fonte deve ser versionado utilizando **Git e GitHub**.
+**RNF11** – Utilizar Git e GitHub para versionamento.
 
-**RNF12** – O desenvolvimento deve utilizar branches e Pull Requests para integração das alterações.
+**RNF12** – Utilizar branches e Pull Requests.
+
+**RNF13** – Publicar a aplicação fora da máquina executora do Jenkins.
 
 ---
 
 # Testes
 
-Os testes automatizados do projeto podem ser executados com:
+Os testes podem ser executados através de:
 
 ```bash
-mvn test
+mvn clean test
 ```
 
-O relatório de cobertura do JaCoCo pode ser gerado durante a execução configurada no projeto.
+Para executar as verificações completas:
 
-Quando disponível, o relatório pode ser encontrado em:
+```bash
+mvn clean verify
+```
+
+Relatório do JaCoCo:
 
 ```text
-target/site/jacoco/
+target/site/jacoco/index.html
+```
+
+Relatórios dos testes:
+
+```text
+target/surefire-reports/
+```
+
+Uma execução anterior da `main` registrou:
+
+```text
+87 testes
+0 falhas
+0 erros
+```
+
+Após todas as alterações finais:
+
+```text
+[PREENCHER COM O RESULTADO FINAL]
 ```
 
 ---
 
 # CI/CD
 
-O projeto utiliza **Jenkins** para automatizar o processo de integração e entrega contínua.
+O projeto utiliza **Jenkins** para integração e entrega contínua.
 
-O pipeline é definido através do arquivo:
-
-```text
-Jenkinsfile
-```
-
-O fluxo do pipeline contempla etapas como:
+O pipeline contém etapas relacionadas a:
 
 ```text
-Validação
+Validate
    ↓
 Build
    ↓
-Testes / Cobertura
-   ↓
-Relatório
+Tests and Coverage
    ↓
 Package
    ↓
 Deploy
 ```
 
+O pipeline está definido no arquivo:
+
+```text
+Jenkinsfile
+```
+
+## Deploy
+
+A entrega final prevê publicação da aplicação fora da máquina executora do Jenkins.
+
+**Serviço utilizado:** [PREENCHER]
+
+**URL pública:** [PREENCHER]
+
+---
+
+# Refactorings
+
+Cada integrante realizou refactorings buscando melhorar a estrutura interna do código sem alterar seu comportamento externo.
+
+## Pedro Cesar Maia
+
+### Refactoring 1 – Remoção de código duplicado nas rotas do dashboard
+
+**Code smell:** código duplicado.
+
+Anteriormente, os métodos responsáveis pelas rotas `/` e `/dashboard` executavam a mesma preparação do `Model` e retornavam a mesma página.
+
+**Refactoring aplicado:** Remove Duplicate Code.
+
+O método `inicio()` passou a reutilizar o método `dashboard()`:
+
+```java
+@GetMapping("/")
+public String inicio(Model model) {
+    return dashboard(model);
+}
+```
+
+**Motivo:** reduzir duplicação e deixar apenas um ponto responsável pela preparação do dashboard.
+
+**PR:** [PREENCHER COM SEU PR]
+
+---
+
+### Refactoring 2 – Renomeação do método de preparação do Model
+
+**Code smell:** nome pouco específico.
+
+O método:
+
+```text
+prepararModel()
+```
+
+foi renomeado para:
+
+```text
+adicionarTituloAoModel()
+```
+
+**Refactoring aplicado:** Rename Method.
+
+O código passou a utilizar:
+
+```java
+private void adicionarTituloAoModel(Model model) {
+    if (model == null) {
+        throw new IllegalArgumentException("O model não pode ser nulo");
+    }
+
+    model.addAttribute("titulo", TITULO);
+}
+```
+
+**Motivo:** tornar o nome mais claro e representar corretamente a responsabilidade executada pelo método.
+
+**PR:** [PREENCHER COM SEU PR]
+
+### Validação
+
+Os testes foram executados para verificar que os refactorings não modificaram o comportamento externo.
+
+**Antes dos refactorings:**
+
+```text
+[PREENCHER RESULTADO DO TESTE]
+```
+
+**Depois dos refactorings:**
+
+```text
+[PREENCHER RESULTADO DO TESTE]
+```
+
+---
+
+## Refactorings dos demais integrantes
+
+As informações de code smell, refactoring aplicado, justificativa e Pull Request dos demais integrantes devem permanecer conforme registrado no README atual do grupo.
+
+---
+
+# Uso de Inteligência Artificial
+
+O uso de Inteligência Artificial foi declarado de forma transparente pelos integrantes que utilizaram essas ferramentas durante o desenvolvimento.
+
+---
+
+## Pedro Cesar Maia
+
+**Modelo:** ChatGPT — GPT-5.6 Sol (OpenAI).
+
+### Para que foi utilizado
+
+- apoio na implementação e revisão da interface web;
+- revisão do `PaginaController`;
+- criação e revisão dos testes unitários;
+- análise dos requisitos das entregas;
+- identificação de possíveis refactorings;
+- revisão da documentação;
+- auxílio na organização das User Stories no Jira;
+- interpretação dos requisitos relacionados ao Jenkins e CI/CD;
+- apoio na preparação da entrega final.
+
+### Exemplos de prompts utilizados
+
+Os textos abaixo representam versões organizadas das solicitações realizadas durante o desenvolvimento, preservando o objetivo técnico dos prompts utilizados.
+
+#### Prompt 1 – Análise da NP2
+
+**Contexto:** após as entregas anteriores, foi necessário comparar o estado do projeto com os requisitos da NP2.
+
+**Prompt:**
+
+> “Analise os requisitos da NP2 e compare com o estado atual do nosso Sistema de Chamados de Manutenção. Verifique se faltam testes, documentação, refactorings, requisitos de CI/CD ou outros itens importantes para a entrega final.”
+
+**Resultado:** aceito com ajustes.
+
+A análise ajudou a identificar itens relacionados aos refactorings individuais, rastreabilidade das histórias, documentação do uso de IA e requisitos do deploy.
+
+---
+
+#### Prompt 2 – Refactoring do PaginaController
+
+**Contexto:** a entrega final exigia pelo menos dois refactorings por integrante sem alteração do comportamento externo.
+
+**Prompt:**
+
+> “Analise o PaginaController da minha parte do projeto e proponha dois refactorings simples que atendam aos critérios da disciplina. As alterações não devem modificar o comportamento das rotas `/` e `/dashboard` e precisam ser fáceis de justificar na defesa.”
+
+**Resultado:** aceito.
+
+Foram utilizados:
+
+- remoção da duplicação entre as rotas;
+- renomeação de `prepararModel()` para `adicionarTituloAoModel()`.
+
+---
+
+#### Prompt 3 – Revisão dos testes
+
+**Contexto:** o `PaginaControllerTest` já possuía testes, mas foi verificada a possibilidade de melhorar a cobertura.
+
+**Prompt:**
+
+> “Revise os testes existentes do PaginaController e verifique se vale a pena adicionar novos casos. Quero aumentar a cobertura apenas com testes relevantes para a US06, incluindo `/`, `/dashboard`, Model real, Mockito e casos negativos.”
+
+**Resultado:** aceito com ajustes.
+
+Os testes passaram a cobrir:
+
+- `/` utilizando mock;
+- `/dashboard` utilizando mock;
+- `/` utilizando `ExtendedModelMap`;
+- `/dashboard` utilizando `ExtendedModelMap`;
+- `/` com `Model` nulo;
+- `/dashboard` com `Model` nulo.
+
+---
+
+#### Prompt 4 – Revisão somente da minha parte
+
+**Contexto:** durante a preparação da entrega final, foi solicitado que nenhuma modificação fosse realizada nos módulos dos outros integrantes.
+
+**Prompt:**
+
+> “Considere esta versão atualizada do projeto e revise somente a minha parte. Verifique o PaginaController, PaginaControllerTest e a documentação relacionada à minha contribuição. Se necessário, melhore os testes e prepare a seção de Uso de IA, sem modificar os módulos dos outros integrantes.”
+
+**Resultado:** aceito com ajustes.
+
+As mudanças foram limitadas ao controller da interface, seus testes e documentação relacionada à contribuição de Pedro Cesar.
+
+### Dinâmica de uso
+
+A IA foi utilizada como ferramenta de apoio ao desenvolvimento.
+
+Foram fornecidos requisitos, arquivos, trechos do projeto e dúvidas específicas. As respostas eram analisadas antes da incorporação das sugestões.
+
+Quando uma sugestão ultrapassava o escopo da minha responsabilidade, era solicitado que a alteração fosse limitada somente à minha parte.
+
+### O que foi feito sem IA
+
+Foram realizados diretamente por mim:
+
+- utilização do ambiente de desenvolvimento;
+- execução de comandos Git;
+- gerenciamento da minha branch;
+- commits e pushes;
+- criação e acompanhamento de Pull Requests;
+- organização das atividades no Jira;
+- execução local dos testes;
+- conferência das alterações;
+- decisão final sobre quais sugestões seriam utilizadas.
+
+A execução real do Jenkins, merges, aprovações de Pull Requests e validações em ferramentas externas não foram realizadas pela IA.
+
+### Compreensão
+
+Todo código, teste, refactoring e documentação sugeridos com apoio de IA foram revisados antes de sua utilização.
+
+A IA foi utilizada como ferramenta de suporte, mantendo a responsabilidade do integrante pela compreensão e validação das alterações realizadas.
+
+---
+
+## Pedro Henrique dos Santos Araujo
+
+**Modelo:** Claude Sonnet 5.5 (Anthropic), usado em todas as sessões.
+
+### Para que foi usado
+
+- orientação passo a passo das entregas;
+- escrita e revisão do módulo de chamados;
+- testes unitários;
+- mensagens de commit e PR;
+- história SCM-9;
+- revisão de refactorings.
+
+### Exemplos
+
+Preservar nesta seção a declaração completa enviada pelo próprio integrante.
+
+---
+
+## Demais integrantes
+
+Cada integrante que utilizou IA deve declarar sua utilização real, incluindo modelo, finalidade, prompts utilizados e quais sugestões foram aceitas, ajustadas ou descartadas.
+
+---
+
+# Dinâmica de Desenvolvimento
+
+O desenvolvimento foi dividido entre os integrantes de acordo com módulos e responsabilidades.
+
+O fluxo principal utilizado foi:
+
+```text
+Issue / User Story
+        ↓
+Branch
+        ↓
+Implementação
+        ↓
+Testes
+        ↓
+Commit
+        ↓
+Push
+        ↓
+Pull Request
+        ↓
+Code Review
+        ↓
+Merge na main
+```
+
+## Divisão de tarefas
+
+Cada integrante ficou responsável por uma área principal do sistema, com integração entre os módulos ao longo das entregas.
+
+## Code Review
+
+As alterações foram enviadas através de Pull Requests e revisadas por outros integrantes antes da integração na `main`.
+
+## Bloqueios e dificuldades
+
+[PREENCHER COM PROBLEMAS REAIS ENFRENTADOS PELO GRUPO]
+
+Exemplos que podem ser utilizados apenas caso realmente tenham acontecido:
+
+- conflitos entre branches;
+- erros de integração entre entidades e services;
+- erros de compilação após merges;
+- configuração do Jenkins;
+- dependências entre funcionalidades desenvolvidas por integrantes diferentes.
+
+## Lições aprendidas
+
+[PREENCHER COM AS LIÇÕES REAIS DO GRUPO]
+
 ---
 
 # Organização do Projeto
-
-A aplicação segue uma estrutura baseada em camadas:
 
 ```text
 src/
 ├── main/
 │   ├── java/
 │   │   └── br/inatel/chamados/
+│   │       ├── config/
 │   │       ├── controller/
 │   │       ├── model/
 │   │       ├── repository/
 │   │       └── service/
-│   │
 │   └── resources/
 │       ├── templates/
 │       ├── static/
@@ -437,129 +898,6 @@ src/
 └── test/
     └── java/
 ```
-
----
-
-# Execução do Projeto
-
-Para executar a aplicação utilizando Maven:
-
-```bash
-mvn spring-boot:run
-```
-
-Após iniciar a aplicação, a interface pode ser acessada em:
-
-```text
-http://localhost:8080/
-```
-
-# Refactorings
-
-Cada integrante aplicou pelo menos 2 refactorings, com testes e pipeline verdes antes e depois de cada um.
-
-## Cauã de Souza Flauzino
-
-| # | Smell | Refactoring aplicado | Por quê | PR |
-|---|-------|----------------------|---------|----|
-| 1 | Field Injection (`@Autowired` em campo) em `LocalController` e `EquipamentoController` | Replace Field Injection with Constructor Injection | As dependências ficam explícitas e imutáveis, e o controller pode ser criado em testes sem o Spring | [#30](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/30) |
-| 2 | Controller acessando o repository direto, sem camada de service | Extract Class (`LocalService` e `EquipamentoService`) | Separa a camada web do acesso a dados, segue o padrão do projeto e permite testes unitários com Mockito | [#31](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/31) |
-
-## Eduardo Nogueira
-
-| # | Smell | Refactoring aplicado | Por quê | PR |
-|---|-------|----------------------|---------|----|
-| 1 | Mensagem de erro de "email já cadastrado" escrita diretamente na exception em `UsuarioService` | Create Constant String (`EMAIL_JA_CADASTRADO`) | Centraliza a mensagem em uma constante, facilitando a manutenção e evitando strings repetidas no código | [#28](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/28/changes/32f81f5ae4de036c2b8973b70fc38b1c6ee016f6) |
-| 2 | Parâmetro `Model` não utilizado no método `listar()` de `UsuarioController` | Remove Parameter | Remove um parâmetro desnecessário, simplificando a assinatura do método e evitando dependências que não são utilizadas | [#28](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/28/changes/0e935c72b53a337361adb77bfe34cd3626acb1ba) |
-
-## Pedro Henrique dos Santos Araujo
-
-| # | Smell | Refactoring aplicado | Por quê | PR |
-|---|-------|----------------------|---------|----|
-| 1 | Uso desajeitado de `Optional` (`isEmpty()` seguido de `get()`) em `ChamadoConsultaService.buscarPorId` | Replace with `orElseThrow` | Remove o `get()` inseguro e deixa o método mais curto e legível, sem mudar a exceção nem a mensagem | [#27](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/27) |
-| 2 | Código duplicado nos testes: criação do `ChamadoConsultaService` repetida em cada teste de `ChamadoConsultaServiceTest` | Extract setup para `@BeforeEach` | Remove a repetição e facilita acrescentar novos testes sem copiar o setup | [#29](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/29) |
-
-## Allan
-
-**Refactoring 1**
-
-- Code smell: duplicação da validação de título e descrição em `ChamadoService.abrirChamado`, com a mesma verificação de texto nulo ou em branco.
-- Refactoring aplicado: Remove Duplicate Code com Extract Method, criando o método privado `validarTextoObrigatorio`.
-- Justificativa: centralizar a validação repetida, preservando a ordem das verificações, as mensagens de erro e os dados do chamado.
-- Pull Request: https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/32
-
-**Refactoring 2**
-
-- Code smell: expressão condicional com comparações repetidas e operadores `&&` e `||` em `ChamadoService.transicaoPermitida`.
-- Refactoring aplicado: Simplify Conditional Expression, substituindo a expressão por um `switch` sobre o status atual.
-- Justificativa: explicitar o destino permitido para cada status, mantendo somente as transições ABERTO → EM_ANDAMENTO → RESOLVIDO → FECHADO e a rejeição de status atual nulo.
-- Pull Request: https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/32
-
-Validação dos refactorings antes da integração da `main`, em 13/11/2026, com Java 21 e `mvn clean test`:
-
-| Estado | Testes | Falhas | Erros | Ignorados | Resultado |
-| --- | --- | --- | --- | --- | --- |
-| Antes dos refactorings | 30 | 0 | 0 | 0 | BUILD SUCCESS |
-| Após o refactoring 1 | 40 | 0 | 0 | 0 | BUILD SUCCESS |
-| Após o refactoring 2 | 65 | 0 | 0 | 0 | BUILD SUCCESS |
-
-Os novos testes passaram também antes de cada refactoring correspondente. Eles verificam as validações de abertura, as 16 combinações de status e os casos nulos, incluindo mensagens de erro e ausência de persistência nas rejeições.
-
-O JaCoCo 0.8.13 gerou o relatório em `target/site/jacoco/index.html`. A cobertura global de linhas passou de 65,78% (123/187) para 70,47% (136/193), e a de ramificações passou de 70,59% para 96,55%. Os resultados dos testes ficam em `target/surefire-reports/`.
-
-A primeira tentativa no sandbox teve 17 erros de inicialização do Mockito/Byte Buddy ao anexar o agente à JVM. As execuções acima ocorreram fora do sandbox, sem alterar código ou configuração para contornar esse problema.
-
-O Jenkinsfile mantém as etapas Validate, Build, Tests and Coverage, Package e Deploy Local. A execução real do Jenkins não foi verificada por falta de endereço e acesso disponíveis neste ambiente; os resultados locais não comprovam o estado do pipeline.
-
-Após integrar a `main` para resolver o conflito do PR #32, `mvn clean test` aprovou 87 testes, sem falhas, erros ou testes ignorados. O JaCoCo gerou o relatório com cobertura global de linhas de 70,65% (219/310) e de ramificações de 67,52% (79/117). Esses resultados incluem o código e os testes adicionados pelos demais integrantes na `main`.
-
----
-
-# Uso de IA
-
-Cada integrante declara abaixo como usou IA no projeto.
-
-## Pedro Henrique dos Santos Araujo
-
-**Modelo:** Claude Sonnet 5.5 (Anthropic), usado em todas as sessões.
-
-**Para que foi usado:**
-- Orientação passo a passo de cada entrega (estrutura do projeto, fluxo de git, testes, pipeline, README).
-- Escrever e revisar código do meu módulo (`ChamadoConsultaService`, `ChamadoController`, vínculos do chamado) e seus testes unitários.
-- Redigir mensagens de commit, descrições de PR e o texto da história SCM-9 no Jira.
-- Revisar refactorings e PRs de colegas à luz dos critérios da entrega.
-
-**Exemplos de prompts reais:**
-
-**Prompt 1: definir o conjunto de testes**
-
-- **Contexto:** a entrega exigia testes unitários dos arquivos de cada integrante.
-- **Prompt:** "Proponha 4 testes unitários apenas para os arquivos do meu módulo: 2 com mock e 2 sem mock, incluindo pelo menos 1 teste negativo, seguindo boas práticas de nomenclatura e estrutura (given/when/then)."
-- **Resultado:** **aceito com ajustes.** Adaptei os testes ao `ChamadoTest` que já existia na `main` e resolvi à mão o conflito de merge com os testes de um colega.
-
-**Prompt 2: validar se um refactoring é adequado**
-
-- **Contexto:** os slides da disciplina definem o que conta e o que não conta como refactoring.
-- **Prompt:** "Com base nos critérios dos slides em anexo, avalie se cada um dos meus dois refactorings é adequado. Aponte qual deles pode ser considerado apenas formatação e sugira uma alternativa no mesmo arquivo."
-- **Resultado:** **ajustado.** A IA indicou que mover um campo de lugar se aproximava de "só formatar". Troquei esse refactoring por extrair o setup repetido do teste para `@BeforeEach`.
-
-**Prompt 3: complementar o stage de build do pipeline**
-
-- **Contexto:** o `Jenkinsfile` já tinha um stage de build básico.
-- **Prompt:** "Complemente o stage Build do `Jenkinsfile` existente, sem substituir os demais stages: limpar o `target` antes de compilar e falhar o stage se o JAR esperado não for gerado. O agente é Windows, então use `bat`."
-- **Resultado:** **aceito.** O stage passou a executar `mvn -B clean -DskipTests package` e a verificar a existência do JAR.
-
-**Prompt 4: tratar erro encontrado no teste manual**
-
-- **Contexto:** ao testar o `ChamadoController` com `curl`, um chamado com `"local":{"id":999}` devolvia erro 500 com stack trace.
-- **Prompt:** "O `POST /chamados` com um local inexistente retorna 500 com stack trace (violação de chave estrangeira). Proponha um tratamento no controller que devolva 400 com uma mensagem curta, e o teste unitário correspondente."
-- **Resultado:** **ajustado após testar.** Passei a devolver 400 com a mensagem "Dados inválidos: verifique se o solicitante, o local e o equipamento informados existem", e conferi de novo com `curl`.
-
-**Dinâmica de uso:** conversas curtas e sequenciais, uma entrega por vez. Eu pedia o código, lia, rodava na minha máquina e só então commitava.
-
-**O que foi feito sem IA, por mim:** executar todos os comandos de git (branch `PedroSantos`, commits, push e PRs), rodar a aplicação e os testes, fazer os testes manuais com `curl`, escolher quais refactorings aplicar, decidir o escopo do módulo e revisar o código antes de entregar.
-
-**Compreensão:** o código gerado foi lido e testado por mim.
 
 ---
 
@@ -578,10 +916,14 @@ Cada integrante declara abaixo como usou IA no projeto.
 
 # Links do Projeto
 
-### GitHub
+## GitHub
 
 https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado
 
-### Jira
+## Jira
 
 https://ppedrocesarmaiaa.atlassian.net/jira/software/projects/SCM/boards/1/backlog
+
+## Aplicação Publicada
+
+[PREENCHER COM A URL PÚBLICA APÓS O DEPLOY]
