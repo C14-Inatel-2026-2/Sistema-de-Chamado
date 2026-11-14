@@ -914,8 +914,8 @@ Para facilitar a realização de testes no sistema, utilize as credenciais da co
 
 | Página | URL |
 |---|---|
-| **Login** | http://localhost:8080/usuarios/login |
-| **Visualização e cadastro dos usuários** | http://localhost:8080/usuarios |
+| **Login** | https://sistema-chamados-manutencao.onrender.com/usuarios/login |
+| **Visualização e cadastro dos usuários** | https://sistema-chamados-manutencao.onrender.com/usuarios |
 
 > **Observação:** Essas credenciais são destinadas exclusivamente ao ambiente de testes. É necessário iniciar a aplicação Spring Boot para acessar os links.
 
