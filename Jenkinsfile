@@ -54,25 +54,18 @@ pipeline {
             }
         }
 
-        stage('Deploy Externo') {
+        stage('Deploy Local') {
             steps {
-                echo 'Disparando deploy externo no Render'
+                echo 'Iniciando deploy local do Sistema de Chamados'
 
-                withCredentials([
-                        string(
-                                credentialsId: 'render-deploy-hook',
-                                variable: 'RENDER_DEPLOY_HOOK'
-                        )
-                ]) {
-                    powershell '''
-                Invoke-WebRequest `
-                    -Uri $env:RENDER_DEPLOY_HOOK `
-                    -Method Post `
-                    -UseBasicParsing
+                bat '''
+            if not exist target\\sistema-chamados-manutencao-0.0.1-SNAPSHOT.jar (
+                echo ERRO: arquivo JAR nao encontrado
+                exit /b 1
+            )
 
-                Write-Host "Deploy solicitado ao Render."
-            '''
-                }
+            start "" /B java -jar target\\sistema-chamados-manutencao-0.0.1-SNAPSHOT.jar
+        '''
             }
         }
     }
