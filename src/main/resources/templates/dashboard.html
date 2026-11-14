@@ -3,6 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta name="viewport"
@@ -61,21 +62,27 @@
             color: #6b7280;
         }
 
+
         /* =========================
            CARDS
            ========================= */
 
         .cards {
             display: grid;
+
             grid-template-columns:
                 repeat(auto-fit, minmax(180px, 1fr));
+
             gap: 18px;
+
             margin-bottom: 30px;
         }
 
         .card {
             background: white;
+
             padding: 22px;
+
             border-radius: 12px;
 
             box-shadow:
@@ -86,8 +93,11 @@
 
         .card span {
             color: #6b7280;
+
             font-size: 13px;
+
             text-transform: uppercase;
+
             font-weight: bold;
         }
 
@@ -116,19 +126,25 @@
             border-color: #6b7280;
         }
 
+
         /* =========================
            GRID PRINCIPAL
            ========================= */
 
         .dashboard-grid {
             display: grid;
-            grid-template-columns: 1fr 2fr;
+
+            grid-template-columns:
+                1fr 2fr;
+
             gap: 22px;
         }
 
         .panel {
             background: white;
+
             border-radius: 12px;
+
             padding: 24px;
 
             box-shadow:
@@ -140,18 +156,22 @@
             margin-bottom: 20px;
         }
 
+
         /* =========================
            PRIORIDADES
            ========================= */
 
         .priority {
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
 
             padding: 14px 0;
 
-            border-bottom: 1px solid #e5e7eb;
+            border-bottom:
+                    1px solid #e5e7eb;
         }
 
         .priority:last-child {
@@ -160,13 +180,17 @@
 
         .priority-label {
             display: flex;
+
             align-items: center;
+
             gap: 9px;
         }
 
         .dot {
             width: 11px;
+
             height: 11px;
+
             border-radius: 50%;
         }
 
@@ -184,21 +208,26 @@
 
         .priority-number {
             font-weight: bold;
+
             font-size: 19px;
         }
 
+
         /* =========================
-           TABELA DO DASHBOARD
+           TABELAS
            ========================= */
 
         table {
             width: 100%;
+
             border-collapse: collapse;
         }
 
         th {
             text-align: left;
+
             font-size: 12px;
+
             text-transform: uppercase;
 
             color: #6b7280;
@@ -226,9 +255,11 @@
             border-radius: 20px;
 
             background: #eef2ff;
+
             color: #4338ca;
 
             font-size: 11px;
+
             font-weight: bold;
         }
 
@@ -239,6 +270,7 @@
 
             padding: 30px;
         }
+
 
         /* =========================
            AÇÕES RÁPIDAS
@@ -259,12 +291,15 @@
 
         .actions h2 {
             font-size: 18px;
+
             margin-bottom: 18px;
         }
 
         .action-buttons {
             display: flex;
+
             flex-wrap: wrap;
+
             gap: 12px;
         }
 
@@ -276,6 +311,7 @@
             border-radius: 8px;
 
             font-size: 14px;
+
             font-weight: bold;
 
             transition: 0.2s;
@@ -289,18 +325,22 @@
 
         .button-primary {
             background: #4f46e5;
+
             color: white;
         }
 
         .button-secondary {
             background: #e5e7eb;
+
             color: #1f2937;
         }
 
         .button:hover {
             transform: translateY(-2px);
+
             opacity: 0.9;
         }
+
 
         /* =========================
            PAINEL DA API
@@ -312,7 +352,9 @@
 
         .dados-header {
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
 
             margin-bottom: 18px;
@@ -324,6 +366,7 @@
 
         .fechar {
             width: 36px;
+
             height: 36px;
 
             border: none;
@@ -331,13 +374,12 @@
             border-radius: 8px;
 
             background: #e5e7eb;
+
             color: #374151;
 
             cursor: pointer;
 
             font-size: 17px;
-
-            transition: 0.2s;
         }
 
         .fechar:hover {
@@ -346,36 +388,18 @@
 
         .api-table-wrapper {
             width: 100%;
+
             overflow-x: auto;
         }
 
         .api-table {
             width: 100%;
+
             border-collapse: collapse;
         }
 
         .api-table th {
             background: #f9fafb;
-
-            padding: 12px;
-
-            text-align: left;
-
-            border-bottom:
-                    2px solid #e5e7eb;
-
-            font-size: 12px;
-
-            text-transform: uppercase;
-        }
-
-        .api-table td {
-            padding: 12px;
-
-            border-bottom:
-                    1px solid #e5e7eb;
-
-            vertical-align: top;
         }
 
         .api-vazio {
@@ -406,6 +430,179 @@
             border-radius: 8px;
         }
 
+
+        /* =========================
+           OPERAÇÕES
+           ========================= */
+
+        .operacoes {
+            margin-top: 24px;
+        }
+
+        .operacoes h2 {
+            margin-bottom: 8px;
+        }
+
+        .operacoes-descricao {
+            color: #6b7280;
+
+            margin-bottom: 22px;
+        }
+
+        .operacoes-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 20px;
+        }
+
+        .form-card {
+            background: #f9fafb;
+
+            border:
+                    1px solid #e5e7eb;
+
+            border-radius: 10px;
+
+            padding: 20px;
+        }
+
+        .form-card h3 {
+            margin-bottom: 18px;
+
+            font-size: 17px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+
+            margin-bottom: 6px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            color: #374151;
+        }
+
+        .form-control {
+            width: 100%;
+
+            padding: 11px 12px;
+
+            border:
+                    1px solid #d1d5db;
+
+            border-radius: 7px;
+
+            background: white;
+
+            font-family: inherit;
+
+            font-size: 14px;
+        }
+
+        .form-control:focus {
+            outline: none;
+
+            border-color: #4f46e5;
+
+            box-shadow:
+                    0 0 0 2px rgba(79, 70, 229, 0.10);
+        }
+
+        textarea.form-control {
+            min-height: 90px;
+
+            resize: vertical;
+        }
+
+        .form-button {
+            width: 100%;
+
+            margin-top: 4px;
+        }
+
+
+        /* =========================
+           MENSAGENS
+           ========================= */
+
+        .mensagem-operacao {
+            display: none;
+
+            margin-top: 15px;
+
+            padding: 13px 14px;
+
+            border-radius: 7px;
+
+            font-size: 14px;
+
+            line-height: 1.4;
+        }
+
+        .mensagem-sucesso {
+            display: block !important;
+
+            background: #dcfce7;
+
+            color: #166534;
+
+            border:
+                    1px solid #bbf7d0;
+        }
+
+        .mensagem-erro {
+            display: block !important;
+
+            background: #fee2e2;
+
+            color: #991b1b;
+
+            border:
+                    1px solid #fecaca;
+        }
+
+
+        /* =========================
+           RESULTADO DA BUSCA
+           ========================= */
+
+        .resultado-chamado {
+            display: none;
+
+            margin-top: 16px;
+
+            padding: 16px;
+
+            background: white;
+
+            border:
+                    1px solid #e5e7eb;
+
+            border-radius: 8px;
+        }
+
+        .resultado-chamado h4 {
+            margin-bottom: 12px;
+
+            color: #166534;
+        }
+
+        .resultado-linha {
+            margin-bottom: 8px;
+
+            line-height: 1.4;
+        }
+
+
         /* =========================
            FOOTER
            ========================= */
@@ -422,6 +619,7 @@
             font-size: 13px;
         }
 
+
         /* =========================
            RESPONSIVO
            ========================= */
@@ -429,6 +627,10 @@
         @media (max-width: 800px) {
 
             .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .operacoes-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -440,24 +642,24 @@
                 padding: 22px 15px;
             }
 
-            table {
-                font-size: 12px;
-            }
-
             .action-buttons {
                 flex-direction: column;
             }
 
             .button {
                 width: 100%;
+
                 text-align: center;
             }
         }
 
     </style>
+
 </head>
 
+
 <body>
+
 
 <header>
 
@@ -474,13 +676,16 @@
 
 <main class="container">
 
+
     <!-- =========================
-         BOAS-VINDAS
+         DASHBOARD
          ========================= -->
 
     <section class="welcome">
 
-        <h2>Dashboard</h2>
+        <h2>
+            Dashboard
+        </h2>
 
         <p>
             Visão geral dos chamados de manutenção
@@ -496,9 +701,12 @@
 
     <section class="cards">
 
+
         <div class="card total">
 
-            <span>Total de chamados</span>
+            <span>
+                Total de chamados
+            </span>
 
             <h3 th:text="${totalChamados}">
                 0
@@ -509,7 +717,9 @@
 
         <div class="card aberto">
 
-            <span>Abertos</span>
+            <span>
+                Abertos
+            </span>
 
             <h3 th:text="${chamadosAbertos}">
                 0
@@ -520,7 +730,9 @@
 
         <div class="card andamento">
 
-            <span>Em andamento</span>
+            <span>
+                Em andamento
+            </span>
 
             <h3 th:text="${chamadosEmAndamento}">
                 0
@@ -531,7 +743,9 @@
 
         <div class="card resolvido">
 
-            <span>Resolvidos</span>
+            <span>
+                Resolvidos
+            </span>
 
             <h3 th:text="${chamadosResolvidos}">
                 0
@@ -542,7 +756,9 @@
 
         <div class="card fechado">
 
-            <span>Fechados</span>
+            <span>
+                Fechados
+            </span>
 
             <h3 th:text="${chamadosFechados}">
                 0
@@ -550,17 +766,16 @@
 
         </div>
 
+
     </section>
 
 
     <!-- =========================
-         GRID
+         RESUMO
          ========================= -->
 
     <section class="dashboard-grid">
 
-
-        <!-- PRIORIDADES -->
 
         <div class="panel">
 
@@ -581,9 +796,12 @@
 
                 </div>
 
-                <span class="priority-number"
-                      th:text="${prioridadeAlta}">
+                <span
+                        class="priority-number"
+                        th:text="${prioridadeAlta}">
+
                     0
+
                 </span>
 
             </div>
@@ -601,9 +819,12 @@
 
                 </div>
 
-                <span class="priority-number"
-                      th:text="${prioridadeMedia}">
+                <span
+                        class="priority-number"
+                        th:text="${prioridadeMedia}">
+
                     0
+
                 </span>
 
             </div>
@@ -621,12 +842,16 @@
 
                 </div>
 
-                <span class="priority-number"
-                      th:text="${prioridadeBaixa}">
+                <span
+                        class="priority-number"
+                        th:text="${prioridadeBaixa}">
+
                     0
+
                 </span>
 
             </div>
+
 
         </div>
 
@@ -640,7 +865,8 @@
             </h2>
 
 
-            <table th:if="${!#lists.isEmpty(ultimosChamados)}">
+            <table
+                    th:if="${!#lists.isEmpty(ultimosChamados)}">
 
                 <thead>
 
@@ -661,22 +887,24 @@
 
                 <tbody>
 
-                <tr th:each="chamado : ${ultimosChamados}">
+                <tr
+                        th:each="chamado : ${ultimosChamados}">
 
-                    <td th:text="${chamado.id}">
+                    <td
+                            th:text="${chamado.id}">
                         1
                     </td>
 
-
-                    <td th:text="${chamado.titulo}">
+                    <td
+                            th:text="${chamado.titulo}">
                         Exemplo
                     </td>
 
-
                     <td>
 
-                        <span class="badge"
-                              th:text="${chamado.prioridade}">
+                        <span
+                                class="badge"
+                                th:text="${chamado.prioridade}">
 
                             ALTA
 
@@ -684,11 +912,11 @@
 
                     </td>
 
-
                     <td>
 
-                        <span class="badge"
-                              th:text="${chamado.status}">
+                        <span
+                                class="badge"
+                                th:text="${chamado.status}">
 
                             ABERTO
 
@@ -703,15 +931,18 @@
             </table>
 
 
-            <div class="empty"
-                 th:if="${#lists.isEmpty(ultimosChamados)}">
+            <div
+                    class="empty"
+                    th:if="${#lists.isEmpty(ultimosChamados)}">
 
                 Nenhum chamado cadastrado
                 até o momento.
 
             </div>
 
+
         </div>
+
 
     </section>
 
@@ -726,10 +957,12 @@
             Acesso rápido
         </h2>
 
+
         <div class="action-buttons">
 
 
-            <button type="button"
+            <button
+                    type="button"
                     class="button button-primary"
                     onclick="carregarDados(
                         '/chamados',
@@ -741,7 +974,8 @@
             </button>
 
 
-            <button type="button"
+            <button
+                    type="button"
                     class="button button-secondary"
                     onclick="carregarDados(
                         '/locais',
@@ -753,7 +987,8 @@
             </button>
 
 
-            <button type="button"
+            <button
+                    type="button"
                     class="button button-secondary"
                     onclick="carregarDados(
                         '/equipamentos',
@@ -765,12 +1000,14 @@
             </button>
 
 
-            <a th:href="@{/dashboard}"
-               class="button button-secondary">
+            <a
+                    th:href="@{/dashboard}"
+                    class="button button-secondary">
 
                 Atualizar dashboard
 
             </a>
+
 
         </div>
 
@@ -781,9 +1018,10 @@
          DADOS DA API
          ========================= -->
 
-    <section id="dadosApi"
-             class="panel dados-api"
-             style="display: none;">
+    <section
+            id="dadosApi"
+            class="panel dados-api"
+            style="display: none;">
 
 
         <div class="dados-header">
@@ -793,10 +1031,10 @@
             </h2>
 
 
-            <button type="button"
+            <button
+                    type="button"
                     class="fechar"
-                    onclick="fecharDados()"
-                    title="Fechar">
+                    onclick="fecharDados()">
 
                 ✕
 
@@ -806,10 +1044,372 @@
 
 
         <div id="dadosConteudo">
+        </div>
+
+
+    </section>
+
+
+    <!-- =========================
+         OPERAÇÕES
+         ========================= -->
+
+    <section class="panel operacoes">
+
+        <h2>
+            Operações do sistema
+        </h2>
+
+        <p class="operacoes-descricao">
+
+            Abra chamados, consulte registros
+            e cadastre locais e equipamentos.
+
+        </p>
+
+
+        <div class="operacoes-grid">
+
+
+            <!-- =====================
+                 ABRIR CHAMADO
+                 ===================== -->
+
+            <div class="form-card">
+
+                <h3>
+                    Abrir chamado
+                </h3>
+
+
+                <form id="formChamado">
+
+
+                    <div class="form-group">
+
+                        <label for="tituloChamado">
+                            Título
+                        </label>
+
+                        <input
+                                type="text"
+                                id="tituloChamado"
+                                class="form-control"
+                                placeholder="Ex: Projetor não liga"
+                                required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="descricaoChamado">
+                            Descrição
+                        </label>
+
+                        <textarea
+                                id="descricaoChamado"
+                                class="form-control"
+                                placeholder="Descreva o problema"
+                                required></textarea>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="prioridadeChamado">
+                            Prioridade
+                        </label>
+
+                        <select
+                                id="prioridadeChamado"
+                                class="form-control"
+                                required>
+
+                            <option value="">
+                                Selecione
+                            </option>
+
+                            <option value="BAIXA">
+                                Baixa
+                            </option>
+
+                            <option value="MEDIA">
+                                Média
+                            </option>
+
+                            <option value="ALTA">
+                                Alta
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="localChamado">
+                            Local
+                        </label>
+
+                        <select
+                                id="localChamado"
+                                class="form-control">
+
+                            <option value="">
+                                Sem local
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <button
+                            type="submit"
+                            class="button button-primary form-button">
+
+                        Abrir chamado
+
+                    </button>
+
+
+                </form>
+
+
+                <div
+                        id="mensagemChamado"
+                        class="mensagem-operacao">
+                </div>
+
+
+            </div>
+
+
+            <!-- =====================
+                 BUSCAR CHAMADO
+                 ===================== -->
+
+            <div class="form-card">
+
+                <h3>
+                    Buscar chamado por ID
+                </h3>
+
+
+                <form id="formBuscarChamado">
+
+
+                    <div class="form-group">
+
+                        <label for="buscarChamadoId">
+                            ID do chamado
+                        </label>
+
+                        <input
+                                type="number"
+                                id="buscarChamadoId"
+                                class="form-control"
+                                min="1"
+                                placeholder="Ex: 1"
+                                required>
+
+                    </div>
+
+
+                    <button
+                            type="submit"
+                            class="button button-primary form-button">
+
+                        Buscar chamado
+
+                    </button>
+
+
+                </form>
+
+
+                <div
+                        id="mensagemBusca"
+                        class="mensagem-operacao">
+                </div>
+
+
+                <div
+                        id="resultadoChamado"
+                        class="resultado-chamado">
+
+                    <h4>
+                        Chamado encontrado
+                    </h4>
+
+                    <div id="conteudoChamado">
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =====================
+                 CADASTRAR LOCAL
+                 ===================== -->
+
+            <div class="form-card">
+
+                <h3>
+                    Cadastrar local
+                </h3>
+
+
+                <form id="formLocal">
+
+
+                    <div class="form-group">
+
+                        <label for="nomeLocal">
+                            Nome do local
+                        </label>
+
+                        <input
+                                type="text"
+                                id="nomeLocal"
+                                class="form-control"
+                                placeholder="Ex: Laboratório 1"
+                                required>
+
+                    </div>
+
+
+                    <button
+                            type="submit"
+                            class="button button-primary form-button">
+
+                        Cadastrar local
+
+                    </button>
+
+
+                </form>
+
+
+                <div
+                        id="mensagemLocal"
+                        class="mensagem-operacao">
+                </div>
+
+
+            </div>
+
+
+            <!-- =====================
+                 CADASTRAR EQUIPAMENTO
+                 ===================== -->
+
+            <div class="form-card">
+
+                <h3>
+                    Cadastrar equipamento
+                </h3>
+
+
+                <form id="formEquipamento">
+
+
+                    <div class="form-group">
+
+                        <label for="nomeEquipamento">
+                            Nome
+                        </label>
+
+                        <input
+                                type="text"
+                                id="nomeEquipamento"
+                                class="form-control"
+                                placeholder="Ex: Projetor"
+                                required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="marcaEquipamento">
+                            Marca
+                        </label>
+
+                        <input
+                                type="text"
+                                id="marcaEquipamento"
+                                class="form-control"
+                                placeholder="Ex: Epson">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="serieEquipamento">
+                            Número de série
+                        </label>
+
+                        <input
+                                type="text"
+                                id="serieEquipamento"
+                                class="form-control"
+                                placeholder="Ex: EPSON-123">
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="localEquipamento">
+                            Local
+                        </label>
+
+                        <select
+                                id="localEquipamento"
+                                class="form-control"
+                                required>
+
+                            <option value="">
+                                Selecione um local
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <button
+                            type="submit"
+                            class="button button-primary form-button">
+
+                        Cadastrar equipamento
+
+                    </button>
+
+
+                </form>
+
+
+                <div
+                        id="mensagemEquipamento"
+                        class="mensagem-operacao">
+                </div>
+
+
+            </div>
+
 
         </div>
 
     </section>
+
 
 </main>
 
@@ -825,37 +1425,118 @@
 
 <script>
 
-    /*
-     * Faz uma requisição para os endpoints
-     * já existentes no projeto.
-     */
-    async function carregarDados(url, titulo) {
+    /* =====================================
+       FUNÇÃO PARA ESCAPAR HTML
+       ===================================== */
+
+    function escaparHtml(valor) {
+
+        const elemento =
+            document.createElement("div");
+
+        elemento.textContent =
+            valor == null
+                ? ""
+                : String(valor);
+
+        return elemento.innerHTML;
+    }
+
+
+    /* =====================================
+       MOSTRAR MENSAGEM
+       ===================================== */
+
+    function mostrarMensagem(
+        id,
+        texto,
+        sucesso
+    ) {
+
+        const elemento =
+            document.getElementById(id);
+
+        if (!elemento) {
+
+            console.error(
+                "Elemento não encontrado:",
+                id
+            );
+
+            return;
+        }
+
+        elemento.textContent =
+            texto;
+
+        elemento.className =
+            sucesso
+                ? "mensagem-operacao mensagem-sucesso"
+                : "mensagem-operacao mensagem-erro";
+
+        /*
+         * Força a exibição da mensagem.
+         */
+        elemento.style.display =
+            "block";
+    }
+
+
+    function limparMensagem(id) {
+
+        const elemento =
+            document.getElementById(id);
+
+        if (!elemento) {
+            return;
+        }
+
+        elemento.textContent =
+            "";
+
+        elemento.className =
+            "mensagem-operacao";
+
+        elemento.style.display =
+            "none";
+    }
+
+
+    /* =====================================
+       ACESSO RÁPIDO
+       ===================================== */
+
+    async function carregarDados(
+        url,
+        titulo
+    ) {
 
         const painel =
-            document.getElementById("dadosApi");
+            document.getElementById(
+                "dadosApi"
+            );
 
         const tituloElemento =
-            document.getElementById("dadosTitulo");
+            document.getElementById(
+                "dadosTitulo"
+            );
 
         const conteudo =
-            document.getElementById("dadosConteudo");
+            document.getElementById(
+                "dadosConteudo"
+            );
 
 
-        tituloElemento.textContent = titulo;
+        tituloElemento.textContent =
+            titulo;
 
-        painel.style.display = "block";
-
+        painel.style.display =
+            "block";
 
         conteudo.innerHTML =
             '<div class="api-carregando">' +
             'Carregando...' +
             '</div>';
-
-
-        painel.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-        });
 
 
         try {
@@ -866,8 +1547,12 @@
 
             if (!resposta.ok) {
 
+                const texto =
+                    await resposta.text();
+
                 throw new Error(
-                    "Erro HTTP: " +
+                    texto ||
+                    "Erro HTTP " +
                     resposta.status
                 );
             }
@@ -885,42 +1570,27 @@
 
         } catch (erro) {
 
-            console.error(
-                "Erro ao carregar dados:",
-                erro
-            );
-
-
             conteudo.innerHTML =
                 '<div class="api-erro">' +
-                '<strong>Não foi possível carregar os dados.</strong>' +
-                '<br><br>' +
-                'Verifique se o endpoint está disponível.' +
+                escaparHtml(
+                    erro.message
+                ) +
                 '</div>';
         }
     }
 
 
-    /*
-     * Monta automaticamente uma tabela
-     * usando o JSON devolvido pela API.
-     */
-    function mostrarTabela(dados, elemento) {
+    function mostrarTabela(
+        dados,
+        elemento
+    ) {
 
-
-        /*
-         * Caso a API retorne um único objeto
-         * em vez de uma lista.
-         */
         if (!Array.isArray(dados)) {
 
             dados = [dados];
         }
 
 
-        /*
-         * Lista vazia.
-         */
         if (dados.length === 0) {
 
             elemento.innerHTML =
@@ -932,10 +1602,6 @@
         }
 
 
-        /*
-         * Obtém os nomes dos campos
-         * do primeiro registro.
-         */
         const colunas =
             Object.keys(dados[0]);
 
@@ -943,8 +1609,7 @@
         let html =
             '<div class="api-table-wrapper">' +
             '<table class="api-table">' +
-            '<thead>' +
-            '<tr>';
+            '<thead><tr>';
 
 
         colunas.forEach(
@@ -959,18 +1624,14 @@
 
 
         html +=
-            '</tr>' +
-            '</thead>' +
-            '<tbody>';
+            '</tr></thead><tbody>';
 
 
-        /*
-         * Criação das linhas.
-         */
         dados.forEach(
             item => {
 
-                html += '<tr>';
+                html +=
+                    '<tr>';
 
 
                 colunas.forEach(
@@ -986,37 +1647,22 @@
                 );
 
 
-                html += '</tr>';
+                html +=
+                    '</tr>';
             }
         );
 
 
         html +=
-            '</tbody>' +
-            '</table>' +
-            '</div>';
+            '</tbody></table></div>';
 
 
-        elemento.innerHTML = html;
+        elemento.innerHTML =
+            html;
     }
 
 
-    /*
-     * Formata objetos vindos da API.
-     *
-     * Exemplo:
-     *
-     * local: {
-     *     id: 1,
-     *     nome: "Laboratório"
-     * }
-     *
-     * Vai mostrar:
-     *
-     * Laboratório
-     */
     function formatarValor(valor) {
-
 
         if (
             valor === null ||
@@ -1030,7 +1676,6 @@
         if (
             typeof valor === "object"
         ) {
-
 
             if (valor.nome) {
 
@@ -1052,7 +1697,7 @@
 
                 return "ID " +
                     escaparHtml(
-                        String(valor.id)
+                        valor.id
                     );
             }
 
@@ -1064,20 +1709,11 @@
 
 
         return escaparHtml(
-            String(valor)
+            valor
         );
     }
 
 
-    /*
-     * Transforma nomes como:
-     *
-     * dataAbertura
-     *
-     * em:
-     *
-     * Data Abertura
-     */
     function formatarNome(nome) {
 
         const texto =
@@ -1102,38 +1738,861 @@
     }
 
 
-    /*
-     * Evita inserir diretamente HTML
-     * recebido da API.
-     */
-    function escaparHtml(valor) {
-
-        const elemento =
-            document.createElement("div");
-
-
-        elemento.textContent =
-            valor;
-
-
-        return elemento.innerHTML;
-    }
-
-
-    /*
-     * Fecha o painel.
-     */
     function fecharDados() {
 
-        const painel =
-            document.getElementById("dadosApi");
-
-
-        painel.style.display =
-            "none";
+        document
+            .getElementById(
+                "dadosApi"
+            )
+            .style
+            .display = "none";
     }
 
+
+    /* =====================================
+       POST JSON
+       ===================================== */
+
+    async function enviarJson(
+        url,
+        dados
+    ) {
+
+        const resposta =
+            await fetch(
+                url,
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json; charset=UTF-8"
+                    },
+
+                    body:
+                        JSON.stringify(dados)
+                }
+            );
+
+
+        const texto =
+            await resposta.text();
+
+
+        let resultado =
+            null;
+
+
+        if (texto.trim()) {
+
+            try {
+
+                resultado =
+                    JSON.parse(texto);
+
+            } catch {
+
+                resultado =
+                    texto;
+            }
+        }
+
+
+        if (!resposta.ok) {
+
+            let mensagem =
+                "Erro HTTP " +
+                resposta.status;
+
+
+            if (
+                typeof resultado ===
+                "string" &&
+                resultado.trim()
+            ) {
+
+                mensagem =
+                    resultado;
+
+            } else if (
+                resultado &&
+                resultado.message
+            ) {
+
+                mensagem =
+                    resultado.message;
+            }
+
+
+            throw new Error(
+                mensagem
+            );
+        }
+
+
+        return resultado;
+    }
+
+
+    /* =====================================
+       CARREGAR LOCAIS
+       ===================================== */
+
+    async function atualizarLocais() {
+
+        try {
+
+            const resposta =
+                await fetch("/locais");
+
+
+            if (!resposta.ok) {
+
+                throw new Error(
+                    "Erro ao carregar locais."
+                );
+            }
+
+
+            const locais =
+                await resposta.json();
+
+
+            const localChamado =
+                document.getElementById(
+                    "localChamado"
+                );
+
+
+            const localEquipamento =
+                document.getElementById(
+                    "localEquipamento"
+                );
+
+
+            localChamado.innerHTML =
+                '<option value="">' +
+                'Sem local' +
+                '</option>';
+
+
+            localEquipamento.innerHTML =
+                '<option value="">' +
+                'Selecione um local' +
+                '</option>';
+
+
+            locais.forEach(
+                local => {
+
+                    const opcaoChamado =
+                        document.createElement(
+                            "option"
+                        );
+
+
+                    opcaoChamado.value =
+                        local.id;
+
+
+                    opcaoChamado.textContent =
+                        local.nome +
+                        " (ID " +
+                        local.id +
+                        ")";
+
+
+                    localChamado.appendChild(
+                        opcaoChamado
+                    );
+
+
+                    const opcaoEquipamento =
+                        document.createElement(
+                            "option"
+                        );
+
+
+                    opcaoEquipamento.value =
+                        local.id;
+
+
+                    opcaoEquipamento.textContent =
+                        local.nome +
+                        " (ID " +
+                        local.id +
+                        ")";
+
+
+                    localEquipamento.appendChild(
+                        opcaoEquipamento
+                    );
+                }
+            );
+
+
+        } catch (erro) {
+
+            console.error(
+                "Erro ao carregar locais:",
+                erro
+            );
+        }
+    }
+
+
+    /* =====================================
+       ABRIR CHAMADO
+       ===================================== */
+
+    document
+        .getElementById(
+            "formChamado"
+        )
+        .addEventListener(
+            "submit",
+            async function (evento) {
+
+                evento.preventDefault();
+
+
+                limparMensagem(
+                    "mensagemChamado"
+                );
+
+
+                const titulo =
+                    document
+                        .getElementById(
+                            "tituloChamado"
+                        )
+                        .value
+                        .trim();
+
+
+                const descricao =
+                    document
+                        .getElementById(
+                            "descricaoChamado"
+                        )
+                        .value
+                        .trim();
+
+
+                const prioridade =
+                    document
+                        .getElementById(
+                            "prioridadeChamado"
+                        )
+                        .value;
+
+
+                const localId =
+                    document
+                        .getElementById(
+                            "localChamado"
+                        )
+                        .value;
+
+
+                const chamado = {
+
+                    titulo:
+                    titulo,
+
+                    descricao:
+                    descricao,
+
+                    prioridade:
+                    prioridade
+                };
+
+
+                if (localId) {
+
+                    chamado.local = {
+
+                        id:
+                            Number(localId)
+                    };
+                }
+
+
+                try {
+
+                    const criado =
+                        await enviarJson(
+                            "/chamados",
+                            chamado
+                        );
+
+
+                    const mensagem =
+                        criado &&
+                        criado.id
+                            ? "Chamado #" +
+                            criado.id +
+                            " aberto com sucesso."
+                            : "Chamado aberto com sucesso.";
+
+
+                    mostrarMensagem(
+                        "mensagemChamado",
+                        mensagem,
+                        true
+                    );
+
+
+                    document
+                        .getElementById(
+                            "formChamado"
+                        )
+                        .reset();
+
+
+                    /*
+                     * Atualiza o dashboard.
+                     */
+                    setTimeout(
+                        function () {
+
+                            window.location.reload();
+
+                        },
+                        1000
+                    );
+
+
+                } catch (erro) {
+
+                    mostrarMensagem(
+                        "mensagemChamado",
+                        erro.message,
+                        false
+                    );
+                }
+            }
+        );
+
+
+    /* =====================================
+       BUSCAR CHAMADO POR ID
+       ===================================== */
+
+    document
+        .getElementById(
+            "formBuscarChamado"
+        )
+        .addEventListener(
+            "submit",
+            async function (evento) {
+
+                evento.preventDefault();
+
+
+                const id =
+                    document
+                        .getElementById(
+                            "buscarChamadoId"
+                        )
+                        .value;
+
+
+                const resultado =
+                    document.getElementById(
+                        "resultadoChamado"
+                    );
+
+
+                const conteudo =
+                    document.getElementById(
+                        "conteudoChamado"
+                    );
+
+
+                /*
+                 * Limpa a busca anterior.
+                 */
+                resultado.style.display =
+                    "none";
+
+
+                conteudo.innerHTML =
+                    "";
+
+
+                limparMensagem(
+                    "mensagemBusca"
+                );
+
+
+                try {
+
+                    const resposta =
+                        await fetch(
+                            "/chamados/" +
+                            encodeURIComponent(id),
+                            {
+                                method: "GET",
+                                cache: "no-store"
+                            }
+                        );
+
+
+                    /*
+                     * IMPORTANTE:
+                     * lê a resposta como texto,
+                     * porque o backend pode devolver
+                     * texto simples em caso de erro.
+                     */
+                    const texto =
+                        await resposta.text();
+
+
+                    /*
+                     * Qualquer erro HTTP.
+                     *
+                     * Exemplo:
+                     * 404
+                     * Chamado não encontrado com id: 9999
+                     */
+                    if (!resposta.ok) {
+
+                        let mensagemErro =
+                            texto.trim();
+
+
+                        /*
+                         * Caso Spring devolva JSON
+                         * com uma propriedade message.
+                         */
+                        if (mensagemErro) {
+
+                            try {
+
+                                const jsonErro =
+                                    JSON.parse(
+                                        mensagemErro
+                                    );
+
+
+                                if (
+                                    jsonErro &&
+                                    jsonErro.message
+                                ) {
+
+                                    mensagemErro =
+                                        jsonErro.message;
+                                }
+
+                            } catch {
+
+                                /*
+                                 * Era texto normal.
+                                 * Mantém o texto.
+                                 */
+                            }
+                        }
+
+
+                        if (!mensagemErro) {
+
+                            mensagemErro =
+                                "Chamado não encontrado.";
+                        }
+
+
+                        mostrarMensagem(
+                            "mensagemBusca",
+                            mensagemErro,
+                            false
+                        );
+
+
+                        return;
+                    }
+
+
+                    /*
+                     * Resposta 200 mas vazia.
+                     */
+                    if (!texto.trim()) {
+
+                        mostrarMensagem(
+                            "mensagemBusca",
+                            "Chamado não encontrado.",
+                            false
+                        );
+
+                        return;
+                    }
+
+
+                    /*
+                     * Resposta válida.
+                     */
+                    let chamado;
+
+
+                    try {
+
+                        chamado =
+                            JSON.parse(texto);
+
+                    } catch {
+
+                        mostrarMensagem(
+                            "mensagemBusca",
+                            "Resposta inválida recebida do servidor.",
+                            false
+                        );
+
+                        return;
+                    }
+
+
+                    if (
+                        !chamado ||
+                        chamado.id === null ||
+                        chamado.id === undefined
+                    ) {
+
+                        mostrarMensagem(
+                            "mensagemBusca",
+                            "Chamado não encontrado.",
+                            false
+                        );
+
+                        return;
+                    }
+
+
+                    let local =
+                        "-";
+
+
+                    if (
+                        chamado.local &&
+                        chamado.local.nome
+                    ) {
+
+                        local =
+                            chamado.local.nome;
+                    }
+
+
+                    conteudo.innerHTML =
+
+                        '<div class="resultado-linha">' +
+
+                        '<strong>ID:</strong> ' +
+
+                        escaparHtml(
+                            chamado.id
+                        ) +
+
+                        '</div>' +
+
+
+                        '<div class="resultado-linha">' +
+
+                        '<strong>Título:</strong> ' +
+
+                        escaparHtml(
+                            chamado.titulo ||
+                            "-"
+                        ) +
+
+                        '</div>' +
+
+
+                        '<div class="resultado-linha">' +
+
+                        '<strong>Descrição:</strong> ' +
+
+                        escaparHtml(
+                            chamado.descricao ||
+                            "-"
+                        ) +
+
+                        '</div>' +
+
+
+                        '<div class="resultado-linha">' +
+
+                        '<strong>Prioridade:</strong> ' +
+
+                        escaparHtml(
+                            chamado.prioridade ||
+                            "-"
+                        ) +
+
+                        '</div>' +
+
+
+                        '<div class="resultado-linha">' +
+
+                        '<strong>Status:</strong> ' +
+
+                        escaparHtml(
+                            chamado.status ||
+                            "-"
+                        ) +
+
+                        '</div>' +
+
+
+                        '<div class="resultado-linha">' +
+
+                        '<strong>Local:</strong> ' +
+
+                        escaparHtml(
+                            local
+                        ) +
+
+                        '</div>';
+
+
+                    resultado.style.display =
+                        "block";
+
+
+                } catch (erro) {
+
+                    mostrarMensagem(
+                        "mensagemBusca",
+                        "Erro ao buscar chamado: " +
+                        erro.message,
+                        false
+                    );
+                }
+            }
+        );
+
+
+    /* =====================================
+       CADASTRAR LOCAL
+       ===================================== */
+
+    document
+        .getElementById(
+            "formLocal"
+        )
+        .addEventListener(
+            "submit",
+            async function (evento) {
+
+                evento.preventDefault();
+
+
+                limparMensagem(
+                    "mensagemLocal"
+                );
+
+
+                const nome =
+                    document
+                        .getElementById(
+                            "nomeLocal"
+                        )
+                        .value
+                        .trim();
+
+
+                try {
+
+                    const criado =
+                        await enviarJson(
+                            "/locais",
+                            {
+                                nome:
+                                nome
+                            }
+                        );
+
+
+                    const nomeCriado =
+                        criado &&
+                        criado.nome
+                            ? criado.nome
+                            : nome;
+
+
+                    mostrarMensagem(
+                        "mensagemLocal",
+                        'Local "' +
+                        nomeCriado +
+                        '" cadastrado com sucesso.',
+                        true
+                    );
+
+
+                    document
+                        .getElementById(
+                            "formLocal"
+                        )
+                        .reset();
+
+
+                    /*
+                     * Atualiza os dois selects
+                     * automaticamente.
+                     */
+                    await atualizarLocais();
+
+
+                } catch (erro) {
+
+                    mostrarMensagem(
+                        "mensagemLocal",
+                        erro.message,
+                        false
+                    );
+                }
+            }
+        );
+
+
+    /* =====================================
+       CADASTRAR EQUIPAMENTO
+       ===================================== */
+
+    document
+        .getElementById(
+            "formEquipamento"
+        )
+        .addEventListener(
+            "submit",
+            async function (evento) {
+
+                evento.preventDefault();
+
+
+                limparMensagem(
+                    "mensagemEquipamento"
+                );
+
+
+                const nome =
+                    document
+                        .getElementById(
+                            "nomeEquipamento"
+                        )
+                        .value
+                        .trim();
+
+
+                const marca =
+                    document
+                        .getElementById(
+                            "marcaEquipamento"
+                        )
+                        .value
+                        .trim();
+
+
+                const numeroSerie =
+                    document
+                        .getElementById(
+                            "serieEquipamento"
+                        )
+                        .value
+                        .trim();
+
+
+                const localId =
+                    document
+                        .getElementById(
+                            "localEquipamento"
+                        )
+                        .value;
+
+
+                if (!localId) {
+
+                    mostrarMensagem(
+                        "mensagemEquipamento",
+                        "Selecione um local.",
+                        false
+                    );
+
+                    return;
+                }
+
+
+                const equipamento = {
+
+                    nome:
+                    nome,
+
+                    marca:
+                    marca,
+
+                    numeroSerie:
+                    numeroSerie,
+
+                    local: {
+
+                        id:
+                            Number(localId)
+                    }
+                };
+
+
+                try {
+
+                    const criado =
+                        await enviarJson(
+                            "/equipamentos",
+                            equipamento
+                        );
+
+
+                    const mensagem =
+                        criado &&
+                        criado.id
+                            ? "Equipamento #" +
+                            criado.id +
+                            " cadastrado com sucesso."
+                            : "Equipamento cadastrado com sucesso.";
+
+
+                    mostrarMensagem(
+                        "mensagemEquipamento",
+                        mensagem,
+                        true
+                    );
+
+
+                    document
+                        .getElementById(
+                            "formEquipamento"
+                        )
+                        .reset();
+
+
+                } catch (erro) {
+
+                    mostrarMensagem(
+                        "mensagemEquipamento",
+                        erro.message,
+                        false
+                    );
+                }
+            }
+        );
+
+
+    /* =====================================
+       INICIALIZAÇÃO
+       ===================================== */
+
+    atualizarLocais();
+
 </script>
+
 
 </body>
 
