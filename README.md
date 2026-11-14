@@ -1185,6 +1185,42 @@ As sugestões fornecidas pela IA foram utilizadas como apoio, sendo necessário 
 
 ---
 
+## Allan Pinto Nogueira
+
+**Ferramentas:** Codex e ChatGPT (OpenAI).
+
+**Para que foi utilizado:**
+
+- consulta à estrutura do projeto e ao histórico de alterações;
+- análise dos registros de contribuições, testes e refactorings presentes no repositório;
+- apoio à organização e à redação da documentação no README;
+- comparação com o padrão de documentação dos demais integrantes;
+- execução assistida de comandos Git para commit, push e integração da `main`;
+- execução assistida dos testes após a integração das alterações.
+
+### Dinâmica de uso
+
+As ferramentas foram utilizadas como apoio à consulta do repositório e à atualização da documentação. O Codex também executou comandos Git e verificações locais durante essa atualização, considerando os registros disponíveis e o padrão adotado pelo grupo.
+
+### O que foi feito sem IA
+
+
+
+- levantamento e interpretação dos requisitos da US05 – Histórico e Filtros de Chamados;
+- organização e acompanhamento das tarefas da própria responsabilidade no Jira;
+- definição das informações necessárias para o histórico de alterações dos chamados;
+- revisão das regras de registro de status anterior, novo status e data da alteração;
+- conferência dos cenários de sucesso e falha previstos para o histórico;
+- execução local dos testes e leitura dos resultados apresentados pelo Maven;
+- consulta aos relatórios de cobertura do JaCoCo;
+- gerenciamento da branch `AllanNogueira` e execução dos comandos Git;
+- organização dos commits e envio das alterações ao repositório;
+- criação e acompanhamento dos Pull Requests;
+- revisão das alterações antes da integração com o trabalho dos demais integrantes;
+- decisão final sobre as sugestões de melhoria e os refactorings adotados.
+
+---
+
 # Acesso para Testes
 
 Para facilitar os testes no sistema, pode ser utilizada a conta de administrador abaixo.
