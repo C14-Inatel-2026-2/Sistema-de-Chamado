@@ -832,6 +832,22 @@ adicionarTituloAoModel()
 | Após integração do dashboard | 101 | 0 | 0 | 0 | BUILD SUCCESS |
 
 ---
+## Felipe da Silva Inácio
+
+| # | Smell | Refactoring aplicado | Por quê | PR                                                                     |
+|---|---|---|---|------------------------------------------------------------------------|
+| 1 | Método `atribuirTecnico()` concentrava a validação do técnico junto com a lógica de atribuição | Extract Method (`validarTecnico`) | Separa a responsabilidade de validação da operação de atribuição, melhorando a organização e a legibilidade do código | [#44](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/44) |
+| 2 | String literal `"TECNICO"` utilizada diretamente na validação do perfil | Replace Magic String with Constant (`PERFIL_TECNICO`) | Centraliza o valor utilizado na comparação, evitando valores literais espalhados e facilitando a manutenção | [#44](https://github.com/C14-Inatel-2026-2/Sistema-de-Chamado/pull/44) |
+
+---
+
+### Validação dos refactorings
+
+| Estado | Testes | Falhas | Erros | Ignorados | Resultado |
+|---|---:|---:|---:|---:|---|
+| Antes dos refactorings | 101 | 0 | 0 | 0 | BUILD SUCCESS |
+| Após os refactorings | 102 | 0 | 0 | 0 | BUILD SUCCESS |
+---
 
 # Evolução da Interface Web
 
@@ -1117,6 +1133,54 @@ As sugestões foram analisadas e adaptadas conforme a estrutura do projeto.
 ### Compreensão
 
 As sugestões foram analisadas quanto à compatibilidade com a arquitetura antes da utilização.
+
+---
+## Felipe da Silva Inácio
+
+**Modelo:** ChatGPT — GPT-6 (OpenAI).
+
+**Para que foi utilizado:**
+
+- orientação durante o desenvolvimento do projeto;
+- resolução de problemas no IntelliJ e Maven;
+- identificação e análise de possíveis refactorings;
+- revisão das alterações no código;
+- documentação do projeto e configuração do Jenkins.
+
+### Prompt 1 – Identificação de refactorings
+
+> "Analise o código atual do projeto e identifique possíveis refactorings que possam melhorar a organização e legibilidade, evitando repetir alterações já realizadas por outros integrantes."
+
+**Resultado:** sugestões analisadas e ajustadas conforme os refactorings já realizados pelo grupo.
+
+### Prompt 2 – Revisão do código
+
+> "Analise os arquivos atuais do projeto e identifique oportunidades de melhoria que possam ser aplicadas sem alterar o comportamento esperado da aplicação."
+
+**Resultado:** sugestões utilizadas como referência para selecionar possíveis melhorias no código.
+
+### Prompt 3 – Documentação do README
+
+> "Crie uma seção para o README.md documentando dois refactorings aplicados ao ChamadoService. Utilize uma tabela contendo número, code smell, refactoring aplicado, justificativa e link do Pull Request. Siga o mesmo padrão de documentação utilizado pelos outros integrantes do grupo."
+
+**Resultado:** sugestões analisadas e ajustadas conforme a documentação realizada pelo grupo.
+
+### Dinâmica de uso
+
+A IA foi utilizada como ferramenta de consulta e apoio durante o desenvolvimento. As sugestões foram analisadas antes de serem aplicadas, considerando a estrutura do projeto e as alterações realizadas pelos demais integrantes.
+
+### O que foi feito sem IA
+
+- gerenciamento das branches;
+- execução dos comandos Git;
+- commits e push;
+- criação e acompanhamento dos Pull Requests;
+- criação e execução dos testes;
+- revisão e decisão final sobre as modificações.
+
+### Compreensão
+
+As sugestões fornecidas pela IA foram utilizadas como apoio, sendo necessário compreender e verificar as alterações antes de incorporá-las ao projeto.
 
 ---
 
