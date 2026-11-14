@@ -501,6 +501,44 @@ Após integrar a `main` para resolver o conflito do PR #32, `mvn clean test` apr
 
 ---
 
+# Uso de IA
+
+Cada integrante declara abaixo como utilizou ferramentas de Inteligência Artificial durante o desenvolvimento.
+
+## Allan Pinto Nogueira
+
+**Ferramentas:** Codex e ChatGPT (OpenAI).
+
+**Para que foi utilizado:**
+
+- consulta à estrutura do projeto e ao histórico de alterações;
+- análise dos registros de contribuições, testes e refactorings presentes no repositório;
+- apoio à organização e à redação da documentação no README;
+- comparação com o padrão de documentação dos demais integrantes.
+
+### Dinâmica de uso
+
+A ferramenta foi utilizada para consultar o repositório e apoiar a atualização da documentação, considerando os registros disponíveis e o padrão adotado pelo grupo.
+
+### O que foi feito sem IA
+
+**Lista sugerida, pendente de confirmação pelo integrante:**
+
+- levantamento e interpretação dos requisitos da US05 – Histórico e Filtros de Chamados;
+- organização e acompanhamento das tarefas da própria responsabilidade no Jira;
+- definição das informações necessárias para o histórico de alterações dos chamados;
+- revisão das regras de registro de status anterior, novo status e data da alteração;
+- conferência dos cenários de sucesso e falha previstos para o histórico;
+- execução local dos testes e leitura dos resultados apresentados pelo Maven;
+- consulta aos relatórios de cobertura do JaCoCo;
+- gerenciamento da branch `AllanNogueira` e execução dos comandos Git;
+- organização dos commits e envio das alterações ao repositório;
+- criação e acompanhamento dos Pull Requests;
+- revisão das alterações antes da integração com o trabalho dos demais integrantes;
+- decisão final sobre as sugestões de melhoria e os refactorings adotados.
+
+---
+
 # Integrantes
 
 | Integrante | Matrícula | Responsabilidade |
