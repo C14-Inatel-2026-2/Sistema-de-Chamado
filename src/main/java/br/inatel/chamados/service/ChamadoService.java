@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 @Service
 public class ChamadoService {
 
+    private static final String PERFIL_TECNICO = "TECNICO";
+
     private final ChamadoRepository chamadoRepository;
 
     public ChamadoService(ChamadoRepository chamadoRepository) {
@@ -30,19 +32,24 @@ public class ChamadoService {
     public Chamado atribuirTecnico(Long chamadoId, Usuario tecnico) {
         Chamado chamado = buscarChamado(chamadoId);
 
-        if (tecnico == null) {
-            throw new IllegalArgumentException("Técnico é obrigatório");
-        }
-
-        if (!"TECNICO".equalsIgnoreCase(tecnico.getPerfil())) {
-            throw new IllegalArgumentException(
-                    "O usuário selecionado não possui perfil de técnico"
-            );
-        }
+        validarTecnico(tecnico);
 
         chamado.setTecnico(tecnico);
 
         return chamadoRepository.save(chamado);
+    }
+
+    private void validarTecnico(Usuario tecnico) {
+
+        if (tecnico == null) {
+            throw new IllegalArgumentException("Técnico é obrigatório");
+        }
+
+        if (!PERFIL_TECNICO.equalsIgnoreCase(tecnico.getPerfil())) {
+            throw new IllegalArgumentException(
+                    "O usuário selecionado não possui perfil de técnico"
+            );
+        }
     }
 
     public Chamado atualizarStatus(Long chamadoId, StatusChamado novoStatus) {
